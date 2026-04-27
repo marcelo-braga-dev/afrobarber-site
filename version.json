@@ -1,0 +1,14 @@
+{
+  "appName": "AfroBarber",
+  "packageName": "br.com.afrobarber.game",
+  "latestVersion": "1.0.0",
+  "minimumRequiredVersion": "1.0.0",
+  "latestVersionCode": 1,
+  "minimumRequiredVersionCode": 1,
+  "forceUpdate": false,
+  "playStoreUrl": "https://play.google.com/store/apps/details?id=br.com.afrobarber.game",
+  "updateTitle": "Nova atualização disponível",
+  "updateMessage": "Atualize o AfroBarber para receber melhorias, correções e novos conteúdos.",
+  "maintenanceMode": false,
+  "maintenanceMessage": "O AfroBarber está temporariamente em manutenção."
+}

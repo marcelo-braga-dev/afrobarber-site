@@ -1,58 +1,1042 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AfroBarber Updates</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AfroBarber Game | Simulador de Barbearia Afro</title>
+    <meta name="description" content="AfroBarber é um jogo mobile de simulação, gestão e cultura afro, onde você administra uma barbearia, atende clientes, realiza cortes, evolui o espaço e aprende sobre identidade e cabelo afro." />
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #141414;
-      color: #f0f0f0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      text-align: center;
-    }
+    <style>
+        :root {
+            --bg: #0f0f0f;
+            --bg-soft: #171717;
+            --card: #1f1b18;
+            --gold: #d4af37;
+            --gold-soft: #f0d878;
+            --brown: #654321;
+            --blue: #00aaff;
+            --white: #f5f5f5;
+            --muted: #c9c0b6;
+            --danger: #ff4d4d;
+            --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+            --radius: 28px;
+        }
 
-    .card {
-      max-width: 640px;
-      padding: 32px;
-      border: 1px solid #d4af37;
-      border-radius: 16px;
-      background: #1f1f1f;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    h1 {
-      color: #d4af37;
-      margin-bottom: 8px;
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    a {
-      color: #00aaff;
-      text-decoration: none;
-      font-weight: bold;
-    }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(212, 175, 55, 0.18), transparent 36%),
+                radial-gradient(circle at 75% 10%, rgba(0, 170, 255, 0.12), transparent 30%),
+                linear-gradient(180deg, #090909 0%, #14110f 46%, #0f0f0f 100%);
+            color: var(--white);
+            overflow-x: hidden;
+        }
 
-    .version {
-      margin-top: 24px;
-      font-size: 20px;
-    }
-  </style>
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            width: min(1180px, calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            backdrop-filter: blur(18px);
+            background: rgba(10, 10, 10, 0.72);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .nav-inner {
+            height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-mark {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            color: #111;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold), var(--gold-soft));
+            box-shadow: 0 12px 28px rgba(212, 175, 55, 0.22);
+        }
+
+        .brand span {
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold-soft);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: 0;
+            cursor: pointer;
+            font-weight: 800;
+            border-radius: 999px;
+            padding: 14px 22px;
+            transition: 0.25s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), var(--gold-soft));
+            color: #111;
+            box-shadow: 0 18px 45px rgba(212, 175, 55, 0.24);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 24px 60px rgba(212, 175, 55, 0.32);
+        }
+
+        .btn-secondary {
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.14);
+            transform: translateY(-3px);
+        }
+
+        .hero {
+            padding: 84px 0 72px;
+            position: relative;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.06fr 0.94fr;
+            align-items: center;
+            gap: 54px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--gold-soft);
+            background: rgba(212, 175, 55, 0.12);
+            border: 1px solid rgba(212, 175, 55, 0.24);
+            padding: 10px 14px;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.7rem, 7vw, 6rem);
+            line-height: 0.95;
+            letter-spacing: -3px;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 span {
+            color: var(--gold);
+        }
+
+        .hero p {
+            font-size: 1.18rem;
+            line-height: 1.8;
+            color: var(--muted);
+            max-width: 660px;
+            margin-bottom: 32px;
+        }
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-bottom: 34px;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            max-width: 630px;
+        }
+
+        .stat {
+            padding: 18px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 1.45rem;
+            color: var(--gold-soft);
+            margin-bottom: 4px;
+        }
+
+        .stat small {
+            color: var(--muted);
+        }
+
+        .phone-showcase {
+            position: relative;
+            min-height: 600px;
+            display: grid;
+            place-items: center;
+        }
+
+        .phone-glow {
+            position: absolute;
+            width: 470px;
+            height: 470px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.25), rgba(0, 170, 255, 0.06), transparent 65%);
+            filter: blur(8px);
+        }
+
+        .phone {
+            position: relative;
+            width: min(360px, 84vw);
+            min-height: 590px;
+            border: 13px solid #060606;
+            border-radius: 46px;
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.65)),
+                linear-gradient(145deg, #2b2118, #101010);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .phone::before {
+            content: "";
+            position: absolute;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 24px;
+            border-radius: 999px;
+            background: #050505;
+            z-index: 2;
+        }
+
+        .screen-art {
+            height: 100%;
+            padding: 58px 24px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background:
+                radial-gradient(circle at 50% 20%, rgba(212, 175, 55, 0.25), transparent 28%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01));
+        }
+
+        .game-card {
+            border-radius: 28px;
+            padding: 22px;
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+        }
+
+        .game-card h3 {
+            color: var(--gold-soft);
+            font-size: 1.45rem;
+            margin-bottom: 10px;
+        }
+
+        .game-card p {
+            color: var(--muted);
+            line-height: 1.55;
+            font-size: 0.95rem;
+        }
+
+        .fake-gameplay {
+            display: grid;
+            gap: 12px;
+        }
+
+        .fake-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 13px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--muted);
+            font-size: 0.86rem;
+        }
+
+        .fake-row b {
+            color: var(--white);
+        }
+
+        .floating-tag {
+            position: absolute;
+            padding: 13px 16px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+            color: var(--white);
+            font-weight: 800;
+        }
+
+        .tag-one {
+            left: 0;
+            top: 18%;
+        }
+
+        .tag-two {
+            right: 0;
+            bottom: 18%;
+        }
+
+        .section {
+            padding: 86px 0;
+        }
+
+        .section-header {
+            max-width: 760px;
+            margin: 0 auto 42px;
+            text-align: center;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3.3rem);
+            line-height: 1.05;
+            letter-spacing: -1.5px;
+            margin-bottom: 18px;
+        }
+
+        .section-header p {
+            color: var(--muted);
+            line-height: 1.75;
+            font-size: 1.05rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .feature-card {
+            padding: 28px;
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.16);
+            min-height: 250px;
+            transition: 0.25s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            background: rgba(255, 255, 255, 0.09);
+            border-color: rgba(212, 175, 55, 0.28);
+        }
+
+        .icon {
+            width: 56px;
+            height: 56px;
+            display: grid;
+            place-items: center;
+            border-radius: 18px;
+            background: rgba(212, 175, 55, 0.14);
+            color: var(--gold-soft);
+            font-size: 1.55rem;
+            margin-bottom: 22px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.32rem;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .gameplay {
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0)),
+                rgba(0, 0, 0, 0.14);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            counter-reset: step;
+        }
+
+        .step {
+            position: relative;
+            padding: 28px;
+            border-radius: var(--radius);
+            background: linear-gradient(180deg, rgba(212, 175, 55, 0.1), rgba(255, 255, 255, 0.045));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .step::before {
+            counter-increment: step;
+            content: "0" counter(step);
+            display: inline-flex;
+            color: #111;
+            background: var(--gold);
+            font-weight: 900;
+            padding: 8px 11px;
+            border-radius: 999px;
+            margin-bottom: 20px;
+        }
+
+        .step h3 {
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+        }
+
+        .step p {
+            color: var(--muted);
+            line-height: 1.65;
+            font-size: 0.96rem;
+        }
+
+        .showcase-panel {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 32px;
+            align-items: center;
+            padding: 38px;
+            border-radius: 36px;
+            background:
+                radial-gradient(circle at top right, rgba(0, 170, 255, 0.16), transparent 32%),
+                linear-gradient(135deg, rgba(101, 67, 33, 0.38), rgba(255, 255, 255, 0.055));
+            border: 1px solid rgba(255, 255, 255, 0.11);
+            box-shadow: var(--shadow);
+        }
+
+        .poster {
+            min-height: 430px;
+            border-radius: 30px;
+            background:
+                linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.74)),
+                radial-gradient(circle at center, rgba(212, 175, 55, 0.36), rgba(101, 67, 33, 0.22), #101010 72%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            display: grid;
+            place-items: center;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .poster-title {
+            font-size: clamp(2rem, 4vw, 4rem);
+            line-height: 0.92;
+            font-weight: 900;
+            letter-spacing: -2px;
+        }
+
+        .poster-title span {
+            color: var(--gold);
+        }
+
+        .showcase-text h2 {
+            font-size: clamp(2rem, 4vw, 3.4rem);
+            line-height: 1.05;
+            margin-bottom: 18px;
+        }
+
+        .showcase-text p {
+            color: var(--muted);
+            line-height: 1.8;
+            margin-bottom: 24px;
+            font-size: 1.04rem;
+        }
+
+        .check-list {
+            display: grid;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .check {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: var(--muted);
+            line-height: 1.55;
+        }
+
+        .check::before {
+            content: "✓";
+            flex: 0 0 26px;
+            width: 26px;
+            height: 26px;
+            display: grid;
+            place-items: center;
+            color: #111;
+            font-weight: 900;
+            border-radius: 50%;
+            background: var(--gold);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .gallery-card {
+            min-height: 330px;
+            border-radius: 30px;
+            padding: 24px;
+            display: flex;
+            align-items: flex-end;
+            background:
+                linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.72)),
+                radial-gradient(circle at 50% 20%, rgba(212, 175, 55, 0.22), rgba(255, 255, 255, 0.04));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .gallery-card:nth-child(2) {
+            background:
+                linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.72)),
+                radial-gradient(circle at 50% 20%, rgba(0, 170, 255, 0.18), rgba(255, 255, 255, 0.04));
+        }
+
+        .gallery-card:nth-child(3) {
+            background:
+                linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.72)),
+                radial-gradient(circle at 50% 20%, rgba(101, 67, 33, 0.45), rgba(255, 255, 255, 0.04));
+        }
+
+        .gallery-card h3 {
+            font-size: 1.45rem;
+            margin-bottom: 8px;
+        }
+
+        .gallery-card p {
+            color: var(--muted);
+            line-height: 1.55;
+        }
+
+        .download {
+            padding: 90px 0;
+        }
+
+        .download-box {
+            position: relative;
+            overflow: hidden;
+            padding: 56px;
+            border-radius: 38px;
+            background:
+                radial-gradient(circle at top left, rgba(212, 175, 55, 0.22), transparent 34%),
+                radial-gradient(circle at bottom right, rgba(0, 170, 255, 0.15), transparent 34%),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.04));
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .download-box h2 {
+            font-size: clamp(2.2rem, 5vw, 4.4rem);
+            line-height: 1;
+            letter-spacing: -2px;
+            margin-bottom: 18px;
+        }
+
+        .download-box p {
+            max-width: 760px;
+            margin: 0 auto 30px;
+            color: var(--muted);
+            line-height: 1.75;
+            font-size: 1.1rem;
+        }
+
+        .store-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .store-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 22px;
+            border-radius: 18px;
+            background: #050505;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            transition: 0.25s ease;
+            min-width: 220px;
+            justify-content: center;
+        }
+
+        .store-btn:hover {
+            transform: translateY(-4px);
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+
+        .store-btn small {
+            display: block;
+            color: var(--muted);
+            font-size: 0.75rem;
+            text-align: left;
+        }
+
+        .store-btn strong {
+            display: block;
+            font-size: 1.05rem;
+            text-align: left;
+        }
+
+        .faq {
+            display: grid;
+            gap: 14px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        details {
+            border-radius: 22px;
+            padding: 20px 22px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: 800;
+            color: var(--white);
+        }
+
+        details p {
+            color: var(--muted);
+            line-height: 1.7;
+            margin-top: 14px;
+        }
+
+        footer {
+            padding: 38px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--muted);
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold-soft);
+        }
+
+        @media (max-width: 980px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-grid,
+            .showcase-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .phone-showcase {
+                min-height: 540px;
+            }
+
+            .features-grid,
+            .gallery {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .steps {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero {
+                padding-top: 54px;
+            }
+
+            .hero h1 {
+                letter-spacing: -1.8px;
+            }
+
+            .hero-stats,
+            .features-grid,
+            .steps,
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .phone {
+                min-height: 520px;
+            }
+
+            .floating-tag {
+                display: none;
+            }
+
+            .showcase-panel,
+            .download-box {
+                padding: 28px;
+                border-radius: 28px;
+            }
+
+            .poster {
+                min-height: 320px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <main class="card">
-    <h1>AfroBarber</h1>
-    <p>Página oficial de atualizações do jogo AfroBarber.</p>
+    <header class="navbar">
+        <div class="container nav-inner">
+            <a href="#inicio" class="brand" aria-label="AfroBarber Game">
+                <div class="brand-mark">AB</div>
+                <div>Afro<span>Barber</span></div>
+            </a>
 
-    <p class="version">Versão atual: <strong>1.0.0</strong></p>
+            <nav class="nav-links" aria-label="Navegação principal">
+                <a href="#gameplay">Gameplay</a>
+                <a href="#recursos">Funcionalidades</a>
+                <a href="#cultura">Cultura</a>
+                <a href="#download">Baixar</a>
+            </nav>
 
-    <p>
-      <a href="./version.json">Ver arquivo JSON de atualização</a>
-    </p>
-  </main>
+            <a href="#download" class="btn btn-primary">Baixar o jogo</a>
+        </div>
+    </header>
+
+    <main id="inicio">
+        <section class="hero">
+            <div class="container hero-grid">
+                <div>
+                    <div class="eyebrow">Simulação • Gestão • Cultura Afro • Mobile</div>
+                    <h1>Administre sua <span>barbearia afro</span> e transforme cada corte em história.</h1>
+                    <p>
+                        AfroBarber é um jogo mobile de simulação onde você atende clientes, organiza a fila, realiza serviços,
+                        evolui sua barbearia, compra equipamentos, cumpre missões e descobre o valor cultural dos cabelos afro.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="#download" class="btn btn-primary">Quero jogar agora</a>
+                        <a href="#gameplay" class="btn btn-secondary">Ver como funciona</a>
+                    </div>
+
+                    <div class="hero-stats" aria-label="Destaques do jogo">
+                        <div class="stat">
+                            <strong>3D</strong>
+                            <small>Barbearia viva com NPCs</small>
+                        </div>
+                        <div class="stat">
+                            <strong>Gestão</strong>
+                            <small>Caixa, loja e progresso</small>
+                        </div>
+                        <div class="stat">
+                            <strong>Cultura</strong>
+                            <small>Cortes com identidade</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="phone-showcase" aria-label="Prévia visual do jogo">
+                    <div class="phone-glow"></div>
+                    <div class="floating-tag tag-one">Clientes chegando</div>
+                    <div class="floating-tag tag-two">Missões e recompensas</div>
+
+                    <div class="phone">
+                        <div class="screen-art">
+                            <div class="game-card">
+                                <h3>Cliente em Atendimento</h3>
+                                <p>Escolha o serviço, use os produtos certos e entregue o corte pedido pelo cliente.</p>
+                            </div>
+
+                            <div class="fake-gameplay">
+                                <div class="fake-row"><b>Caixa</b><span>R$ 1.250</span></div>
+                                <div class="fake-row"><b>Agenda</b><span>Próximo: 14:30</span></div>
+                                <div class="fake-row"><b>XP</b><span>Nível 7</span></div>
+                                <div class="fake-row"><b>Status</b><span>Barbearia aberta</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="recursos" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Um jogo de barbearia com vida, estratégia e personalidade.</h2>
+                    <p>
+                        Cada sistema foi pensado para fazer o jogador sentir que está realmente administrando uma barbearia:
+                        clientes chegam, esperam, pedem serviços, pagam, conversam e reagem ao atendimento.
+                    </p>
+                </div>
+
+                <div class="features-grid">
+                    <article class="feature-card">
+                        <div class="icon">✂</div>
+                        <h3>Atendimento de clientes</h3>
+                        <p>Receba NPCs, confira pedidos, direcione o cliente até a cadeira, realize o serviço e finalize o pagamento no caixa.</p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="icon">▦</div>
+                        <h3>Fila e sala de espera</h3>
+                        <p>Organize clientes nos sofás, controle a capacidade da barbearia e mantenha o fluxo de atendimento funcionando.</p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="icon">◷</div>
+                        <h3>Agenda de horários</h3>
+                        <p>Clientes podem ser programados para chegar antes do horário marcado, criando uma rotina mais realista e estratégica.</p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="icon">$</div>
+                        <h3>Gestão financeira</h3>
+                        <p>Acompanhe entradas, saídas, saldo da barbearia, caixa atual e evolução econômica conforme realiza atendimentos.</p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="icon">▣</div>
+                        <h3>Loja e inventário</h3>
+                        <p>Compre equipamentos, produtos e melhorias para desbloquear novas possibilidades dentro da gameplay.</p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="icon">★</div>
+                        <h3>Missões e progressão</h3>
+                        <p>Cumpra objetivos, ganhe XP, avance de nível e desenvolva sua barbearia com recompensas e novos desafios.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="gameplay" class="section gameplay">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Como é jogar AfroBarber?</h2>
+                    <p>
+                        O jogador precisa equilibrar tempo, qualidade, recursos, satisfação dos clientes e crescimento da barbearia.
+                    </p>
+                </div>
+
+                <div class="steps">
+                    <article class="step">
+                        <h3>Receba o cliente</h3>
+                        <p>O cliente chega na barbearia, entra na fila, espera no sofá ou vai embora se não houver espaço disponível.</p>
+                    </article>
+
+                    <article class="step">
+                        <h3>Confira o pedido</h3>
+                        <p>Cada cliente pode pedir um tipo de serviço, com tempo, preço, dificuldade, produtos necessários e recompensa de XP.</p>
+                    </article>
+
+                    <article class="step">
+                        <h3>Execute o serviço</h3>
+                        <p>Leve o cliente até a cadeira, use as ferramentas certas e conclua o atendimento com qualidade.</p>
+                    </article>
+
+                    <article class="step">
+                        <h3>Receba e evolua</h3>
+                        <p>Após o serviço, o cliente paga no caixa, você ganha experiência e pode investir em melhorias para a barbearia.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="cultura" class="section">
+            <div class="container showcase-panel">
+                <div class="poster">
+                    <div class="poster-title">Corte.<br /><span>Cultura.</span><br />Identidade.</div>
+                </div>
+
+                <div class="showcase-text">
+                    <h2>Mais que um jogo de barbearia: uma experiência sobre cabelo afro.</h2>
+                    <p>
+                        AfroBarber valoriza estilos, técnicas e referências ligadas à estética afro. A ideia é unir diversão,
+                        gestão e aprendizado, mostrando que cada corte pode carregar história, memória e identidade.
+                    </p>
+
+                    <div class="check-list">
+                        <div class="check">Cortes e estilos inspirados na cultura afro e no universo das barbearias.</div>
+                        <div class="check">Pedidos de clientes com informações sobre serviço, dificuldade, tempo e recompensa.</div>
+                        <div class="check">Sistema preparado para conteúdos educativos sobre história, estética e significado dos penteados.</div>
+                        <div class="check">Visual moderno com identidade urbana, profissional e cultural.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Explore, melhore e personalize sua barbearia.</h2>
+                    <p>
+                        O jogo combina sistemas de simulação com recursos de gerenciamento para criar uma experiência envolvente e crescente.
+                    </p>
+                </div>
+
+                <div class="gallery">
+                    <article class="gallery-card">
+                        <div>
+                            <h3>Barbearia em movimento</h3>
+                            <p>NPCs entram, sentam, esperam, conversam, são atendidos e deixam o local.</p>
+                        </div>
+                    </article>
+
+                    <article class="gallery-card">
+                        <div>
+                            <h3>Interface funcional</h3>
+                            <p>HUD, notificações, chat, agenda, loja, financeiro e missões conectados à gameplay.</p>
+                        </div>
+                    </article>
+
+                    <article class="gallery-card">
+                        <div>
+                            <h3>Progressão constante</h3>
+                            <p>Ganhe dinheiro, compre produtos, melhore equipamentos e desbloqueie novas possibilidades.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="download" class="download">
+            <div class="container">
+                <div class="download-box">
+                    <h2>Pronto para abrir sua barbearia?</h2>
+                    <p>
+                        Baixe AfroBarber, atenda seus primeiros clientes, evolua seu espaço e descubra como cada corte pode contar uma história.
+                        Disponível para dispositivos móveis.
+                    </p>
+
+                    <div class="store-buttons">
+                        <a class="store-btn" href="#" aria-label="Baixar na Google Play">
+                            <span style="font-size: 1.8rem;">▶</span>
+                            <span>
+                                <small>Disponível em breve na</small>
+                                <strong>Google Play</strong>
+                            </span>
+                        </a>
+
+                        <a class="store-btn" href="#" aria-label="Ver novidades do projeto">
+                            <span style="font-size: 1.8rem;">★</span>
+                            <span>
+                                <small>Acompanhe as</small>
+                                <strong>Novidades</strong>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Perguntas frequentes</h2>
+                    <p>Informações rápidas para quem quer conhecer melhor o jogo.</p>
+                </div>
+
+                <div class="faq">
+                    <details>
+                        <summary>AfroBarber é sobre o quê?</summary>
+                        <p>É um jogo mobile de simulação e gestão onde o jogador administra uma barbearia afro, atende clientes, realiza serviços, ganha dinheiro, evolui e aprende sobre cultura e identidade.</p>
+                    </details>
+
+                    <details>
+                        <summary>O jogo terá sistema de evolução?</summary>
+                        <p>Sim. O jogo foi pensado com dinheiro, XP, missões, loja, inventário e melhorias para que o jogador tenha progressão constante.</p>
+                    </details>
+
+                    <details>
+                        <summary>O jogo terá conteúdo educativo?</summary>
+                        <p>Sim. A proposta inclui informações sobre cortes, estética, cabelo afro, história e identidade cultural integradas à experiência de gameplay.</p>
+                    </details>
+
+                    <details>
+                        <summary>Em quais plataformas o jogo será lançado?</summary>
+                        <p>O foco inicial é mobile, especialmente Android via Google Play. Outros formatos podem ser adicionados futuramente.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-inner">
+            <div>© 2026 AfroBarber Game. Todos os direitos reservados.</div>
+            <div class="footer-links">
+                <a href="#inicio">Início</a>
+                <a href="#recursos">Funcionalidades</a>
+                <a href="#download">Download</a>
+                <a href="#">Política de Privacidade</a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

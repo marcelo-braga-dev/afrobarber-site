@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AfroBarber — Simulador de Barbearia</title>
+  <title>AfroBarber — Simulador de Barbearia Afro</title>
   <meta name="description" content="Gerencie sua barbearia, sirva clientes, evolua seu negócio e celebre a cultura afro. Baixe grátis no Google Play." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -11,55 +11,63 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --pk:   #FF6B35;
-      --pkd:  #E55020;
-      --pkl:  #FF9166;
-      --ac:   #7C3AED;
-      --acl:  #A78BFA;
-      --em:   #10B981;
-      --sky:  #0EA5E9;
-      --bg:   #F7F4F0;
-      --s0:   #FFFFFF;
-      --s1:   #F0EBE4;
-      --s2:   #E8E0D6;
-      --tx:   #1A1310;
-      --t2:   #3D3028;
-      --mt:   #7A6E65;
-      --bd:   rgba(26,19,16,.09);
-      --bd2:  rgba(255,107,53,.22);
-      --head: 'Bebas Neue', sans-serif;
-      --syne: 'Syne', sans-serif;
-      --body: 'Inter', sans-serif;
-      --r:    20px;
-      --sh1:  0 2px 8px rgba(26,19,16,.07);
-      --sh2:  0 8px 28px rgba(26,19,16,.11);
-      --sh3:  0 20px 56px rgba(26,19,16,.15);
+      /* Core palette */
+      --pk:    #FF6B35;
+      --pkd:   #E55020;
+      --pkl:   #FF9166;
+      --ac:    #7C3AED;
+      --acl:   #A78BFA;
+      --em:    #10B981;
+      --sky:   #0EA5E9;
+      /* Warm browns — barbershop identity */
+      --br1:   #3D2B1F;   /* deep espresso */
+      --br2:   #6B4226;   /* warm mahogany */
+      --br3:   #C17F50;   /* caramel */
+      --br4:   #E8C99A;   /* sand */
+      /* Surfaces */
+      --bg:    #F7F4F0;
+      --s0:    #FFFFFF;
+      --s1:    #F2EDE6;
+      --s2:    #E8E0D6;
+      /* Text */
+      --tx:    #1A1310;
+      --mt:    #7A6E65;
+      /* Borders */
+      --bd:    rgba(26,19,16,.09);
+      --bd2:   rgba(255,107,53,.22);
+      /* Fonts */
+      --head:  'Bebas Neue', sans-serif;
+      --syne:  'Syne', sans-serif;
+      --body:  'Inter', sans-serif;
+      /* Shadows */
+      --sh1:   0 2px 10px rgba(26,19,16,.07);
+      --sh2:   0 8px 32px rgba(26,19,16,.11);
+      --sh3:   0 24px 64px rgba(26,19,16,.16);
     }
     html { scroll-behavior: smooth; }
     body { font-family: var(--body); background: var(--bg); color: var(--tx); overflow-x: hidden; line-height: 1.6; }
     a { text-decoration: none; color: inherit; }
 
     /* ─── UTILS ─── */
-    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
 
     .tag {
       display: inline-flex; align-items: center; gap: 7px;
-      font-family: var(--body); font-size: .7rem; font-weight: 700;
-      letter-spacing: .13em; text-transform: uppercase;
-      padding: 6px 14px; border-radius: 100px;
+      font-size: .7rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 100px;
     }
-    .tag-pk  { background: rgba(255,107,53,.1);  color: var(--pk);  border: 1px solid rgba(255,107,53,.22); }
-    .tag-ac  { background: rgba(124,58,237,.1);  color: var(--ac);  border: 1px solid rgba(124,58,237,.22); }
-    .tag-em  { background: rgba(16,185,129,.1);  color: var(--em);  border: 1px solid rgba(16,185,129,.22); }
-    .tag-sky { background: rgba(14,165,233,.1);  color: var(--sky); border: 1px solid rgba(14,165,233,.22); }
-    .tag::before { content:''; width:5px; height:5px; border-radius:50%; background:currentColor; animation: blink 2s ease-in-out infinite; }
+    .tag::before { content:''; width:5px; height:5px; border-radius:50%; background:currentColor; flex-shrink:0; animation: blink 2s ease-in-out infinite; }
+    .tag-pk  { background: rgba(255,107,53,.1);  color: var(--pk);  border: 1px solid rgba(255,107,53,.2); }
+    .tag-ac  { background: rgba(124,58,237,.1);  color: var(--ac);  border: 1px solid rgba(124,58,237,.2); }
+    .tag-em  { background: rgba(16,185,129,.1);  color: var(--em);  border: 1px solid rgba(16,185,129,.2); }
+    .tag-br  { background: rgba(61,43,31,.08);   color: var(--br2); border: 1px solid rgba(61,43,31,.18); }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
 
     .btn-pk {
       display: inline-flex; align-items: center; gap: 10px;
       background: var(--pk); color: #fff;
       font-family: var(--syne); font-weight: 700; font-size: .92rem;
-      padding: 15px 32px; border-radius: 14px; border: none; cursor: pointer;
+      padding: 16px 34px; border-radius: 14px; border: none; cursor: pointer;
       box-shadow: 0 4px 24px rgba(255,107,53,.38);
       transition: transform .2s, box-shadow .2s, background .2s;
     }
@@ -69,13 +77,13 @@
       display: inline-flex; align-items: center; gap: 10px;
       background: var(--s0); color: var(--tx);
       font-family: var(--syne); font-weight: 700; font-size: .92rem;
-      padding: 14px 32px; border-radius: 14px;
+      padding: 15px 34px; border-radius: 14px;
       border: 1.5px solid var(--bd); cursor: pointer; box-shadow: var(--sh1);
       transition: border-color .2s, transform .2s, box-shadow .2s;
     }
     .btn-out:hover { border-color: var(--pk); transform: translateY(-2px); box-shadow: var(--sh2); }
 
-    .sh { text-align: center; margin-bottom: 60px; }
+    .sh { text-align: center; margin-bottom: 68px; }
     .sh h2 {
       font-family: var(--head); font-size: clamp(2.8rem, 5.5vw, 5rem);
       line-height: .92; color: var(--tx); margin: 14px 0 18px;
@@ -86,8 +94,24 @@
     [data-r="l"] { transform: translateX(-28px); }
     [data-r="r"] { transform: translateX(28px); }
     [data-r].in  { opacity: 1; transform: none; }
-    .d1{transition-delay:.07s} .d2{transition-delay:.14s} .d3{transition-delay:.21s}
-    .d4{transition-delay:.28s} .d5{transition-delay:.35s}
+    .d1{transition-delay:.07s}.d2{transition-delay:.14s}.d3{transition-delay:.21s}
+    .d4{transition-delay:.28s}.d5{transition-delay:.35s}
+
+    /* ─── AFRICAN KENTE PATTERN ─── */
+    .kente {
+      height: 8px; width: 100%;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--pk)    0px,  var(--pk)    14px,
+        var(--br1)   14px, var(--br1)   20px,
+        var(--ac)    20px, var(--ac)    34px,
+        var(--br1)   34px, var(--br1)   40px,
+        var(--em)    40px, var(--em)    54px,
+        var(--br1)   54px, var(--br1)   60px,
+        var(--sky)   60px, var(--sky)   74px,
+        var(--br1)   74px, var(--br1)   80px
+      );
+    }
 
     /* ─── NAV ─── */
     #nav {
@@ -100,26 +124,24 @@
       -webkit-backdrop-filter: blur(20px) saturate(1.8);
       box-shadow: 0 1px 0 var(--bd), var(--sh1);
     }
-    .nav-row {
-      display: flex; align-items: center; justify-content: space-between;
-      height: 68px; gap: 20px;
-    }
-    .nav-brand { display: flex; align-items: center; gap: 10px; }
+    .nav-row { display: flex; align-items: center; justify-content: space-between; height: 70px; gap: 20px; }
+    .nav-brand { display: flex; align-items: center; gap: 11px; }
     .nav-logo {
-      width: 36px; height: 36px; border-radius: 9px;
-      background: linear-gradient(135deg, var(--pk) 0%, var(--ac) 100%);
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--br1);
       display: flex; align-items: center; justify-content: center;
-      font-family: var(--syne); font-size: .8rem; font-weight: 800; color: #fff;
-      box-shadow: 0 3px 12px rgba(255,107,53,.32);
+      position: relative; overflow: hidden;
     }
-    .nav-name { font-family: var(--syne); font-weight: 800; font-size: .95rem; letter-spacing: .06em; }
+    /* scissors icon inside logo */
+    .nav-logo svg { width: 22px; height: 22px; }
+    .nav-name { font-family: var(--syne); font-weight: 800; font-size: .95rem; letter-spacing: .07em; }
     .nav-links { display: flex; align-items: center; gap: 34px; list-style: none; }
-    .nav-links a { font-size: .855rem; font-weight: 500; color: var(--mt); transition: color .2s; }
+    .nav-links a { font-size: .86rem; font-weight: 500; color: var(--mt); transition: color .2s; }
     .nav-links a:hover { color: var(--tx); }
     .burger { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; padding: 4px; }
     .burger span { display: block; width: 22px; height: 2px; background: var(--tx); border-radius: 2px; transition: .3s; }
     .mob-nav {
-      display: none; position: fixed; inset: 68px 0 0; z-index: 199;
+      display: none; position: fixed; inset: 70px 0 0; z-index: 199;
       background: rgba(247,244,240,.97); backdrop-filter: blur(24px);
       flex-direction: column; align-items: center; justify-content: center; gap: 36px;
     }
@@ -128,172 +150,224 @@
 
     /* ─── HERO ─── */
     #hero {
-      min-height: 100svh;
-      padding: 100px 0 0;
-      position: relative; overflow: hidden;
-      background: linear-gradient(155deg, #FFF8F4 0%, var(--bg) 45%, #EEE6FB 100%);
-      display: flex; flex-direction: column;
+      min-height: 100svh; display: flex; flex-direction: column;
+      padding-top: 70px; position: relative; overflow: hidden;
+      background: var(--br1);
     }
-    /* background blobs */
-    .h-blob {
-      position: absolute; border-radius: 50%; pointer-events: none;
+    /* geometric fade background */
+    .hero-geo {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 70% at 70% 40%, rgba(255,107,53,.18) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 60% at 10% 80%, rgba(124,58,237,.14) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 50% 10%, rgba(193,127,80,.12) 0%, transparent 55%);
     }
-    .h-blob-1 {
-      width: 700px; height: 700px;
-      background: radial-gradient(circle, rgba(255,107,53,.13) 0%, transparent 65%);
-      top: -200px; right: -180px;
+    /* diagonal lines — barbershop pole vibe */
+    .hero-lines {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+      opacity: .06;
     }
-    .h-blob-2 {
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(124,58,237,.1) 0%, transparent 65%);
-      bottom: 100px; left: -120px;
+    .hero-lines::before {
+      content: '';
+      position: absolute; inset: -100%;
+      background: repeating-linear-gradient(
+        -55deg,
+        rgba(255,255,255,.9) 0px, rgba(255,255,255,.9) 1px,
+        transparent 1px, transparent 48px
+      );
     }
-    .h-blob-3 {
-      width: 300px; height: 300px;
-      background: radial-gradient(circle, rgba(16,185,129,.08) 0%, transparent 65%);
-      bottom: 200px; right: 10%;
+    /* diamond pattern */
+    .hero-diamond {
+      position: absolute; right: 0; top: 0; bottom: 0; width: 45%;
+      pointer-events: none; z-index: 0; opacity: .04;
+      background-image:
+        linear-gradient(45deg, rgba(255,255,255,1) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255,255,255,1) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(255,255,255,1) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(255,255,255,1) 75%);
+      background-size: 30px 30px;
+      background-position: 0 0, 0 15px, 15px -15px, -15px 0px;
+      mask-image: linear-gradient(90deg, transparent, black);
+      -webkit-mask-image: linear-gradient(90deg, transparent, black);
     }
-    /* dot grid */
-    .h-dots {
-      position: absolute; inset: 0; pointer-events: none;
-      background-image: radial-gradient(circle, rgba(26,19,16,.07) 1px, transparent 1px);
-      background-size: 36px 36px;
-      mask-image: radial-gradient(ellipse 90% 90% at 50% 40%, black 10%, transparent 70%);
-      -webkit-mask-image: radial-gradient(ellipse 90% 90% at 50% 40%, black 10%, transparent 70%);
+    /* big decorative text */
+    .hero-deco-text {
+      position: absolute; right: -2vw; bottom: 80px;
+      font-family: var(--head); font-size: clamp(10rem, 20vw, 22rem);
+      line-height: .85; letter-spacing: -.02em;
+      color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.06);
+      pointer-events: none; user-select: none; z-index: 0;
     }
-    /* top content */
-    .hero-top {
+
+    .hero-inner {
       position: relative; z-index: 1; flex: 1;
-      display: flex; align-items: center;
+      display: grid; grid-template-columns: 1fr 400px; gap: 64px;
+      align-items: center; padding: 80px 0 64px;
     }
-    .hero-grid {
-      display: grid; grid-template-columns: 1fr 420px; gap: 56px; align-items: center;
-    }
-    /* left copy */
-    .hero-label { margin-bottom: 22px; }
+    /* left */
+    .hero-label { margin-bottom: 24px; }
     .hero-h1 {
       font-family: var(--head);
-      font-size: clamp(3.8rem, 8vw, 8rem);
-      line-height: .875; letter-spacing: .005em;
-      color: var(--tx); margin-bottom: 26px;
+      font-size: clamp(4.2rem, 9vw, 9.5rem);
+      line-height: .85; letter-spacing: .005em;
+      color: #fff; margin-bottom: 28px;
     }
     .hero-h1 .c-pk  { color: var(--pk); }
-    .hero-h1 .c-ac  { color: var(--ac); }
+    .hero-h1 .c-br3 { color: var(--br3); }
     .hero-body {
-      font-size: 1.05rem; color: var(--mt);
-      max-width: 420px; line-height: 1.8; margin-bottom: 36px;
+      font-size: 1.05rem; color: rgba(255,255,255,.65);
+      max-width: 440px; line-height: 1.8; margin-bottom: 36px;
     }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 44px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 52px; }
+    .btn-pk-dark {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--pk); color: #fff;
+      font-family: var(--syne); font-weight: 700; font-size: .92rem;
+      padding: 16px 34px; border-radius: 14px; border: none; cursor: pointer;
+      box-shadow: 0 4px 28px rgba(255,107,53,.45);
+      transition: transform .2s, box-shadow .2s, background .2s;
+    }
+    .btn-pk-dark:hover { transform: translateY(-2px); box-shadow: 0 10px 44px rgba(255,107,53,.55); background: var(--pkd); }
+    .btn-wh-out {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: transparent; color: rgba(255,255,255,.85);
+      font-family: var(--syne); font-weight: 700; font-size: .92rem;
+      padding: 15px 34px; border-radius: 14px;
+      border: 1.5px solid rgba(255,255,255,.2); cursor: pointer;
+      transition: border-color .2s, color .2s, transform .2s;
+    }
+    .btn-wh-out:hover { border-color: var(--pk); color: var(--pk); transform: translateY(-2px); }
+
+    /* hero pills */
     .hero-pills { display: flex; flex-wrap: wrap; gap: 8px; }
-    .pill {
-      font-size: .77rem; font-weight: 500; color: var(--mt);
-      background: var(--s0); border: 1px solid var(--bd);
-      border-radius: 100px; padding: 6px 14px; box-shadow: var(--sh1);
+    .h-pill {
+      font-size: .76rem; font-weight: 500;
+      color: rgba(255,255,255,.55);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 100px; padding: 6px 14px;
       transition: color .2s, border-color .2s;
     }
-    .pill:hover { color: var(--pk); border-color: rgba(255,107,53,.3); }
+    .h-pill:hover { color: var(--pk); border-color: rgba(255,107,53,.4); }
 
     /* right — app card */
-    .app-card {
-      background: var(--s0);
-      border: 1.5px solid var(--bd);
-      border-radius: 28px;
-      overflow: hidden;
-      box-shadow: var(--sh3);
-      position: relative;
+    .hero-card {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 28px; overflow: hidden;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 32px 80px rgba(0,0,0,.4);
     }
-    .app-card-top {
-      padding: 36px 32px 28px;
-      background: linear-gradient(145deg, #FFF4EE 0%, #F5EEF9 100%);
-      border-bottom: 1px solid var(--bd);
-      display: flex; flex-direction: column; align-items: flex-start; gap: 16px;
+    .hc-top {
+      padding: 32px 28px 24px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
     }
-    .app-card-logo {
-      width: 64px; height: 64px; border-radius: 16px;
-      background: linear-gradient(135deg, var(--pk) 0%, var(--ac) 100%);
+    .hc-logo {
+      width: 60px; height: 60px; border-radius: 15px;
+      background: var(--pk);
       display: flex; align-items: center; justify-content: center;
-      font-family: var(--syne); font-size: 1.3rem; font-weight: 800; color: #fff;
-      box-shadow: 0 6px 20px rgba(255,107,53,.35);
+      margin-bottom: 16px;
+      box-shadow: 0 6px 20px rgba(255,107,53,.45);
     }
-    .app-card-name {
-      font-family: var(--syne); font-weight: 800; font-size: 1.35rem;
-      letter-spacing: .04em; color: var(--tx);
+    .hc-logo svg { width: 30px; height: 30px; }
+    .hc-name { font-family: var(--syne); font-weight: 800; font-size: 1.2rem; color: #fff; margin-bottom: 4px; letter-spacing: .04em; }
+    .hc-sub  { font-size: .82rem; color: rgba(255,255,255,.5); margin-bottom: 16px; }
+    .hc-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(16,185,129,.15); border: 1px solid rgba(16,185,129,.3);
+      color: var(--em); font-size: .72rem; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 100px;
     }
-    .app-card-desc { font-size: .88rem; color: var(--mt); line-height: 1.6; }
-    .app-rating {
-      display: flex; align-items: center; gap: 10px;
+    .hc-badge::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--em); }
+    .hc-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-top: 1px solid rgba(255,255,255,.08);
     }
-    .stars { display: flex; gap: 3px; }
-    .star {
-      width: 14px; height: 14px;
-      background: var(--pk); border-radius: 2px;
-      clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+    .hcs {
+      padding: 20px 24px; border-right: 1px solid rgba(255,255,255,.06);
+      border-bottom: 1px solid rgba(255,255,255,.06);
     }
-    .star.half { background: linear-gradient(90deg, var(--pk) 60%, var(--s2) 60%); }
-    .rating-text { font-size: .82rem; color: var(--mt); font-weight: 500; }
-    /* mini stats inside card */
-    .app-mini-stats {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
-      background: var(--bd); border-top: 1px solid var(--bd);
+    .hcs:nth-child(even) { border-right: none; }
+    .hcs:nth-child(3), .hcs:nth-child(4) { border-bottom: none; }
+    .hcs-n { font-family: var(--head); font-size: 2rem; line-height: 1; margin-bottom: 2px; }
+    .hcs:nth-child(1) .hcs-n { color: var(--pk); }
+    .hcs:nth-child(2) .hcs-n { color: var(--acl); }
+    .hcs:nth-child(3) .hcs-n { color: var(--em); }
+    .hcs:nth-child(4) .hcs-n { color: var(--sky); }
+    .hcs-l { font-size: .72rem; color: rgba(255,255,255,.45); font-weight: 500; }
+    .hc-btn {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 18px 24px; border-top: 1px solid rgba(255,255,255,.08);
     }
-    .ams {
-      background: var(--s0); padding: 20px 24px;
-      display: flex; flex-direction: column; gap: 4px;
-    }
-    .ams-n {
-      font-family: var(--head); font-size: 2.2rem; line-height: 1;
-    }
-    .ams:nth-child(1) .ams-n { color: var(--pk); }
-    .ams:nth-child(2) .ams-n { color: var(--ac); }
-    .ams:nth-child(3) .ams-n { color: var(--em); }
-    .ams:nth-child(4) .ams-n { color: var(--sky); }
-    .ams-l { font-size: .75rem; color: var(--mt); font-weight: 500; }
-    /* download strip inside card */
-    .app-card-dl {
-      padding: 20px 24px;
-      display: flex; align-items: center; justify-content: space-between; gap: 16px;
-      border-top: 1px solid var(--bd);
-    }
-    .app-card-dl span { font-size: .82rem; color: var(--mt); font-weight: 500; }
-    .btn-dl-sm {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--tx); color: #fff;
-      font-family: var(--syne); font-size: .8rem; font-weight: 700;
-      padding: 10px 20px; border-radius: 10px;
+    .hc-btn span { font-size: .8rem; color: rgba(255,255,255,.45); font-weight: 500; }
+    .btn-sm-dl {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--pk); color: #fff;
+      font-family: var(--syne); font-size: .78rem; font-weight: 700;
+      padding: 9px 18px; border-radius: 9px;
       transition: background .2s, transform .2s;
     }
-    .btn-dl-sm:hover { background: var(--pk); transform: translateY(-1px); }
-    .btn-dl-sm svg { flex-shrink: 0; }
+    .btn-sm-dl:hover { background: var(--pkd); transform: translateY(-1px); }
 
-    /* bottom scroll bar */
-    .hero-scroll-strip {
+    /* scroll strip */
+    .hero-strip {
       position: relative; z-index: 1;
-      border-top: 1px solid var(--bd);
-      background: var(--s0);
-      padding: 16px 0;
-      margin-top: 72px;
-      overflow: hidden;
+      overflow: hidden; border-top: 1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.25); backdrop-filter: blur(8px);
+      padding: 15px 0;
     }
-    .scroll-track {
+    .strip-track {
       display: flex; width: max-content;
-      animation: scroll-l 26s linear infinite;
+      animation: strip-scroll 28s linear infinite;
     }
-    .scroll-track:hover { animation-play-state: paused; }
-    @keyframes scroll-l { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-    .scroll-item {
-      display: flex; align-items: center; gap: 14px;
-      padding: 0 32px; white-space: nowrap;
-      font-family: var(--syne); font-size: .76rem; font-weight: 700;
-      letter-spacing: .12em; text-transform: uppercase; color: var(--mt);
+    .strip-track:hover { animation-play-state: paused; }
+    @keyframes strip-scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .strip-item {
+      display: flex; align-items: center; gap: 14px; padding: 0 28px;
+      font-family: var(--syne); font-size: .74rem; font-weight: 700;
+      letter-spacing: .13em; text-transform: uppercase;
+      white-space: nowrap; color: rgba(255,255,255,.45);
     }
-    .scroll-sep { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
+    .strip-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ─── MANIFESTO STRIP ─── */
+    .manifesto-strip {
+      background: var(--br2);
+      padding: 56px 0;
+      overflow: hidden; position: relative;
+    }
+    .manifesto-strip::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        rgba(255,255,255,.04) 0px, rgba(255,255,255,.04) 1px,
+        transparent 1px, transparent 40px
+      );
+    }
+    .manifesto-inner {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0;
+    }
+    .mf-col {
+      padding: 20px 36px; border-right: 1px solid rgba(255,255,255,.1);
+      display: flex; flex-direction: column; gap: 6px;
+      transition: background .2s;
+    }
+    .mf-col:last-child { border-right: none; }
+    .mf-col:hover { background: rgba(255,255,255,.05); }
+    .mf-n {
+      font-family: var(--head); font-size: 3.6rem; line-height: 1;
+    }
+    .mf-col:nth-child(1) .mf-n { color: var(--pk); }
+    .mf-col:nth-child(2) .mf-n { color: var(--acl); }
+    .mf-col:nth-child(3) .mf-n { color: var(--em); }
+    .mf-col:nth-child(4) .mf-n { color: var(--sky); }
+    .mf-label { font-family: var(--syne); font-size: .78rem; font-weight: 700; color: rgba(255,255,255,.5); letter-spacing: .08em; text-transform: uppercase; }
 
     /* ─── FEATURES ─── */
-    #features { padding: 110px 0; }
-    .bento {
-      display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px;
-    }
-    /* spans */
+    #features { padding: 120px 0; }
+    .bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px; }
     .bc-1,.bc-2,.bc-3 { grid-column: span 4; }
     .bc-4 { grid-column: span 5; }
     .bc-5 { grid-column: span 7; }
@@ -303,99 +377,88 @@
 
     .bc {
       background: var(--s0); border: 1.5px solid var(--bd);
-      border-radius: var(--r); padding: 30px;
-      position: relative; overflow: hidden;
-      box-shadow: var(--sh1);
+      border-radius: 22px; padding: 40px;
+      position: relative; overflow: hidden; box-shadow: var(--sh1);
       transition: border-color .25s, transform .25s, box-shadow .25s;
     }
-    .bc:hover { border-color: rgba(255,107,53,.28); transform: translateY(-4px); box-shadow: var(--sh3); }
-    /* spotlight */
+    .bc:hover { border-color: rgba(255,107,53,.28); transform: translateY(-5px); box-shadow: var(--sh3); }
     .bc::after {
       content: ''; position: absolute; inset: 0; border-radius: inherit; opacity: 0; pointer-events: none;
       background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,107,53,.06) 0%, transparent 55%);
       transition: opacity .3s;
     }
     .bc:hover::after { opacity: 1; }
-
-    /* color bar on left */
-    .bc::before {
-      content: ''; position: absolute; left: 0; top: 20%; bottom: 20%; width: 3px; border-radius: 0 3px 3px 0;
-      background: var(--pk); opacity: 0; transition: opacity .3s;
+    /* left color accent */
+    .bc-bar {
+      position: absolute; left: 0; top: 24px; bottom: 24px; width: 4px; border-radius: 0 4px 4px 0;
+      opacity: 0; transition: opacity .3s;
     }
-    .bc:hover::before { opacity: 1; }
-    .bc-2::before, .bc-6::before { background: var(--ac); }
-    .bc-3::before, .bc-7::before { background: var(--em); }
-    .bc-4::before { background: var(--sky); }
+    .bc:hover .bc-bar { opacity: 1; }
+    .bc-1 .bc-bar,.bc-5 .bc-bar { background: var(--pk); }
+    .bc-2 .bc-bar,.bc-6 .bc-bar { background: var(--ac); }
+    .bc-3 .bc-bar,.bc-7 .bc-bar { background: var(--em); }
+    .bc-4 .bc-bar { background: var(--sky); }
 
-    /* card icon box */
+    /* icon mark */
     .bc-mark {
-      width: 44px; height: 44px; border-radius: 12px; margin-bottom: 20px;
+      width: 48px; height: 48px; border-radius: 13px; margin-bottom: 22px;
       display: flex; align-items: center; justify-content: center;
     }
-    .bc-1 .bc-mark { background: rgba(255,107,53,.1); }
-    .bc-2 .bc-mark { background: rgba(124,58,237,.1); }
-    .bc-3 .bc-mark { background: rgba(16,185,129,.1); }
+    .bc-1 .bc-mark,.bc-5 .bc-mark { background: rgba(255,107,53,.1); }
+    .bc-2 .bc-mark,.bc-6 .bc-mark { background: rgba(124,58,237,.1); }
+    .bc-3 .bc-mark,.bc-7 .bc-mark { background: rgba(16,185,129,.1); }
     .bc-4 .bc-mark { background: rgba(14,165,233,.1); }
-    .bc-5 .bc-mark { background: rgba(255,107,53,.1); }
-    .bc-6 .bc-mark { background: rgba(124,58,237,.1); }
-    .bc-7 .bc-mark { background: rgba(16,185,129,.1); }
-
-    /* SVG icon size */
     .bc-mark svg { width: 22px; height: 22px; }
-
+    .bc-title {
+      font-family: var(--syne); font-weight: 700; font-size: 1.05rem;
+      color: var(--tx); margin-bottom: 10px;
+    }
+    .bc-text { color: var(--mt); font-size: .88rem; line-height: 1.68; }
     .bc-idx {
-      position: absolute; right: 22px; bottom: 14px;
-      font-family: var(--head); font-size: 5rem; line-height: 1;
-      color: transparent; -webkit-text-stroke: 1.5px rgba(26,19,16,.05);
+      position: absolute; right: 26px; bottom: 16px;
+      font-family: var(--head); font-size: 5.5rem; line-height: 1;
+      color: transparent; -webkit-text-stroke: 1.5px rgba(26,19,16,.04);
       pointer-events: none;
     }
-    .bc-title {
-      font-family: var(--syne); font-weight: 700; font-size: 1.02rem;
-      color: var(--tx); margin-bottom: 9px;
+    /* wide card */
+    .bc-wide {
+      background: linear-gradient(135deg, var(--br1) 0%, #2D1F17 100%);
+      border-color: rgba(255,255,255,.06);
     }
-    .bc-text { color: var(--mt); font-size: .87rem; line-height: 1.65; }
-
-    /* wide feature card */
-    .bc-wide-inner {
-      display: flex; align-items: center; gap: 32px;
-    }
-    .bc-wide-bar {
+    .bc-wide:hover { border-color: rgba(255,107,53,.35); }
+    .bc-wide-inner { display: flex; align-items: center; gap: 32px; }
+    .bc-wide-bar-v {
       flex-shrink: 0; width: 4px; height: 80px; border-radius: 4px;
       background: linear-gradient(180deg, var(--pk) 0%, var(--ac) 100%);
     }
-    .bc-wide-body { flex: 1; }
-    .bc-wide-body .bc-title { font-size: 1.2rem; }
+    .bc-wide .bc-title { font-size: 1.2rem; color: #fff; }
+    .bc-wide .bc-text  { color: rgba(255,255,255,.5); max-width: 520px; }
     .bc-wide-stat {
-      flex-shrink: 0; text-align: right;
+      margin-left: auto; flex-shrink: 0; text-align: right;
       font-family: var(--head); font-size: 4rem; line-height: 1; color: var(--pk);
     }
-    .bc-wide-stat small { display: block; font-family: var(--body); font-size: .72rem; color: var(--mt); margin-top: 4px; letter-spacing: .04em; }
+    .bc-wide-stat small { display: block; font-family: var(--body); font-size: .72rem; color: rgba(255,255,255,.4); margin-top: 4px; }
 
     /* ─── HOW TO PLAY ─── */
     #how {
-      padding: 110px 0;
-      background: linear-gradient(160deg, #EEE6FB 0%, #F7F4F0 40%, #E6F5F1 100%);
+      padding: 120px 0; position: relative; overflow: hidden;
+      background: linear-gradient(155deg, #EEE6FB 0%, #F7F4F0 45%, #E6F5F1 100%);
     }
-    .steps {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
-      position: relative; z-index: 1;
-    }
-    /* connector line */
+    .steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 22px; position: relative; z-index: 1; }
     .steps::before {
       content: '';
-      position: absolute; top: 38px; left: calc(12.5% + 36px); right: calc(12.5% + 36px);
-      height: 2px; border-radius: 1px;
+      position: absolute; top: 38px; left: calc(12.5% + 38px); right: calc(12.5% + 38px);
+      height: 2px;
       background: repeating-linear-gradient(90deg, var(--pk) 0, var(--pk) 8px, transparent 8px, transparent 20px);
       opacity: .25;
     }
     .step { display: flex; flex-direction: column; align-items: center; text-align: center; }
     .step-num {
       width: 76px; height: 76px; border-radius: 50%;
-      border: 2px solid var(--bd); background: var(--s0);
+      background: var(--s0); border: 2px solid var(--bd);
       display: flex; align-items: center; justify-content: center;
       font-family: var(--head); font-size: 1.5rem;
-      position: relative; z-index: 1; box-shadow: var(--sh1);
-      margin-bottom: 20px;
+      z-index: 1; box-shadow: var(--sh1); margin-bottom: 20px;
       transition: transform .3s, box-shadow .3s, border-color .3s;
     }
     .step:nth-child(1) .step-num { color: var(--pk); }
@@ -403,120 +466,98 @@
     .step:nth-child(3) .step-num { color: var(--em); }
     .step:nth-child(4) .step-num { color: var(--sky); }
     .step:hover .step-num { transform: scale(1.08); box-shadow: var(--sh2); }
-    .step:nth-child(1):hover .step-num { border-color: var(--pk); box-shadow: 0 0 0 6px rgba(255,107,53,.1), var(--sh2); }
-    .step:nth-child(2):hover .step-num { border-color: var(--ac); box-shadow: 0 0 0 6px rgba(124,58,237,.1), var(--sh2); }
-    .step:nth-child(3):hover .step-num { border-color: var(--em); box-shadow: 0 0 0 6px rgba(16,185,129,.1), var(--sh2); }
+    .step:nth-child(1):hover .step-num { border-color: var(--pk);  box-shadow: 0 0 0 6px rgba(255,107,53,.1), var(--sh2); }
+    .step:nth-child(2):hover .step-num { border-color: var(--ac);  box-shadow: 0 0 0 6px rgba(124,58,237,.1), var(--sh2); }
+    .step:nth-child(3):hover .step-num { border-color: var(--em);  box-shadow: 0 0 0 6px rgba(16,185,129,.1), var(--sh2); }
     .step:nth-child(4):hover .step-num { border-color: var(--sky); box-shadow: 0 0 0 6px rgba(14,165,233,.1), var(--sh2); }
-
     .step-body {
       background: var(--s0); border: 1.5px solid var(--bd);
-      border-radius: 18px; padding: 24px 20px;
-      box-shadow: var(--sh1); width: 100%;
+      border-radius: 20px; padding: 28px 24px; box-shadow: var(--sh1); width: 100%;
       transition: box-shadow .3s, transform .3s;
     }
-    .step:hover .step-body { box-shadow: var(--sh2); transform: translateY(-3px); }
+    .step:hover .step-body { box-shadow: var(--sh2); transform: translateY(-4px); }
     .step-title { font-family: var(--syne); font-weight: 700; font-size: .98rem; color: var(--tx); margin-bottom: 8px; }
-    .step-text  { font-size: .84rem; color: var(--mt); line-height: 1.6; }
-
-    /* ─── STATS ─── */
-    #stats {
-      background: var(--s0); border-top: 1px solid var(--bd); border-bottom: 1px solid var(--bd);
-    }
-    .stats-row { display: grid; grid-template-columns: repeat(4,1fr); }
-    .stat {
-      padding: 60px 24px; text-align: center;
-      border-right: 1px solid var(--bd);
-      transition: background .2s;
-    }
-    .stat:last-child { border-right: none; }
-    .stat:hover { background: var(--bg); }
-    .stat-n {
-      font-family: var(--head); font-size: clamp(2.8rem, 4.5vw, 4.2rem);
-      line-height: 1; margin-bottom: 8px;
-    }
-    .stat:nth-child(1) .stat-n { color: var(--pk); }
-    .stat:nth-child(2) .stat-n { color: var(--ac); }
-    .stat:nth-child(3) .stat-n { color: var(--em); }
-    .stat:nth-child(4) .stat-n { color: var(--sky); }
-    .stat-l { font-size: .83rem; color: var(--mt); font-weight: 500; }
+    .step-text  { font-size: .84rem; color: var(--mt); line-height: 1.62; }
 
     /* ─── CULTURE ─── */
     #culture {
-      padding: 120px 0;
-      background: var(--bg);
-      position: relative; overflow: hidden;
+      padding: 0; position: relative; overflow: hidden;
+      background: var(--br1);
     }
+    /* top kente strip */
+    #culture > .kente { margin-bottom: 0; }
+    .culture-body { padding: 100px 0 0; }
     .culture-deco {
-      position: absolute; right: -4vw; top: 50%; transform: translateY(-50%);
-      font-family: var(--head); font-size: clamp(10rem, 20vw, 20rem);
+      position: absolute; right: -4vw; top: 60%; transform: translateY(-50%);
+      font-family: var(--head); font-size: clamp(8rem, 18vw, 20rem);
       writing-mode: vertical-lr; line-height: 1;
-      color: transparent; -webkit-text-stroke: 2px rgba(124,58,237,.05);
+      color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.04);
       pointer-events: none; user-select: none;
     }
     .culture-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
       position: relative; z-index: 1;
     }
+    .culture-left .tag { margin-bottom: 24px; }
     .culture-left h2 {
-      font-family: var(--head); font-size: clamp(3rem, 5vw, 5rem);
-      line-height: .9; color: var(--tx); margin: 14px 0 28px;
+      font-family: var(--head); font-size: clamp(3rem, 5.5vw, 5.2rem);
+      line-height: .9; color: #fff; margin-bottom: 28px;
     }
-    .culture-left h2 em { font-style: normal; color: var(--ac); display: block; }
-    .culture-left p { color: var(--mt); line-height: 1.85; margin-bottom: 16px; font-size: .98rem; }
-    .culture-left .btns { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
-    /* values list */
+    .culture-left h2 em { font-style: normal; color: var(--pk); display: block; }
+    .culture-left p { color: rgba(255,255,255,.6); line-height: 1.85; margin-bottom: 16px; font-size: .98rem; }
+    .culture-left .btns { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 36px; }
+    /* values */
     .vals { display: flex; flex-direction: column; gap: 8px; margin-top: 28px; }
     .val {
       display: flex; align-items: center; gap: 14px;
-      background: var(--s0); border: 1.5px solid var(--bd);
-      border-radius: 14px; padding: 15px 20px; box-shadow: var(--sh1);
-      transition: border-color .2s, transform .2s, box-shadow .2s;
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.09);
+      border-radius: 14px; padding: 16px 20px;
+      transition: background .2s, border-color .2s, transform .2s;
     }
-    .val:nth-child(1):hover { border-color: rgba(255,107,53,.35); transform: translateX(5px); box-shadow: var(--sh2); }
-    .val:nth-child(2):hover { border-color: rgba(124,58,237,.35); transform: translateX(5px); box-shadow: var(--sh2); }
-    .val:nth-child(3):hover { border-color: rgba(16,185,129,.35); transform: translateX(5px); box-shadow: var(--sh2); }
-    .val:nth-child(4):hover { border-color: rgba(14,165,233,.35); transform: translateX(5px); box-shadow: var(--sh2); }
+    .val:nth-child(1):hover { border-color: rgba(255,107,53,.4);  background: rgba(255,107,53,.08);  transform: translateX(5px); }
+    .val:nth-child(2):hover { border-color: rgba(167,139,250,.4); background: rgba(167,139,250,.08); transform: translateX(5px); }
+    .val:nth-child(3):hover { border-color: rgba(16,185,129,.4);  background: rgba(16,185,129,.08);  transform: translateX(5px); }
+    .val:nth-child(4):hover { border-color: rgba(14,165,233,.4);  background: rgba(14,165,233,.08);  transform: translateX(5px); }
     .val-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
     .val:nth-child(1) .val-dot { background: var(--pk); }
-    .val:nth-child(2) .val-dot { background: var(--ac); }
+    .val:nth-child(2) .val-dot { background: var(--acl); }
     .val:nth-child(3) .val-dot { background: var(--em); }
     .val:nth-child(4) .val-dot { background: var(--sky); }
-    .val-title { font-family: var(--syne); font-weight: 700; font-size: .92rem; color: var(--tx); }
-    .val-desc  { font-size: .8rem; color: var(--mt); margin-top: 1px; }
+    .val-title { font-family: var(--syne); font-weight: 700; font-size: .92rem; color: #fff; }
+    .val-desc  { font-size: .8rem; color: rgba(255,255,255,.45); margin-top: 1px; }
     /* culture right cards */
-    .culture-cards { display: flex; flex-direction: column; gap: 12px; }
+    .culture-cards { display: flex; flex-direction: column; gap: 14px; }
     .cc {
-      background: var(--s0); border: 1.5px solid var(--bd);
-      border-radius: 18px; padding: 24px 26px;
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.09);
+      border-radius: 18px; padding: 28px 30px;
       display: flex; gap: 18px; align-items: flex-start;
-      box-shadow: var(--sh1);
-      transition: border-color .25s, transform .25s, box-shadow .25s;
+      transition: background .25s, border-color .25s, transform .25s;
     }
-    .cc:nth-child(1):hover { border-color: rgba(255,107,53,.3); transform: translateY(-3px); box-shadow: var(--sh2); }
-    .cc:nth-child(2):hover { border-color: rgba(124,58,237,.3); transform: translateY(-3px); box-shadow: var(--sh2); }
-    .cc:nth-child(3):hover { border-color: rgba(16,185,129,.3); transform: translateY(-3px); box-shadow: var(--sh2); }
-    .cc:nth-child(4):hover { border-color: rgba(14,165,233,.3); transform: translateY(-3px); box-shadow: var(--sh2); }
+    .cc:nth-child(1):hover { border-color: rgba(255,107,53,.35);  background: rgba(255,107,53,.07);  transform: translateY(-3px); }
+    .cc:nth-child(2):hover { border-color: rgba(124,58,237,.35);  background: rgba(124,58,237,.07);  transform: translateY(-3px); }
+    .cc:nth-child(3):hover { border-color: rgba(16,185,129,.35);  background: rgba(16,185,129,.07);  transform: translateY(-3px); }
+    .cc:nth-child(4):hover { border-color: rgba(14,165,233,.35);  background: rgba(14,165,233,.07);  transform: translateY(-3px); }
     .cc-icon {
       width: 44px; height: 44px; border-radius: 11px; flex-shrink: 0;
       display: flex; align-items: center; justify-content: center;
     }
-    .cc:nth-child(1) .cc-icon { background: rgba(255,107,53,.1); }
-    .cc:nth-child(2) .cc-icon { background: rgba(124,58,237,.1); }
-    .cc:nth-child(3) .cc-icon { background: rgba(16,185,129,.1); }
-    .cc:nth-child(4) .cc-icon { background: rgba(14,165,233,.1); }
+    .cc:nth-child(1) .cc-icon { background: rgba(255,107,53,.15); }
+    .cc:nth-child(2) .cc-icon { background: rgba(124,58,237,.15); }
+    .cc:nth-child(3) .cc-icon { background: rgba(16,185,129,.15); }
+    .cc:nth-child(4) .cc-icon { background: rgba(14,165,233,.15); }
     .cc-icon svg { width: 20px; height: 20px; }
-    .cc-title { font-family: var(--syne); font-weight: 700; font-size: .95rem; color: var(--tx); margin-bottom: 5px; }
-    .cc-text  { font-size: .84rem; color: var(--mt); line-height: 1.6; }
+    .cc-title { font-family: var(--syne); font-weight: 700; font-size: .95rem; color: #fff; margin-bottom: 5px; }
+    .cc-text  { font-size: .84rem; color: rgba(255,255,255,.5); line-height: 1.62; }
+    /* bottom kente strip */
+    .culture-kente-btm { margin-top: 80px; }
 
     /* ─── DOWNLOAD CTA ─── */
-    #download {
-      padding: 120px 0; position: relative; overflow: hidden;
-    }
+    #download { padding: 120px 0; position: relative; overflow: hidden; }
     .dl-bg {
       position: absolute; inset: 0;
-      background: linear-gradient(135deg, #FFF2EA 0%, #F2EAFE 50%, #E6F9F4 100%);
+      background: linear-gradient(135deg, #FFF2EA 0%, #F2EAFE 55%, #E6F9F4 100%);
     }
-    .dl-grid {
+    .dl-grid-lines {
       position: absolute; inset: 0; pointer-events: none;
       background-image:
         linear-gradient(rgba(26,19,16,.05) 1px, transparent 1px),
@@ -525,50 +566,53 @@
       mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 15%, transparent 68%);
       -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 15%, transparent 68%);
     }
+    /* scissors deco */
+    .dl-scissors {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%) rotate(-15deg);
+      opacity: .035; pointer-events: none;
+    }
+    .dl-scissors svg { width: 340px; height: 340px; }
     .dl-inner { position: relative; z-index: 1; text-align: center; }
     .dl-inner .tag { margin-bottom: 28px; }
     .dl-h {
       font-family: var(--head); font-size: clamp(3.6rem, 8.5vw, 8.5rem);
-      line-height: .88; color: var(--tx); margin-bottom: 22px; letter-spacing: .005em;
+      line-height: .88; color: var(--tx); margin-bottom: 22px;
     }
     .dl-h .c-pk { color: var(--pk); }
     .dl-h .c-ac { color: var(--ac); }
     .dl-p { color: var(--mt); font-size: 1.05rem; max-width: 500px; margin: 0 auto 40px; line-height: 1.8; }
     .dl-btns { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 44px; }
     .store-btn {
-      display: inline-flex; align-items: center; gap: 14px;
+      display: inline-flex; align-items: center; gap: 16px;
       background: var(--s0); border: 2px solid var(--bd);
-      border-radius: 16px; padding: 16px 28px; box-shadow: var(--sh2);
+      border-radius: 18px; padding: 18px 32px; box-shadow: var(--sh2);
       transition: border-color .25s, transform .25s, box-shadow .25s;
     }
     .store-btn:hover { border-color: var(--pk); transform: translateY(-4px); box-shadow: 0 20px 56px rgba(255,107,53,.18); }
     .store-btn svg { width: 28px; height: 28px; }
-    .store-btn-text small { display: block; font-size: .66rem; color: var(--mt); letter-spacing: .06em; text-transform: uppercase; font-weight: 500; }
-    .store-btn-text strong { display: block; font-family: var(--syne); font-size: 1rem; font-weight: 700; color: var(--tx); }
-    /* trust badges */
-    .trust {
-      display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;
-    }
+    .store-btn-txt small { display: block; font-size: .66rem; color: var(--mt); letter-spacing: .06em; text-transform: uppercase; font-weight: 500; }
+    .store-btn-txt strong { display: block; font-family: var(--syne); font-size: 1rem; font-weight: 700; color: var(--tx); }
+    .trust { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
     .trust-b {
       display: flex; align-items: center; gap: 8px;
       background: var(--s0); border: 1px solid var(--bd); border-radius: 100px;
-      padding: 8px 16px; box-shadow: var(--sh1);
+      padding: 9px 18px; box-shadow: var(--sh1);
       font-size: .8rem; color: var(--mt); font-weight: 500;
     }
     .trust-b svg { width: 15px; height: 15px; flex-shrink: 0; }
 
     /* ─── FAQ ─── */
     #faq { padding: 110px 0; background: var(--s1); }
-    .faq-list { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
+    .faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
     .fq {
       background: var(--s0); border: 1.5px solid var(--bd);
-      border-radius: 16px; overflow: hidden; box-shadow: var(--sh1);
+      border-radius: 18px; overflow: hidden; box-shadow: var(--sh1);
       transition: border-color .2s, box-shadow .2s;
     }
     .fq:hover, .fq.open { border-color: rgba(255,107,53,.28); box-shadow: var(--sh2); }
     .fq-btn {
       width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 14px;
-      padding: 20px 24px; background: transparent; border: none; cursor: pointer;
+      padding: 22px 28px; background: transparent; border: none; cursor: pointer;
       font-family: var(--syne); font-size: .95rem; font-weight: 700;
       color: var(--tx); text-align: left; transition: color .2s;
     }
@@ -577,37 +621,31 @@
       flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
       background: rgba(255,107,53,.07); border: 1.5px solid rgba(255,107,53,.18);
       display: flex; align-items: center; justify-content: center;
-      transition: background .25s;
     }
     .fq-arr svg { width: 11px; height: 11px; stroke: var(--pk); transition: transform .35s; }
     .fq.open .fq-arr { background: rgba(255,107,53,.14); }
     .fq.open .fq-arr svg { transform: rotate(180deg); }
     .fq-body { max-height: 0; overflow: hidden; transition: max-height .38s ease; }
     .fq.open .fq-body { max-height: 200px; }
-    .fq-inner {
-      border-top: 1px solid var(--bd);
-      padding: 16px 24px 20px;
-      color: var(--mt); font-size: .9rem; line-height: 1.75;
-    }
+    .fq-inner { border-top: 1px solid var(--bd); padding: 16px 28px 22px; color: var(--mt); font-size: .9rem; line-height: 1.75; }
 
     /* ─── FOOTER ─── */
-    footer { background: var(--tx); color: rgba(255,255,255,.6); padding: 52px 0 36px; }
+    footer { background: var(--br1); color: rgba(255,255,255,.55); padding: 56px 0 36px; }
     .foot-row {
       display: flex; align-items: flex-start; justify-content: space-between;
       gap: 40px; flex-wrap: wrap; margin-bottom: 36px;
     }
     .foot-left { max-width: 280px; }
-    .foot-brand { display: flex; align-items: center; gap: 9px; margin-bottom: 12px; }
+    .foot-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
     .foot-logo {
-      width: 32px; height: 32px; border-radius: 8px;
-      background: linear-gradient(135deg, var(--pk) 0%, var(--ac) 100%);
+      width: 34px; height: 34px; border-radius: 8px; background: var(--pk);
       display: flex; align-items: center; justify-content: center;
-      font-family: var(--syne); font-size: .75rem; font-weight: 800; color: #fff;
     }
-    .foot-name { font-family: var(--syne); font-weight: 800; font-size: .9rem; letter-spacing: .06em; color: #fff; }
+    .foot-logo svg { width: 18px; height: 18px; }
+    .foot-name { font-family: var(--syne); font-weight: 800; font-size: .92rem; letter-spacing: .07em; color: #fff; }
     .foot-left p { font-size: .83rem; line-height: 1.7; }
     .foot-links { display: flex; gap: 52px; flex-wrap: wrap; }
-    .fl h4 { font-family: var(--syne); font-size: .7rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 14px; }
+    .fl h4 { font-family: var(--syne); font-size: .7rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: rgba(255,255,255,.28); margin-bottom: 14px; }
     .fl ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
     .fl a { font-size: .85rem; transition: color .2s; }
     .fl a:hover { color: var(--pkl); }
@@ -621,14 +659,18 @@
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 1024px) {
-      .hero-grid { grid-template-columns: 1fr; }
-      .app-card { display: none; }
-      .bento { grid-template-columns: repeat(6, 1fr); }
+      .hero-inner { grid-template-columns: 1fr; padding: 64px 0 56px; }
+      .hero-card { display: none; }
+      .manifesto-inner { grid-template-columns: repeat(2,1fr); }
+      .mf-col:nth-child(2) { border-right: none; }
+      .mf-col:nth-child(3) { border-top: 1px solid rgba(255,255,255,.1); }
+      .mf-col:nth-child(4) { border-top: 1px solid rgba(255,255,255,.1); border-right: none; }
+      .bento { grid-template-columns: repeat(6,1fr); }
       .bc-1,.bc-2,.bc-3 { grid-column: span 2; }
       .bc-4,.bc-5,.bc-6,.bc-7 { grid-column: span 3; }
       .bc-wide { grid-column: span 6; }
       .bc-wide-stat { display: none; }
-      .culture-grid { grid-template-columns: 1fr; gap: 56px; }
+      .culture-grid { grid-template-columns: 1fr; gap: 60px; }
       .culture-deco { display: none; }
     }
     @media (max-width: 768px) {
@@ -636,20 +678,16 @@
       .burger { display: flex; }
       .bento { grid-template-columns: 1fr; }
       .bc-1,.bc-2,.bc-3,.bc-4,.bc-5,.bc-6,.bc-7,.bc-wide { grid-column: span 1; }
-      .bc-wide-inner { flex-direction: column; gap: 20px; }
+      .bc-wide-inner { flex-direction: column; gap: 16px; }
       .steps { grid-template-columns: repeat(2,1fr); gap: 24px; }
       .steps::before { display: none; }
-      .stats-row { grid-template-columns: repeat(2,1fr); }
-      .stat:nth-child(2) { border-right: none; }
-      .stat:nth-child(3) { border-top: 1px solid var(--bd); }
-      .stat:nth-child(4) { border-top: 1px solid var(--bd); border-right: none; }
       .foot-row { flex-direction: column; }
-      .foot-links { gap: 32px; }
     }
     @media (max-width: 480px) {
       .steps { grid-template-columns: 1fr; }
-      .hero-h1 { font-size: 3.8rem; }
+      .hero-h1 { font-size: 4rem; }
       .dl-h { font-size: 3.4rem; }
+      .manifesto-inner { grid-template-columns: repeat(2,1fr); }
     }
   </style>
 </head>
@@ -660,7 +698,11 @@
   <div class="wrap">
     <div class="nav-row">
       <a href="#hero" class="nav-brand">
-        <div class="nav-logo">AB</div>
+        <div class="nav-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round">
+            <path d="M6 3a3 3 0 100 6 3 3 0 000-6z"/><path d="M6 9L18 21"/><path d="M18 3a3 3 0 100 6 3 3 0 000-6z"/><path d="M6 21L18 9"/>
+          </svg>
+        </div>
         <span class="nav-name">AFROBARBER</span>
       </a>
       <ul class="nav-links">
@@ -685,101 +727,110 @@
 
 <!-- HERO -->
 <section id="hero">
-  <div class="h-blob h-blob-1"></div>
-  <div class="h-blob h-blob-2"></div>
-  <div class="h-blob h-blob-3"></div>
-  <div class="h-dots"></div>
+  <div class="hero-geo"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-diamond"></div>
+  <div class="hero-deco-text" aria-hidden="true">AB</div>
 
-  <div class="hero-top">
-    <div class="wrap" style="width:100%">
-      <div class="hero-grid">
+  <div class="hero-inner">
+    <div class="wrap" style="width:100%; grid-column: 1/-1;">
+      <div style="display:grid; grid-template-columns: 1fr 400px; gap: 64px; align-items: center;">
+
         <!-- LEFT -->
         <div>
           <div class="hero-label" data-r>
             <span class="tag tag-pk">Simulador de Barbearia Afro</span>
           </div>
           <h1 class="hero-h1" data-r class="d1">
-            GERENCIE.<br/>
-            EVOLUA.<br/>
-            <span class="c-pk">CELEBRE</span><br/>
-            <span class="c-ac">CULTURA.</span>
+            O CORTE QUE<br/>
+            <span class="c-pk">CONTA</span><br/>
+            <span class="c-br3">HISTÓRIA.</span>
           </h1>
           <p class="hero-body" data-r class="d2">
-            AfroBarber é um simulador de barbearia com alma. Atenda clientes, cuide das finanças, complete missões e construa um legado com identidade afro.
+            AfroBarber é mais que um jogo — é uma celebração da cultura e da barbearia afro. Gerencie seu negócio, sirva sua comunidade e construa um legado com identidade.
           </p>
           <div class="hero-actions" data-r class="d3">
-            <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-pk">
+            <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-pk-dark">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.83 1.01-1.3 1.7-.8l14 8.5c.63.38.63 1.32 0 1.7l-14 8.5c-.69.5-1.7.03-1.7-.8z"/></svg>
-              Google Play — Grátis
+              Baixar no Google Play
             </a>
-            <a href="#how" class="btn-out">Como funciona</a>
+            <a href="#how" class="btn-wh-out">Como funciona</a>
           </div>
           <div class="hero-pills" data-r class="d4">
-            <span class="pill">Cortes Afro</span>
-            <span class="pill">Agenda</span>
-            <span class="pill">Finanças</span>
-            <span class="pill">Missões</span>
-            <span class="pill">Loja</span>
-            <span class="pill">Para todas as idades</span>
+            <span class="h-pill">Cortes Afro</span>
+            <span class="h-pill">Agenda</span>
+            <span class="h-pill">Finanças</span>
+            <span class="h-pill">Missões</span>
+            <span class="h-pill">Para todas as idades</span>
+            <span class="h-pill">100% Grátis</span>
           </div>
         </div>
 
         <!-- RIGHT — app card -->
-        <div class="app-card" data-r="r">
-          <div class="app-card-top">
-            <div class="app-card-logo">AB</div>
-            <div>
-              <div class="app-card-name">AfroBarber</div>
-              <div class="app-card-desc">Simulador de barbearia com cultura e identidade afro</div>
+        <div class="hero-card" data-r="r">
+          <div class="hc-top">
+            <div class="hc-logo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round">
+                <path d="M6 3a3 3 0 100 6 3 3 0 000-6z"/><path d="M6 9L18 21"/><path d="M18 3a3 3 0 100 6 3 3 0 000-6z"/><path d="M6 21L18 9"/>
+              </svg>
             </div>
-            <div class="app-rating">
-              <div class="stars">
-                <div class="star"></div><div class="star"></div><div class="star"></div>
-                <div class="star"></div><div class="star half"></div>
-              </div>
-              <span class="rating-text">Grátis · Android</span>
-            </div>
+            <div class="hc-name">AfroBarber</div>
+            <div class="hc-sub">Simulador de barbearia com cultura e identidade afro</div>
+            <span class="hc-badge">Grátis · Google Play · Android</span>
           </div>
-          <div class="app-mini-stats">
-            <div class="ams"><span class="ams-n">100%</span><span class="ams-l">Gratuito</span></div>
-            <div class="ams"><span class="ams-n">7+</span><span class="ams-l">Sistemas</span></div>
-            <div class="ams"><span class="ams-n">50+</span><span class="ams-l">Missões</span></div>
-            <div class="ams"><span class="ams-n">∞</span><span class="ams-l">Gameplay</span></div>
+          <div class="hc-stats">
+            <div class="hcs"><div class="hcs-n">100%</div><div class="hcs-l">Gratuito</div></div>
+            <div class="hcs"><div class="hcs-n">7+</div><div class="hcs-l">Sistemas</div></div>
+            <div class="hcs"><div class="hcs-n">50+</div><div class="hcs-l">Missões</div></div>
+            <div class="hcs"><div class="hcs-n">∞</div><div class="hcs-l">Gameplay</div></div>
           </div>
-          <div class="app-card-dl">
-            <span>Disponível agora no Google Play</span>
-            <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-dl-sm">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.83 1.01-1.3 1.7-.8l14 8.5c.63.38.63 1.32 0 1.7l-14 8.5c-.69.5-1.7.03-1.7-.8z"/></svg>
+          <div class="hc-btn">
+            <span>Disponível no Google Play</span>
+            <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-sm-dl">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.83 1.01-1.3 1.7-.8l14 8.5c.63.38.63 1.32 0 1.7l-14 8.5c-.69.5-1.7.03-1.7-.8z"/></svg>
               Baixar
             </a>
           </div>
         </div>
+
       </div>
     </div>
   </div>
 
   <!-- scroll strip -->
-  <div class="hero-scroll-strip">
-    <div class="scroll-track" aria-hidden="true">
-      <span class="scroll-item"><span class="scroll-sep" style="background:var(--pk)"></span>Gestão de Barbearia</span>
-      <span class="scroll-item"><span class="scroll-sep" style="background:var(--ac)"></span>Cortes Afro Autênticos</span>
-      <span class="scroll-item"><span class="scroll-sep" style="background:var(--em)"></span>Cultura &amp; Identidade</span>
-      <span class="scroll-item"><span class="scroll-sep" style="background:var(--sky)"></span>Controle Financeiro</span>
-      <span class="scroll-item"><span class="scroll-sep" style="background:var(--pk)"></span>Missões &amp; XP</span>
-      <span class="scroll-item"><span class="scroll-sep" style="background:var(--ac)"></span>Agenda Inteligente</span>
-      <span class="scroll-item"><span class="scroll-sep" style="background:var(--em)"></span>Loja &amp; Upgrades</span>
-      <span class="scroll-item"><span class="scroll-sep" style="background:var(--sky)"></span>Para Todas as Idades</span>
-      <span class="scroll-item"><span class="scroll-sep" style="background:var(--pk)"></span>Gestão de Barbearia</span>
-      <span class="scroll-item"><span class="scroll-sep" style="background:var(--ac)"></span>Cortes Afro Autênticos</span>
-      <span class="scroll-item"><span class="scroll-sep" style="background:var(--em)"></span>Cultura &amp; Identidade</span>
-      <span class="scroll-item"><span class="scroll-sep" style="background:var(--sky)"></span>Controle Financeiro</span>
-      <span class="scroll-item"><span class="scroll-sep" style="background:var(--pk)"></span>Missões &amp; XP</span>
-      <span class="scroll-item"><span class="scroll-sep" style="background:var(--ac)"></span>Agenda Inteligente</span>
-      <span class="scroll-item"><span class="scroll-sep" style="background:var(--em)"></span>Loja &amp; Upgrades</span>
-      <span class="scroll-item"><span class="scroll-sep" style="background:var(--sky)"></span>Para Todas as Idades</span>
+  <div class="hero-strip">
+    <div class="strip-track" aria-hidden="true">
+      <span class="strip-item"><span class="strip-dot" style="background:var(--pk)"></span>Barbearia Afro</span>
+      <span class="strip-item"><span class="strip-dot" style="background:var(--ac)"></span>Cortes Autênticos</span>
+      <span class="strip-item"><span class="strip-dot" style="background:var(--em)"></span>Cultura Negra</span>
+      <span class="strip-item"><span class="strip-dot" style="background:var(--sky)"></span>Identidade &amp; Respeito</span>
+      <span class="strip-item"><span class="strip-dot" style="background:var(--pk)"></span>Gestão de Negócios</span>
+      <span class="strip-item"><span class="strip-dot" style="background:var(--ac)"></span>Missões &amp; XP</span>
+      <span class="strip-item"><span class="strip-dot" style="background:var(--em)"></span>Para Todas as Idades</span>
+      <span class="strip-item"><span class="strip-dot" style="background:var(--sky)"></span>100% Gratuito</span>
+      <span class="strip-item"><span class="strip-dot" style="background:var(--pk)"></span>Barbearia Afro</span>
+      <span class="strip-item"><span class="strip-dot" style="background:var(--ac)"></span>Cortes Autênticos</span>
+      <span class="strip-item"><span class="strip-dot" style="background:var(--em)"></span>Cultura Negra</span>
+      <span class="strip-item"><span class="strip-dot" style="background:var(--sky)"></span>Identidade &amp; Respeito</span>
+      <span class="strip-item"><span class="strip-dot" style="background:var(--pk)"></span>Gestão de Negócios</span>
+      <span class="strip-item"><span class="strip-dot" style="background:var(--ac)"></span>Missões &amp; XP</span>
+      <span class="strip-item"><span class="strip-dot" style="background:var(--em)"></span>Para Todas as Idades</span>
+      <span class="strip-item"><span class="strip-dot" style="background:var(--sky)"></span>100% Gratuito</span>
     </div>
   </div>
 </section>
+
+<!-- MANIFESTO STATS STRIP -->
+<div class="manifesto-strip">
+  <div class="wrap">
+    <div class="manifesto-inner">
+      <div class="mf-col" data-r><div class="mf-n">100%</div><div class="mf-label">Grátis para baixar</div></div>
+      <div class="mf-col" data-r class="d1"><div class="mf-n">7+</div><div class="mf-label">Sistemas de jogo</div></div>
+      <div class="mf-col" data-r class="d2"><div class="mf-n">50+</div><div class="mf-label">Missões disponíveis</div></div>
+      <div class="mf-col" data-r class="d3"><div class="mf-n">∞</div><div class="mf-label">Horas de gameplay</div></div>
+    </div>
+  </div>
+</div>
 
 <!-- FEATURES -->
 <section id="features">
@@ -787,14 +838,15 @@
     <div class="sh" data-r>
       <span class="tag tag-pk">Recursos do Jogo</span>
       <h2>TUDO QUE SUA<br/><span style="color:var(--pk)">BARBEARIA</span> PRECISA</h2>
-      <p>Sete sistemas completos para você sentir que está realmente administrando um negócio.</p>
+      <p>Sete sistemas completos para você sentir que está realmente administrando um negócio com alma.</p>
     </div>
     <div class="bento">
 
       <div class="bc bc-1" data-r>
+        <div class="bc-bar"></div>
         <div class="bc-mark">
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--pk)" stroke-width="2" stroke-linecap="round">
-            <path d="M6 2v4M6 18v4M18 2v4M18 18v4M2 6h4M18 6h4M2 18h4M18 18h4M6 6l12 12M18 6L6 18"/>
+            <path d="M6 3a3 3 0 100 6 3 3 0 000-6z"/><path d="M6 9L18 21"/><path d="M18 3a3 3 0 100 6 3 3 0 000-6z"/><path d="M6 21L18 9"/>
           </svg>
         </div>
         <div class="bc-title">Cortes Realistas</div>
@@ -803,6 +855,7 @@
       </div>
 
       <div class="bc bc-2" data-r class="d1">
+        <div class="bc-bar"></div>
         <div class="bc-mark">
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2" stroke-linecap="round">
             <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
@@ -814,6 +867,7 @@
       </div>
 
       <div class="bc bc-3" data-r class="d2">
+        <div class="bc-bar"></div>
         <div class="bc-mark">
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--em)" stroke-width="2" stroke-linecap="round">
             <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
@@ -824,11 +878,10 @@
         <div class="bc-idx">03</div>
       </div>
 
-      <!-- wide card -->
       <div class="bc bc-wide" data-r>
         <div class="bc-wide-inner">
-          <div class="bc-wide-bar"></div>
-          <div class="bc-wide-body">
+          <div class="bc-wide-bar-v"></div>
+          <div>
             <div class="bc-title">Evolução sem limite — do primeiro corte ao topo da comunidade</div>
             <div class="bc-text">Cada atendimento gera XP. Cada XP desbloqueia upgrades. Cada upgrade transforma sua barbearia. O ciclo não para.</div>
           </div>
@@ -837,46 +890,50 @@
       </div>
 
       <div class="bc bc-4" data-r>
+        <div class="bc-bar"></div>
         <div class="bc-mark">
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="2" stroke-linecap="round">
             <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
           </svg>
         </div>
         <div class="bc-title">Loja &amp; Upgrades</div>
-        <div class="bc-text">Móveis, equipamentos, produtos premium. Personalize cada canto da sua barbearia e impressione os clientes.</div>
+        <div class="bc-text">Móveis, equipamentos, produtos premium. Personalize cada canto da sua barbearia.</div>
         <div class="bc-idx">04</div>
       </div>
 
       <div class="bc bc-5" data-r class="d1">
+        <div class="bc-bar"></div>
         <div class="bc-mark">
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--pk)" stroke-width="2" stroke-linecap="round">
-            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
           </svg>
         </div>
         <div class="bc-title">Missões &amp; Conquistas</div>
-        <div class="bc-text">Desafios diários, objetivos de longo prazo e recompensas exclusivas que mantêm o jogo sempre fresco. Nunca falta o que fazer.</div>
+        <div class="bc-text">Desafios diários, objetivos de longo prazo e recompensas exclusivas que mantêm o jogo sempre fresco.</div>
         <div class="bc-idx">05</div>
       </div>
 
       <div class="bc bc-6" data-r>
+        <div class="bc-bar"></div>
         <div class="bc-mark">
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2" stroke-linecap="round">
             <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
           </svg>
         </div>
         <div class="bc-title">Reputação &amp; Comunidade</div>
-        <div class="bc-text">Atenda bem, ganhe respeito, torne-se referência no bairro. A barbearia é o coração da comunidade — e a sua pode ser a melhor.</div>
+        <div class="bc-text">Atenda bem, ganhe respeito, torne-se referência no bairro. A barbearia é o coração da comunidade.</div>
         <div class="bc-idx">06</div>
       </div>
 
       <div class="bc bc-7" data-r class="d1">
+        <div class="bc-bar"></div>
         <div class="bc-mark">
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--em)" stroke-width="2" stroke-linecap="round">
             <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
           </svg>
         </div>
         <div class="bc-title">Progresso na Nuvem</div>
-        <div class="bc-text">Salvo automaticamente via Unity Cloud Save. Troque de dispositivo sem perder nada do que construiu.</div>
+        <div class="bc-text">Salvo automaticamente via Unity Cloud Save. Troque de dispositivo sem perder nada.</div>
         <div class="bc-idx">07</div>
       </div>
 
@@ -897,128 +954,109 @@
         <div class="step-num">01</div>
         <div class="step-body">
           <div class="step-title">Receba Clientes</div>
-          <div class="step-text">Clientes chegam com pedidos únicos. Organize a fila e decida a ordem de atendimento com estratégia.</div>
+          <div class="step-text">Clientes chegam com pedidos únicos. Organize a fila e decida a ordem com estratégia.</div>
         </div>
       </div>
       <div class="step" data-r class="d2">
         <div class="step-num">02</div>
         <div class="step-body">
           <div class="step-title">Entenda o Pedido</div>
-          <div class="step-text">Confira o serviço, preço e nível de dificuldade. Cada cliente espera um resultado diferente e tem sua personalidade.</div>
+          <div class="step-text">Confira o serviço, preço e dificuldade. Cada cliente tem sua personalidade e expectativa.</div>
         </div>
       </div>
       <div class="step" data-r class="d3">
         <div class="step-num">03</div>
         <div class="step-body">
           <div class="step-title">Execute o Corte</div>
-          <div class="step-text">Use as ferramentas certas, siga o pedido e entregue um atendimento impecável para conquistar avaliações altas.</div>
+          <div class="step-text">Use as ferramentas certas e entregue um atendimento impecável para conquistar avaliações altas.</div>
         </div>
       </div>
       <div class="step" data-r class="d4">
         <div class="step-num">04</div>
         <div class="step-body">
           <div class="step-title">Evolua &amp; Reinvista</div>
-          <div class="step-text">Receba pagamento, ganhe XP, desbloqueie upgrades e leve sua barbearia cada vez mais longe.</div>
+          <div class="step-text">Ganhe XP, desbloqueie upgrades e leve sua barbearia cada vez mais longe.</div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- STATS -->
-<section id="stats">
-  <div class="wrap">
-    <div class="stats-row">
-      <div class="stat" data-r><div class="stat-n">100%</div><div class="stat-l">Grátis para baixar</div></div>
-      <div class="stat" data-r class="d1"><div class="stat-n">7+</div><div class="stat-l">Sistemas de jogo</div></div>
-      <div class="stat" data-r class="d2"><div class="stat-n">50+</div><div class="stat-l">Missões disponíveis</div></div>
-      <div class="stat" data-r class="d3"><div class="stat-n">∞</div><div class="stat-l">Horas de gameplay</div></div>
     </div>
   </div>
 </section>
 
 <!-- CULTURE -->
 <section id="culture">
-  <div class="culture-deco" aria-hidden="true">AFRO</div>
-  <div class="wrap">
-    <div class="culture-grid">
-      <div>
-        <span class="tag tag-ac" data-r="l">Identidade &amp; Cultura</span>
-        <h2 data-r="l" class="d1">
-          MAIS QUE UM JOGO.
-          <em>UM MANIFESTO.</em>
-        </h2>
-        <p data-r="l" class="d2">
-          AfroBarber celebra a barbearia como espaço de resistência, cultura e comunidade. Cada corte, cada cliente, cada detalhe carrega significado.
-        </p>
-        <p data-r="l" class="d3">
-          Representatividade não é detalhe — é o núcleo. Um jogo que honra a estética afro, a musicalidade das raízes e a força de quem constrói algo do zero.
-        </p>
-        <div class="vals" data-r="l" class="d3">
-          <div class="val"><div class="val-dot"></div><div><div class="val-title">Respeito</div><div class="val-desc">Pela história, pela cultura, pelo cliente</div></div></div>
-          <div class="val"><div class="val-dot"></div><div><div class="val-title">Foco</div><div class="val-desc">No ofício, na excelência, no crescimento</div></div></div>
-          <div class="val"><div class="val-dot"></div><div><div class="val-title">Disciplina</div><div class="val-desc">Para construir algo que dura além do jogo</div></div></div>
-          <div class="val"><div class="val-dot"></div><div><div class="val-title">Sucesso</div><div class="val-desc">Definido por você, conquistado por você</div></div></div>
-        </div>
-        <div class="btns" data-r="l" class="d4">
-          <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-pk">Baixar e Jogar</a>
-          <a href="#faq" class="btn-out">Saiba mais</a>
-        </div>
-      </div>
-      <div class="culture-cards">
-        <div class="cc" data-r="r">
-          <div class="cc-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--pk)" stroke-width="2" stroke-linecap="round">
-              <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
-            </svg>
+  <div class="kente"></div>
+  <div class="culture-body">
+    <div class="culture-deco" aria-hidden="true">AFRO</div>
+    <div class="wrap">
+      <div class="culture-grid">
+        <div>
+          <span class="tag tag-pk" data-r="l">Identidade &amp; Cultura</span>
+          <h2 data-r="l" class="d1">
+            MAIS QUE UM JOGO.
+            <em>UM MANIFESTO.</em>
+          </h2>
+          <p data-r="l" class="d2">AfroBarber celebra a barbearia como espaço de resistência, cultura e comunidade. Cada corte, cada cliente, cada detalhe carrega significado.</p>
+          <p data-r="l" class="d3">Representatividade não é detalhe — é o núcleo. Um jogo que honra a estética afro, a musicalidade das raízes e a força de quem constrói algo do zero.</p>
+          <div class="vals" data-r="l" class="d3">
+            <div class="val"><div class="val-dot"></div><div><div class="val-title">Respeito</div><div class="val-desc">Pela história, pela cultura, pelo cliente</div></div></div>
+            <div class="val"><div class="val-dot"></div><div><div class="val-title">Foco</div><div class="val-desc">No ofício, na excelência, no crescimento</div></div></div>
+            <div class="val"><div class="val-dot"></div><div><div class="val-title">Disciplina</div><div class="val-desc">Para construir algo que dura além do jogo</div></div></div>
+            <div class="val"><div class="val-dot"></div><div><div class="val-title">Sucesso</div><div class="val-desc">Definido por você, conquistado por você</div></div></div>
           </div>
-          <div>
-            <div class="cc-title">Música &amp; Atmosfera</div>
-            <div class="cc-text">Trilha sonora imersiva que captura a energia real da barbearia. O som certo para cada momento do atendimento.</div>
+          <div class="btns" data-r="l" class="d4">
+            <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-pk-dark">Baixar e Jogar</a>
+            <a href="#faq" class="btn-wh-out">Saiba mais</a>
           </div>
         </div>
-        <div class="cc" data-r="r" class="d1">
-          <div class="cc-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2" stroke-linecap="round">
-              <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
-            </svg>
+        <div class="culture-cards">
+          <div class="cc" data-r="r">
+            <div class="cc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--pk)" stroke-width="2" stroke-linecap="round">
+                <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+              </svg>
+            </div>
+            <div><div class="cc-title">Música &amp; Atmosfera</div><div class="cc-text">Trilha sonora imersiva que captura a energia real da barbearia. O som certo para cada momento.</div></div>
           </div>
-          <div>
-            <div class="cc-title">Estilos que Representam</div>
-            <div class="cc-text">Cortes que celebram a beleza, diversidade e riqueza da estética afro-brasileira — autênticos e respeitosos.</div>
+          <div class="cc" data-r="r" class="d1">
+            <div class="cc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--acl)" stroke-width="2" stroke-linecap="round">
+                <path d="M6 3a3 3 0 100 6 3 3 0 000-6z"/><path d="M6 9L18 21"/><path d="M18 3a3 3 0 100 6 3 3 0 000-6z"/><path d="M6 21L18 9"/>
+              </svg>
+            </div>
+            <div><div class="cc-title">Estilos que Representam</div><div class="cc-text">Cortes que celebram a beleza e diversidade da estética afro-brasileira — autênticos e respeitosos.</div></div>
           </div>
-        </div>
-        <div class="cc" data-r="r" class="d2">
-          <div class="cc-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--em)" stroke-width="2" stroke-linecap="round">
-              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
-            </svg>
+          <div class="cc" data-r="r" class="d2">
+            <div class="cc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--em)" stroke-width="2" stroke-linecap="round">
+                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+              </svg>
+            </div>
+            <div><div class="cc-title">Comunidade no Centro</div><div class="cc-text">A barbearia é onde histórias se cruzam. Construa laços, ganhe respeito e deixe sua marca.</div></div>
           </div>
-          <div>
-            <div class="cc-title">Comunidade no Centro</div>
-            <div class="cc-text">A barbearia é onde histórias se cruzam. Construa laços, ganhe respeito e deixe sua marca dentro e fora do jogo.</div>
-          </div>
-        </div>
-        <div class="cc" data-r="r" class="d3">
-          <div class="cc-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="2" stroke-linecap="round">
-              <rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
-            </svg>
-          </div>
-          <div>
-            <div class="cc-title">Para Todas as Idades</div>
-            <div class="cc-text">Sem violência, sem conteúdo adulto. Um jogo inspirador e educativo, acessível a toda a família.</div>
+          <div class="cc" data-r="r" class="d3">
+            <div class="cc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="2" stroke-linecap="round">
+                <rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+              </svg>
+            </div>
+            <div><div class="cc-title">Para Todas as Idades</div><div class="cc-text">Sem violência, sem conteúdo adulto. Inspirador e educativo — acessível a toda a família.</div></div>
           </div>
         </div>
       </div>
     </div>
+    <div class="culture-kente-btm"><div class="kente"></div></div>
   </div>
 </section>
 
 <!-- DOWNLOAD CTA -->
 <section id="download">
   <div class="dl-bg"></div>
-  <div class="dl-grid"></div>
+  <div class="dl-grid-lines"></div>
+  <div class="dl-scissors" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="var(--br1)" stroke-width=".8" stroke-linecap="round">
+      <path d="M6 3a3 3 0 100 6 3 3 0 000-6z"/><path d="M6 9L18 21"/><path d="M18 3a3 3 0 100 6 3 3 0 000-6z"/><path d="M6 21L18 9"/>
+    </svg>
+  </div>
   <div class="wrap">
     <div class="dl-inner">
       <div data-r><span class="tag tag-em">Disponível Agora — 100% Grátis</span></div>
@@ -1032,7 +1070,7 @@
       <div class="dl-btns" data-r class="d3">
         <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="store-btn">
           <svg viewBox="0 0 24 24" fill="var(--tx)"><path d="M3.18 23.76c.3.17.64.24.99.19l12.6-12.6-3.54-3.54L3.18 23.76zm17.46-12.18L18 10.04l-3.47 3.47 3.47 3.47 2.65-1.53c.76-.43.76-1.49-.01-1.87zM1.07 1.07C.76 1.38.57 1.84.57 2.43v19.14c0 .59.19 1.05.5 1.36L2.11 22 14.71 9.39l-1.54-1.54L1.07 1.07zM3.18.24L13.17 6.2l-3.54 3.54L1.07 1.18c-.03-.02.01-.08.1-.16L3.18.24z"/></svg>
-          <div class="store-btn-text">
+          <div class="store-btn-txt">
             <small>Disponível no</small>
             <strong>Google Play</strong>
           </div>
@@ -1044,7 +1082,7 @@
           100% Gratuito
         </span>
         <span class="trust-b">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="2"><path d="M1 6l11 7L23 6M2 4h20a1 1 0 011 1v14a1 1 0 01-1 1H2a1 1 0 01-1-1V5a1 1 0 011-1z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="2" stroke-linecap="round"><path d="M1 6l11 7L23 6M2 4h20a1 1 0 011 1v14a1 1 0 01-1 1H2a1 1 0 01-1-1V5a1 1 0 011-1z"/></svg>
           Jogue Offline
         </span>
         <span class="trust-b">
@@ -1053,7 +1091,7 @@
         </span>
         <span class="trust-b">
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          Progresso na Nuvem
+          Salvo na Nuvem
         </span>
       </div>
     </div>
@@ -1064,51 +1102,33 @@
 <section id="faq">
   <div class="wrap">
     <div class="sh" data-r>
-      <span class="tag tag-pk">Dúvidas Frequentes</span>
+      <span class="tag tag-pk">Dúvidas</span>
       <h2>PERGUNTAS<br/><span style="color:var(--pk)">FREQUENTES</span></h2>
       <p>Tudo que você precisa saber antes de baixar.</p>
     </div>
     <div class="faq-list">
       <div class="fq" data-r>
-        <button class="fq-btn" aria-expanded="false">
-          O jogo é realmente gratuito?
-          <span class="fq-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
-        </button>
+        <button class="fq-btn" aria-expanded="false">O jogo é realmente gratuito?<span class="fq-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span></button>
         <div class="fq-body"><div class="fq-inner">Sim, 100% gratuito. Baixe pelo Google Play sem pagar nada. O jogo entrega uma experiência completa sem necessidade de compras obrigatórias.</div></div>
       </div>
       <div class="fq" data-r class="d1">
-        <button class="fq-btn" aria-expanded="false">
-          Precisa de conexão com internet?
-          <span class="fq-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
-        </button>
+        <button class="fq-btn" aria-expanded="false">Precisa de conexão com internet?<span class="fq-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span></button>
         <div class="fq-body"><div class="fq-inner">Você pode jogar sem internet. A conexão é usada apenas para sincronizar seu progresso na nuvem e acessar placares globais via Unity Services.</div></div>
       </div>
       <div class="fq" data-r class="d2">
-        <button class="fq-btn" aria-expanded="false">
-          Em quais dispositivos funciona?
-          <span class="fq-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
-        </button>
+        <button class="fq-btn" aria-expanded="false">Em quais dispositivos funciona?<span class="fq-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span></button>
         <div class="fq-body"><div class="fq-inner">AfroBarber roda em Android. Recomendamos Android 7.0 ou superior para a experiência mais fluida.</div></div>
       </div>
       <div class="fq" data-r class="d3">
-        <button class="fq-btn" aria-expanded="false">
-          O conteúdo é adequado para crianças?
-          <span class="fq-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
-        </button>
-        <div class="fq-body"><div class="fq-inner">Sim. O jogo não contém violência, drogas ou conteúdo adulto. É pensado para ser inspirador e educativo para todas as idades.</div></div>
+        <button class="fq-btn" aria-expanded="false">O conteúdo é adequado para crianças?<span class="fq-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span></button>
+        <div class="fq-body"><div class="fq-inner">Sim. Sem violência, drogas ou conteúdo adulto. É pensado para ser inspirador e educativo para todas as idades.</div></div>
       </div>
       <div class="fq" data-r class="d4">
-        <button class="fq-btn" aria-expanded="false">
-          Meu progresso é salvo se trocar de celular?
-          <span class="fq-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
-        </button>
-        <div class="fq-body"><div class="fq-inner">Sim. O progresso é sincronizado automaticamente via Unity Cloud Save. Troque de dispositivo sem perder nada do que você construiu.</div></div>
+        <button class="fq-btn" aria-expanded="false">Meu progresso é salvo se trocar de celular?<span class="fq-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span></button>
+        <div class="fq-body"><div class="fq-inner">Sim. O progresso é sincronizado automaticamente via Unity Cloud Save. Troque de dispositivo sem perder nada.</div></div>
       </div>
       <div class="fq" data-r class="d5">
-        <button class="fq-btn" aria-expanded="false">
-          Como entrar em contato ou reportar um problema?
-          <span class="fq-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
-        </button>
+        <button class="fq-btn" aria-expanded="false">Como entrar em contato ou reportar um problema?<span class="fq-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span></button>
         <div class="fq-body"><div class="fq-inner">Entre em contato pelo e-mail marcelobraga.dev@gmail.com. Respondemos o mais rápido possível e valorizamos cada feedback.</div></div>
       </div>
     </div>
@@ -1117,11 +1137,16 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="wrap">
+  <div class="kente" style="opacity:.4"></div>
+  <div class="wrap" style="padding-top:52px">
     <div class="foot-row">
       <div class="foot-left">
         <div class="foot-brand">
-          <div class="foot-logo">AB</div>
+          <div class="foot-logo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round">
+              <path d="M6 3a3 3 0 100 6 3 3 0 000-6z"/><path d="M6 9L18 21"/><path d="M18 3a3 3 0 100 6 3 3 0 000-6z"/><path d="M6 21L18 9"/>
+            </svg>
+          </div>
           <span class="foot-name">AFROBARBER</span>
         </div>
         <p>Simulador de barbearia com identidade. Gerencie, evolua, celebre a cultura afro e construa o seu legado.</p>
@@ -1153,21 +1178,19 @@
     </div>
     <div class="foot-bottom">
       <p>© 2026 AfroBarber. Todos os direitos reservados.</p>
-      <div class="foot-heart">Feito com <span>♥</span> e identidade</div>
+      <div class="foot-heart">Feito com <span>♥</span> e identidade afro</div>
     </div>
   </div>
 </footer>
 
 <script>
 (function(){
-  /* nav scroll */
   const nav = document.getElementById('nav');
-  window.addEventListener('scroll', ()=>{ nav.classList.toggle('stuck', scrollY > 40); }, {passive:true});
+  window.addEventListener('scroll',()=>{ nav.classList.toggle('stuck', scrollY>40); },{passive:true});
 
-  /* burger */
   const burger = document.getElementById('burger');
   const mob    = document.getElementById('mobNav');
-  burger.addEventListener('click', ()=>{
+  burger.addEventListener('click',()=>{
     const on = mob.classList.toggle('on');
     burger.setAttribute('aria-expanded', on);
   });
@@ -1175,27 +1198,23 @@
     mob.classList.remove('on'); burger.setAttribute('aria-expanded','false');
   }));
 
-  /* bento spotlight */
   document.querySelectorAll('.bc').forEach(c=>{
-    c.addEventListener('mousemove', e=>{
-      const r = c.getBoundingClientRect();
-      c.style.setProperty('--mx', ((e.clientX-r.left)/r.width*100).toFixed(1)+'%');
-      c.style.setProperty('--my', ((e.clientY-r.top)/r.height*100).toFixed(1)+'%');
+    c.addEventListener('mousemove',e=>{
+      const r=c.getBoundingClientRect();
+      c.style.setProperty('--mx',((e.clientX-r.left)/r.width*100).toFixed(1)+'%');
+      c.style.setProperty('--my',((e.clientY-r.top)/r.height*100).toFixed(1)+'%');
     });
   });
 
-  /* FAQ */
   document.querySelectorAll('.fq-btn').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const fq  = btn.closest('.fq');
-      const was = fq.classList.contains('open');
+    btn.addEventListener('click',()=>{
+      const fq=btn.closest('.fq'), was=fq.classList.contains('open');
       document.querySelectorAll('.fq').forEach(f=>{ f.classList.remove('open'); f.querySelector('.fq-btn').setAttribute('aria-expanded','false'); });
       if(!was){ fq.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
     });
   });
 
-  /* scroll reveal */
-  const io = new IntersectionObserver(entries=>{
+  const io=new IntersectionObserver(entries=>{
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   },{threshold:.1});
   document.querySelectorAll('[data-r]').forEach(el=>io.observe(el));

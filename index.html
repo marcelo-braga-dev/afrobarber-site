@@ -7,628 +7,507 @@
   <meta name="description" content="Gerencie sua barbearia, sirva clientes, evolua seu negócio e celebre a cultura afro. Baixe grátis no Google Play." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
   <style>
+    /* ═══ RESET & TOKENS ═══ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --gold:    #f6c744;
-      --gold-dim: #c9a630;
-      --black:   #060504;
-      --surface: #0e0c0a;
-      --card:    #141210;
-      --border:  rgba(246,199,68,.18);
-      --muted:   #7d7165;
-      --text:    #e8dece;
-      --white:   #f7f3ea;
-      --r:       20px;
-      --font-head: 'Syne', sans-serif;
-      --font-body: 'Space Grotesk', sans-serif;
+      --g:  #f5c518; --gd: #b8920f; --gl: #fde77a;
+      --bg: #080706; --s1: #0f0e0c; --s2: #161410; --s3: #1e1b16;
+      --bd: rgba(245,197,24,.14); --bd2: rgba(245,197,24,.28);
+      --mt: #6b6055; --tx: #e2d8c8; --wh: #f5f0e8;
+      --head: 'Bebas Neue', sans-serif;
+      --syne: 'Syne', sans-serif;
+      --body: 'Inter', sans-serif;
     }
-
     html { scroll-behavior: smooth; }
+    body { font-family: var(--body); background: var(--bg); color: var(--tx); overflow-x: hidden; line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
 
-    body {
-      font-family: var(--font-body);
-      background: var(--black);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
-    /* ─── UTILS ─── */
-    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
-    .tag {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: rgba(246,199,68,.1); border: 1px solid var(--border);
-      color: var(--gold); font-size: .75rem; font-weight: 600;
-      letter-spacing: .12em; text-transform: uppercase;
+    /* ═══ UTILITIES ═══ */
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+    .gold { color: var(--g); }
+    .chip {
+      display: inline-flex; align-items: center; gap: 7px;
+      border: 1px solid var(--bd2); background: rgba(245,197,24,.08);
+      color: var(--g); font-family: var(--body); font-size: .72rem;
+      font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
       padding: 6px 14px; border-radius: 100px;
     }
-    .tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink:0; }
-    .section-label { display: flex; justify-content: center; margin-bottom: 20px; }
-    h2.section-title {
-      font-family: var(--font-head); font-size: clamp(2rem,4vw,2.9rem);
-      line-height: 1.1; text-align: center; color: var(--white);
-      margin-bottom: 16px;
-    }
-    h2.section-title span { color: var(--gold); }
-    p.section-sub {
-      text-align: center; color: var(--muted); max-width: 540px;
-      margin: 0 auto 60px; font-size: 1.05rem;
-    }
+    .chip::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--g); flex-shrink: 0; animation: blink 2s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
 
-    /* ─── NOISE TEXTURE ─── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0; z-index: 0; pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-      background-size: 200px; opacity: .5;
-    }
-
-    /* ─── NAV ─── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      transition: background .3s, box-shadow .3s;
-    }
-    nav.scrolled {
-      background: rgba(6,5,4,.88);
-      backdrop-filter: blur(20px) saturate(1.4);
-      -webkit-backdrop-filter: blur(20px) saturate(1.4);
-      box-shadow: 0 1px 0 var(--border);
-    }
-    .nav-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      height: 68px;
-    }
-    .nav-logo {
-      display: flex; align-items: center; gap: 10px;
-      text-decoration: none; color: var(--white);
-    }
-    .nav-logo .logo-mark {
-      width: 36px; height: 36px; border-radius: 10px;
-      background: linear-gradient(135deg, var(--gold), var(--gold-dim));
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-head); font-size: .9rem; font-weight: 800;
-      color: var(--black); flex-shrink: 0;
-    }
-    .nav-logo .logo-text {
-      font-family: var(--font-head); font-size: 1.1rem; font-weight: 800;
-      letter-spacing: .06em;
-    }
-    .nav-links {
-      display: flex; align-items: center; gap: 32px;
-      list-style: none;
-    }
-    .nav-links a {
-      text-decoration: none; color: var(--muted); font-size: .9rem;
-      font-weight: 500; transition: color .2s;
-    }
-    .nav-links a:hover { color: var(--white); }
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-family: var(--font-body); font-weight: 600; font-size: .9rem;
-      text-decoration: none; border: none; cursor: pointer;
-      transition: transform .2s, box-shadow .2s, opacity .2s;
-    }
-    .btn:active { transform: scale(.97) !important; }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dim) 100%);
-      color: var(--black); padding: 11px 22px; border-radius: 100px;
-      box-shadow: 0 4px 24px rgba(246,199,68,.25);
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(246,199,68,.35); }
-    .btn-outline {
-      border: 1.5px solid var(--border); color: var(--white);
-      padding: 11px 22px; border-radius: 100px; background: transparent;
-    }
-    .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
-    .hamburger {
-      display: none; flex-direction: column; gap: 5px;
-      background: none; border: none; cursor: pointer; padding: 4px;
-    }
-    .hamburger span { display: block; width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: .3s; }
-    .mobile-menu {
-      display: none; position: fixed; inset: 68px 0 0;
-      background: rgba(6,5,4,.97);
-      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-      flex-direction: column; align-items: center; justify-content: center;
-      gap: 36px; z-index: 99;
-    }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a { color: var(--white); text-decoration: none; font-size: 1.3rem; font-weight: 600; }
-
-    /* ─── HERO ─── */
-    #inicio {
-      min-height: 100dvh;
-      display: flex; align-items: center;
-      padding: 120px 0 80px;
-      position: relative; overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute; inset: 0; z-index: 0;
-      background:
-        radial-gradient(ellipse 70% 60% at 70% 50%, rgba(246,199,68,.08) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(246,199,68,.05) 0%, transparent 60%),
-        var(--black);
-    }
-    .hero-grid-lines {
-      position: absolute; inset: 0; z-index: 0;
-      background-image:
-        linear-gradient(rgba(246,199,68,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(246,199,68,.04) 1px, transparent 1px);
-      background-size: 60px 60px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
-      -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
-    }
-    .hero-inner {
-      position: relative; z-index: 1;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
-    }
-    .hero-eyebrow { margin-bottom: 20px; }
-    h1 {
-      font-family: var(--font-head);
-      font-size: clamp(2.6rem, 5.5vw, 4.2rem);
-      line-height: 1.05; color: var(--white);
-      margin-bottom: 22px;
-    }
-    h1 .accent { color: var(--gold); }
-    h1 .line-2 { display: block; color: var(--muted); }
-    .hero-desc {
-      font-size: 1.1rem; color: var(--muted); max-width: 480px;
-      margin-bottom: 36px; line-height: 1.7;
-    }
-    .hero-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 48px; }
-    .btn-play {
+    .btn-gold {
       display: inline-flex; align-items: center; gap: 10px;
-      background: linear-gradient(135deg, var(--gold), var(--gold-dim));
-      color: var(--black); padding: 14px 26px; border-radius: 100px;
-      font-family: var(--font-body); font-weight: 700; font-size: 1rem; text-decoration: none;
-      box-shadow: 0 6px 28px rgba(246,199,68,.3); transition: transform .2s, box-shadow .2s;
+      background: var(--g); color: var(--bg);
+      font-family: var(--syne); font-weight: 700; font-size: .95rem;
+      padding: 14px 28px; border-radius: 10px; border: none; cursor: pointer;
+      box-shadow: 0 0 0 0 rgba(245,197,24,.4);
+      transition: transform .2s, box-shadow .2s;
     }
-    .btn-play:hover { transform: translateY(-3px); box-shadow: 0 10px 36px rgba(246,199,68,.4); }
-    .hero-pills { display: flex; flex-wrap: wrap; gap: 10px; }
-    .pill {
-      display: flex; align-items: center; gap: 8px;
-      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
-      border-radius: 100px; padding: 7px 14px; font-size: .82rem;
-      color: var(--muted); transition: border-color .2s, color .2s;
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(245,197,24,.35); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: transparent; color: var(--wh);
+      font-family: var(--syne); font-weight: 700; font-size: .95rem;
+      padding: 13px 28px; border-radius: 10px;
+      border: 1.5px solid rgba(255,255,255,.12); cursor: pointer;
+      transition: border-color .2s, color .2s, transform .2s;
     }
-    .pill:hover { border-color: var(--border); color: var(--text); }
+    .btn-ghost:hover { border-color: var(--g); color: var(--g); transform: translateY(-2px); }
 
-    /* Hero visual */
-    .hero-visual { display: flex; justify-content: center; align-items: center; }
-    .hero-card {
-      width: 280px; aspect-ratio: 9/16; max-height: 500px;
-      background: var(--card);
-      border: 1.5px solid var(--border);
-      border-radius: 32px;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 18px;
-      position: relative; overflow: hidden;
-      box-shadow: 0 40px 120px rgba(0,0,0,.7), 0 0 0 1px rgba(246,199,68,.08);
+    .sh { text-align: center; margin-bottom: 64px; }
+    .sh h2 {
+      font-family: var(--head); font-size: clamp(3.2rem, 6vw, 5.5rem);
+      line-height: .95; letter-spacing: .01em; color: var(--wh); margin: 16px 0 20px;
     }
-    .hero-card::before {
-      content: '';
-      position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
-      width: 200px; height: 200px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(246,199,68,.18) 0%, transparent 70%);
-    }
-    .hero-card-emoji { font-size: 4.5rem; line-height: 1; position: relative; }
-    .hero-card-title {
-      font-family: var(--font-head); font-size: 1.4rem; font-weight: 800;
-      letter-spacing: .08em; text-align: center; color: var(--white);
-      position: relative;
-    }
-    .hero-card-sub {
-      font-size: .72rem; letter-spacing: .2em; text-transform: uppercase;
-      color: var(--gold); text-align: center; position: relative;
-    }
-    .hero-card-values {
-      display: flex; flex-wrap: wrap; justify-content: center; gap: 6px;
-      padding: 0 20px; position: relative;
-    }
-    .hero-card-values span {
-      font-size: .65rem; letter-spacing: .08em; text-transform: uppercase;
-      color: var(--muted); background: rgba(246,199,68,.07);
-      border: 1px solid rgba(246,199,68,.12); border-radius: 6px;
-      padding: 4px 8px;
-    }
-    .hero-card-badge {
-      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-      background: rgba(246,199,68,.12); border: 1px solid var(--border);
-      color: var(--gold); font-size: .7rem; font-weight: 600;
-      letter-spacing: .08em; padding: 6px 14px; border-radius: 100px;
-      white-space: nowrap;
-    }
-    .floating-stat {
-      position: absolute;
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 14px; padding: 10px 14px;
-      display: flex; align-items: center; gap: 8px;
-      font-size: .8rem; white-space: nowrap;
-      box-shadow: 0 8px 32px rgba(0,0,0,.5);
-    }
-    .floating-stat.a1 {
-      right: calc(100% + 16px); top: 28%;
-      animation: floatY 4s ease-in-out infinite;
-    }
-    .floating-stat.a2 {
-      left: calc(100% + 16px); top: 55%;
-      animation: floatY 4s ease-in-out 1.5s infinite;
-    }
-    .floating-stat .stat-val { font-family: var(--font-head); font-size: 1rem; font-weight: 700; color: var(--white); }
-    .floating-stat .stat-lbl { color: var(--muted); font-size: .72rem; }
-    @keyframes floatY {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
+    .sh p { color: var(--mt); font-size: 1.05rem; max-width: 520px; margin: 0 auto; }
 
-    /* ─── STATS BAR ─── */
-    #stats {
-      padding: 60px 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      background: var(--surface);
+    [data-r] { opacity: 0; transform: translateY(32px); transition: opacity .7s ease, transform .7s ease; }
+    [data-r="l"] { transform: translateX(-32px); }
+    [data-r="r"] { transform: translateX(32px); }
+    [data-r].in { opacity: 1; transform: none; }
+    .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+    .d4{transition-delay:.32s}.d5{transition-delay:.4s}.d6{transition-delay:.48s}
+
+    /* ═══ NAVBAR ═══ */
+    #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; transition: background .35s, box-shadow .35s; }
+    #nav.stuck {
+      background: rgba(8,7,6,.92);
+      backdrop-filter: blur(24px) saturate(1.6);
+      -webkit-backdrop-filter: blur(24px) saturate(1.6);
+      box-shadow: 0 1px 0 var(--bd);
+    }
+    .nav-row { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 24px; }
+    .nav-brand { display: flex; align-items: center; gap: 11px; }
+    .nav-logo-box {
+      width: 38px; height: 38px; border-radius: 9px; flex-shrink: 0;
+      background: var(--g); display: flex; align-items: center; justify-content: center;
+      font-family: var(--syne); font-size: .85rem; font-weight: 800; color: var(--bg);
+    }
+    .nav-brand-name { font-family: var(--syne); font-weight: 800; font-size: 1rem; letter-spacing: .06em; color: var(--wh); }
+    .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+    .nav-links a { font-size: .875rem; font-weight: 500; color: var(--mt); transition: color .2s; }
+    .nav-links a:hover { color: var(--wh); }
+    .nav-cta { display: flex; align-items: center; gap: 12px; }
+    .burger { display: none; background: none; border: none; cursor: pointer; padding: 4px; flex-direction: column; gap: 5px; }
+    .burger span { display: block; width: 22px; height: 1.5px; background: var(--tx); border-radius: 2px; transition: .3s; }
+    .mob-nav {
+      display: none; position: fixed; inset: 72px 0 0; z-index: 199;
+      background: rgba(8,7,6,.97); backdrop-filter: blur(28px);
+      flex-direction: column; align-items: center; justify-content: center; gap: 40px;
+    }
+    .mob-nav.on { display: flex; }
+    .mob-nav a { font-family: var(--syne); font-size: 1.6rem; font-weight: 700; color: var(--wh); }
+
+    /* ═══ HERO ═══ */
+    #hero { min-height: 100svh; display: flex; align-items: center; padding: 120px 0 80px; position: relative; overflow: hidden; }
+    .hero-noise {
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='f'%3E%3CfeTurbulence baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23f)' opacity='.04'/%3E%3C/svg%3E");
+      background-size: 300px;
+    }
+    .hero-glow {
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 65% 55% at 80% 40%, rgba(245,197,24,.07) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 50% at 10% 70%, rgba(245,197,24,.04) 0%, transparent 60%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background-image: linear-gradient(var(--bd) 1px, transparent 1px), linear-gradient(90deg, var(--bd) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(ellipse 90% 80% at 50% 50%, black 20%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 50%, black 20%, transparent 75%);
+      opacity: .5;
+    }
+    .hero-deco {
+      position: absolute; right: -2vw; bottom: -4vw; z-index: 0;
+      font-family: var(--head); font-size: clamp(14rem, 26vw, 28rem);
+      line-height: .85; color: transparent;
+      -webkit-text-stroke: 1px rgba(245,197,24,.07);
+      pointer-events: none; user-select: none;
+    }
+    .hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    .hero-eyebrow { margin-bottom: 24px; }
+    .hero-h1 {
+      font-family: var(--head); font-size: clamp(4rem, 8.5vw, 8.5rem);
+      line-height: .88; letter-spacing: .01em; color: var(--wh); margin-bottom: 28px;
+    }
+    .hero-h1 em { font-style: normal; color: var(--g); }
+    .hero-h1 .dim { color: rgba(245,240,230,.35); }
+    .hero-body { font-size: 1.05rem; color: var(--mt); max-width: 440px; line-height: 1.75; margin-bottom: 36px; }
+    .hero-btns { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 52px; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .htag {
+      font-size: .78rem; color: var(--mt);
+      border: 1px solid rgba(255,255,255,.07); border-radius: 100px; padding: 5px 13px;
+      transition: color .2s, border-color .2s;
+    }
+    .htag:hover { color: var(--g); border-color: var(--bd2); }
+    .hero-right { display: flex; justify-content: center; align-items: center; }
+    .phone-wrap { position: relative; }
+    .phone {
+      width: 256px; aspect-ratio: 9/18;
+      background: var(--s2); border: 1.5px solid var(--bd2); border-radius: 40px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
       position: relative; overflow: hidden;
+      box-shadow: 0 50px 100px rgba(0,0,0,.8), 0 0 0 1px rgba(245,197,24,.06), inset 0 1px 0 rgba(255,255,255,.06);
     }
-    #stats::before {
-      content: '';
-      position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
-      width: 600px; height: 200px;
-      background: radial-gradient(ellipse, rgba(246,199,68,.05) 0%, transparent 70%);
-      pointer-events: none;
+    .phone::before {
+      content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 90px; height: 28px; background: var(--bg); border-radius: 0 0 18px 18px; z-index: 2;
     }
-    .stats-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr);
+    .phone-glow {
+      position: absolute; top: -30px; width: 160px; height: 160px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(245,197,24,.22) 0%, transparent 65%);
+    }
+    .phone-icon { font-size: 4.5rem; position: relative; z-index: 1; }
+    .phone-brand { font-family: var(--syne); font-size: 1.2rem; font-weight: 800; letter-spacing: .1em; color: var(--wh); position: relative; z-index: 1; }
+    .phone-sub { font-size: .65rem; letter-spacing: .22em; text-transform: uppercase; color: var(--g); position: relative; z-index: 1; }
+    .phone-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; padding: 0 22px; position: relative; z-index: 1; }
+    .phone-pill {
+      font-size: .58rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--mt);
+      background: rgba(245,197,24,.06); border: 1px solid rgba(245,197,24,.1); border-radius: 5px; padding: 4px 8px;
+    }
+    .phone-badge {
+      position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+      white-space: nowrap; font-size: .65rem; font-weight: 600; letter-spacing: .08em; color: var(--g);
+      background: rgba(245,197,24,.1); border: 1px solid var(--bd); border-radius: 100px; padding: 5px 14px; z-index: 1;
+    }
+    .fc {
+      position: absolute; background: var(--s2); border: 1px solid var(--bd2);
+      border-radius: 12px; padding: 10px 14px;
+      display: flex; align-items: center; gap: 9px;
+      font-size: .78rem; white-space: nowrap; box-shadow: 0 12px 36px rgba(0,0,0,.6);
+    }
+    .fc.f1 { top: 18%; right: calc(100% + 20px); animation: flt 5s ease-in-out infinite; }
+    .fc.f2 { bottom: 28%; left: calc(100% + 20px); animation: flt 5s ease-in-out 2s infinite; }
+    .fc .fv { font-family: var(--syne); font-weight: 700; font-size: .92rem; color: var(--wh); }
+    .fc .fl { font-size: .68rem; color: var(--mt); }
+    @keyframes flt { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+
+    /* ═══ MARQUEE ═══ */
+    .marquee-wrap { border-top: 1px solid var(--bd); border-bottom: 1px solid var(--bd); background: var(--s1); overflow: hidden; padding: 20px 0; }
+    .marquee-track { display: flex; animation: marquee 22s linear infinite; width: max-content; }
+    .marquee-track:hover { animation-play-state: paused; }
+    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .marquee-item {
+      display: flex; align-items: center; gap: 20px; padding: 0 36px; white-space: nowrap;
+      font-family: var(--syne); font-size: .82rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--mt);
+    }
+    .marquee-item .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--g); flex-shrink: 0; }
+
+    /* ═══ BENTO FEATURES ═══ */
+    #features { padding: 120px 0; position: relative; }
+    #features::after {
+      content: ''; position: absolute; left: -10%; top: 30%; width: 500px; height: 500px;
+      border-radius: 50%; pointer-events: none;
+      background: radial-gradient(circle, rgba(245,197,24,.04) 0%, transparent 70%);
+    }
+    .bento { display: grid; grid-template-columns: repeat(12, 1fr); grid-template-rows: auto; gap: 16px; }
+    .bc {
+      background: var(--s2); border: 1px solid var(--bd); border-radius: 20px; padding: 32px;
+      transition: border-color .25s, background .25s, transform .25s; position: relative; overflow: hidden;
+    }
+    .bc:hover { border-color: var(--bd2); background: var(--s3); transform: translateY(-3px); }
+    .bc::before {
+      content: ''; position: absolute; inset: 0; border-radius: 20px; opacity: 0;
+      background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(245,197,24,.06) 0%, transparent 60%);
+      transition: opacity .3s; pointer-events: none;
+    }
+    .bc:hover::before { opacity: 1; }
+    .bc-1{grid-column:span 4} .bc-2{grid-column:span 4} .bc-3{grid-column:span 4}
+    .bc-4{grid-column:span 5} .bc-5{grid-column:span 7}
+    .bc-6{grid-column:span 7} .bc-7{grid-column:span 5}
+    .bc-em{grid-column:span 12; display:flex; align-items:center; gap:24px}
+    .bc-ico {
+      width: 54px; height: 54px; border-radius: 14px;
+      background: rgba(245,197,24,.1); border: 1px solid rgba(245,197,24,.18);
+      display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin-bottom: 22px;
+      transition: background .25s, transform .3s;
+    }
+    .bc:hover .bc-ico { background: rgba(245,197,24,.2); transform: scale(1.08) rotate(-3deg); }
+    .bc-title { font-family: var(--syne); font-weight: 700; font-size: 1.1rem; color: var(--wh); margin-bottom: 10px; }
+    .bc-text { color: var(--mt); font-size: .9rem; line-height: 1.65; }
+    .bc-num {
+      font-family: var(--head); font-size: 6rem; line-height: 1;
+      color: transparent; -webkit-text-stroke: 1px rgba(245,197,24,.18);
+      position: absolute; right: 24px; bottom: 10px; pointer-events: none;
+    }
+    .bc-em .em-icon { font-size: 3rem; flex-shrink: 0; }
+    .bc-em .bc-title { font-size: 1.4rem; margin-bottom: 6px; }
+    .bc-em .bc-text { max-width: 560px; }
+    .bc-em .em-stat { margin-left: auto; flex-shrink: 0; text-align: right; font-family: var(--head); font-size: 4.5rem; line-height: 1; color: var(--g); }
+    .bc-em .em-stat small { display: block; font-family: var(--body); font-size: .75rem; color: var(--mt); letter-spacing: .05em; }
+
+    /* ═══ HOW TO PLAY ═══ */
+    #how { padding: 120px 0; background: var(--s1); position: relative; overflow: hidden; }
+    #how::before {
+      content: ''; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+      width: 700px; height: 400px; pointer-events: none;
+      background: radial-gradient(ellipse, rgba(245,197,24,.05) 0%, transparent 65%);
+    }
+    .how-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; position: relative; z-index: 1; }
+    .how-grid::before {
+      content: ''; position: absolute; top: 28px; left: calc(12.5% + 28px); right: calc(12.5% + 28px);
+      height: 1px; background: repeating-linear-gradient(90deg, var(--bd) 0, var(--bd) 6px, transparent 6px, transparent 14px);
+    }
+    .how-step { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px; }
+    .step-ring {
+      width: 56px; height: 56px; border-radius: 50%;
+      border: 1.5px solid var(--bd2); background: var(--s2);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--head); font-size: 1.4rem; color: var(--g);
       position: relative; z-index: 1;
+      transition: background .3s, border-color .3s, box-shadow .3s;
     }
-    .stat-item {
-      text-align: center; padding: 24px;
-      border-right: 1px solid var(--border);
-    }
-    .stat-item:last-child { border-right: none; }
-    .stat-num {
-      font-family: var(--font-head); font-size: 2.6rem; font-weight: 800;
-      color: var(--gold); line-height: 1; margin-bottom: 6px;
-    }
-    .stat-desc { color: var(--muted); font-size: .88rem; }
+    .how-step:hover .step-ring { background: rgba(245,197,24,.15); border-color: var(--g); box-shadow: 0 0 0 6px rgba(245,197,24,.08); }
+    .step-emoji { font-size: 2.2rem; }
+    .step-name { font-family: var(--syne); font-weight: 700; font-size: 1.05rem; color: var(--wh); }
+    .step-info { font-size: .875rem; color: var(--mt); line-height: 1.6; }
 
-    /* ─── FEATURES ─── */
-    #recursos {
-      padding: 120px 0;
-      position: relative; overflow: hidden;
+    /* ═══ CULTURE ═══ */
+    #culture { padding: 140px 0; position: relative; overflow: hidden; }
+    .culture-bg { position: absolute; inset: 0; z-index: 0; background: linear-gradient(160deg, rgba(30,20,10,.6) 0%, transparent 55%); }
+    .culture-deco {
+      position: absolute; right: -5vw; top: 50%; transform: translateY(-50%);
+      font-family: var(--head); font-size: clamp(12rem, 22vw, 24rem);
+      line-height: 1; writing-mode: vertical-lr;
+      color: transparent; -webkit-text-stroke: 1px rgba(245,197,24,.05);
+      pointer-events: none; z-index: 0; user-select: none;
     }
-    #recursos::before {
-      content: '';
-      position: absolute; right: -200px; top: 50%; transform: translateY(-50%);
-      width: 600px; height: 600px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(246,199,68,.05) 0%, transparent 65%);
-      pointer-events: none;
+    .culture-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .culture-left .sect-chip { margin-bottom: 24px; }
+    .culture-left h2 { font-family: var(--head); font-size: clamp(3.5rem, 6vw, 6rem); line-height: .9; color: var(--wh); margin-bottom: 32px; }
+    .culture-left h2 em { font-style: normal; color: var(--g); display: block; }
+    .culture-left p { color: var(--mt); line-height: 1.85; margin-bottom: 18px; font-size: 1rem; }
+    .culture-left .cta-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 36px; }
+    .values { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+    .val {
+      display: flex; align-items: center; gap: 16px;
+      background: var(--s2); border: 1px solid var(--bd); border-radius: 14px; padding: 16px 20px;
+      transition: background .2s, border-color .2s, transform .2s;
     }
-    .features-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      border: 1px solid var(--border); border-radius: var(--r); overflow: hidden;
+    .val:hover { background: var(--s3); border-color: var(--bd2); transform: translateX(4px); }
+    .val-num { font-family: var(--head); font-size: 2rem; color: var(--g); line-height: 1; flex-shrink: 0; width: 36px; }
+    .val-title { font-family: var(--syne); font-weight: 700; font-size: .95rem; color: var(--wh); }
+    .val-desc { font-size: .82rem; color: var(--mt); margin-top: 2px; }
+    .culture-right { display: flex; flex-direction: column; gap: 14px; }
+    .cul-card {
+      background: var(--s2); border: 1px solid var(--bd); border-radius: 18px; padding: 28px;
+      display: flex; align-items: flex-start; gap: 18px;
+      transition: border-color .25s, transform .25s;
     }
-    .feat-card {
-      background: var(--card); padding: 36px 32px;
-      border-right: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      transition: background .25s;
-      position: relative; overflow: hidden;
+    .cul-card:hover { border-color: var(--bd2); transform: translateY(-3px); }
+    .cul-icon {
+      width: 48px; height: 48px; flex-shrink: 0; border-radius: 12px;
+      background: rgba(245,197,24,.1); border: 1px solid var(--bd);
+      display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
     }
-    .feat-card:hover { background: #1a1714; }
-    .feat-card:nth-child(3n) { border-right: none; }
-    .feat-card:nth-last-child(-n+3) { border-bottom: none; }
-    .feat-icon {
-      width: 52px; height: 52px; border-radius: 14px;
-      background: rgba(246,199,68,.1); border: 1px solid rgba(246,199,68,.2);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem; margin-bottom: 20px;
-      transition: background .25s, transform .25s;
-    }
-    .feat-card:hover .feat-icon { background: rgba(246,199,68,.18); transform: scale(1.05); }
-    .feat-title {
-      font-family: var(--font-head); font-size: 1.1rem; font-weight: 700;
-      color: var(--white); margin-bottom: 10px;
-    }
-    .feat-desc { color: var(--muted); font-size: .9rem; line-height: 1.6; }
+    .cul-title { font-family: var(--syne); font-weight: 700; font-size: 1rem; color: var(--wh); margin-bottom: 6px; }
+    .cul-text { font-size: .875rem; color: var(--mt); line-height: 1.65; }
 
-    /* ─── GAMEPLAY ─── */
-    #gameplay {
-      padding: 120px 0;
-      background: var(--surface);
-      position: relative; overflow: hidden;
-    }
-    #gameplay::before {
-      content: '';
-      position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
-      width: 800px; height: 400px;
-      background: radial-gradient(ellipse, rgba(246,199,68,.06) 0%, transparent 65%);
-      pointer-events: none;
-    }
-    .steps {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 0; position: relative; z-index: 1;
-    }
-    .steps::before {
-      content: '';
-      position: absolute; top: 25px; left: calc(12.5% + 26px); right: calc(12.5% + 26px);
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border) 10%, var(--border) 90%, transparent);
-    }
-    .step {
-      text-align: center; padding: 0 20px;
-      display: flex; flex-direction: column; align-items: center; gap: 16px;
-    }
-    .step-num {
-      width: 52px; height: 52px; border-radius: 50%;
-      background: var(--card); border: 1.5px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-head); font-size: 1.1rem; font-weight: 800;
-      color: var(--gold); position: relative; z-index: 1;
-      transition: background .3s, border-color .3s, transform .3s;
-    }
-    .step:hover .step-num {
-      background: rgba(246,199,68,.15); border-color: var(--gold); transform: scale(1.1);
-    }
-    .step-icon { font-size: 2rem; }
-    .step-title {
-      font-family: var(--font-head); font-weight: 700; font-size: 1rem; color: var(--white);
-    }
-    .step-desc { color: var(--muted); font-size: .85rem; line-height: 1.5; }
+    /* ═══ STATS ═══ */
+    #stats { padding: 80px 0; background: var(--s1); border-top: 1px solid var(--bd); border-bottom: 1px solid var(--bd); }
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .stat-col { text-align: center; padding: 16px 24px; border-right: 1px solid var(--bd); }
+    .stat-col:last-child { border-right: none; }
+    .stat-n { font-family: var(--head); font-size: clamp(3rem, 5vw, 4.5rem); line-height: 1; color: var(--g); margin-bottom: 8px; }
+    .stat-l { font-size: .85rem; color: var(--mt); }
 
-    /* ─── CULTURE ─── */
-    #cultura {
-      padding: 120px 0;
-      position: relative; overflow: hidden;
+    /* ═══ DOWNLOAD ═══ */
+    #download { padding: 140px 0; position: relative; overflow: hidden; }
+    .dl-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(245,197,24,.09) 0%, transparent 65%), var(--bg); }
+    .dl-grid-lines {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: linear-gradient(var(--bd) 1px, transparent 1px), linear-gradient(90deg, var(--bd) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 70%);
+      opacity: .6;
     }
-    .culture-layout {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    .dl-inner { position: relative; z-index: 1; text-align: center; }
+    .dl-inner .chip { margin-bottom: 32px; }
+    .dl-h { font-family: var(--head); font-size: clamp(4rem, 9vw, 9rem); line-height: .88; color: var(--wh); margin-bottom: 24px; }
+    .dl-h em { font-style: normal; color: var(--g); }
+    .dl-p { color: var(--mt); font-size: 1.1rem; max-width: 520px; margin: 0 auto 44px; line-height: 1.75; }
+    .dl-btns { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .btn-store {
+      display: inline-flex; align-items: center; gap: 14px;
+      background: var(--s2); border: 1.5px solid var(--bd2); border-radius: 14px; padding: 16px 28px;
+      transition: border-color .25s, background .25s, transform .25s, box-shadow .25s;
     }
-    .culture-text .section-label { justify-content: flex-start; margin-bottom: 16px; }
-    .culture-text h2 {
-      font-family: var(--font-head); font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-      line-height: 1.1; color: var(--white); margin-bottom: 20px;
-    }
-    .culture-text h2 span { color: var(--gold); }
-    .culture-text p { color: var(--muted); line-height: 1.8; margin-bottom: 24px; }
-    .culture-values { display: flex; flex-direction: column; gap: 10px; }
-    .culture-value {
-      display: flex; align-items: center; gap: 12px;
-      background: rgba(246,199,68,.05); border: 1px solid var(--border);
-      border-radius: 12px; padding: 14px 18px; transition: background .2s;
-    }
-    .culture-value:hover { background: rgba(246,199,68,.09); }
-    .cv-icon { font-size: 1.3rem; }
-    .cv-label { font-weight: 600; font-size: .9rem; color: var(--white); }
-    .cv-desc { font-size: .82rem; color: var(--muted); }
-    .culture-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .culture-card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: var(--r); padding: 28px 24px;
-      transition: transform .25s, border-color .25s;
-    }
-    .culture-card:hover { transform: translateY(-4px); border-color: rgba(246,199,68,.3); }
-    .culture-card:first-child { grid-column: span 2; }
-    .culture-card-icon { font-size: 2rem; margin-bottom: 12px; }
-    .culture-card-title {
-      font-family: var(--font-head); font-weight: 700; font-size: 1rem;
-      color: var(--white); margin-bottom: 8px;
-    }
-    .culture-card-text { color: var(--muted); font-size: .85rem; line-height: 1.6; }
+    .btn-store:hover { border-color: var(--g); background: rgba(245,197,24,.08); transform: translateY(-3px); box-shadow: 0 16px 48px rgba(245,197,24,.18); }
+    .btn-store .si { font-size: 1.8rem; }
+    .btn-store .st small { display: block; font-size: .68rem; color: var(--mt); letter-spacing: .06em; text-transform: uppercase; }
+    .btn-store .st strong { display: block; font-family: var(--syne); font-size: 1.05rem; font-weight: 700; color: var(--wh); }
+    .trust-row { display: flex; align-items: center; justify-content: center; gap: 32px; margin-top: 52px; flex-wrap: wrap; }
+    .trust-item { display: flex; align-items: center; gap: 8px; font-size: .82rem; color: var(--mt); }
 
-    /* ─── DOWNLOAD ─── */
-    #download { padding: 120px 0; background: var(--surface); }
-    .download-box {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 32px; padding: 72px 60px; text-align: center;
-      position: relative; overflow: hidden;
+    /* ═══ FAQ ═══ */
+    #faq { padding: 120px 0; background: var(--s1); }
+    .faq-wrap { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+    .fq { border: 1px solid var(--bd); border-radius: 16px; overflow: hidden; transition: border-color .2s; }
+    .fq:hover, .fq.open { border-color: var(--bd2); }
+    .fq-q {
+      width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 22px 26px; background: var(--s2); border: none; cursor: pointer;
+      font-family: var(--syne); font-size: .98rem; font-weight: 700; color: var(--wh); text-align: left; transition: background .2s;
     }
-    .download-box::before {
-      content: '';
-      position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
-      width: 600px; height: 400px;
-      background: radial-gradient(ellipse, rgba(246,199,68,.1) 0%, transparent 60%);
+    .fq-q:hover { background: var(--s3); }
+    .fq-icon {
+      flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(245,197,24,.1); border: 1px solid var(--bd);
+      display: flex; align-items: center; justify-content: center; transition: background .25s;
     }
-    .download-box > * { position: relative; z-index: 1; }
-    .download-box h2 {
-      font-family: var(--font-head); font-size: clamp(2rem, 4.5vw, 3.2rem);
-      line-height: 1.1; color: var(--white); margin: 20px 0 16px;
-    }
-    .download-box h2 span { color: var(--gold); }
-    .download-box p { color: var(--muted); max-width: 500px; margin: 0 auto 40px; font-size: 1.05rem; }
-    .download-actions { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
-    .btn-play-lg {
-      display: inline-flex; align-items: center; gap: 12px;
-      background: linear-gradient(135deg, var(--gold), var(--gold-dim));
-      color: var(--black); padding: 16px 32px; border-radius: 16px;
-      font-family: var(--font-body); font-weight: 700; font-size: 1.1rem; text-decoration: none;
-      box-shadow: 0 8px 36px rgba(246,199,68,.3); transition: transform .2s, box-shadow .2s;
-    }
-    .btn-play-lg:hover { transform: translateY(-3px); box-shadow: 0 14px 48px rgba(246,199,68,.4); }
-    .btn-play-lg .btn-sub { display: block; font-size: .7rem; font-weight: 400; opacity: .7; }
-    .btn-play-lg .btn-main { display: block; font-size: 1rem; font-weight: 700; }
-    .store-icon { font-size: 1.8rem; }
+    .fq-icon svg { width: 12px; height: 12px; stroke: var(--g); transition: transform .35s; }
+    .fq.open .fq-icon { background: rgba(245,197,24,.2); }
+    .fq.open .fq-icon svg { transform: rotate(180deg); }
+    .fq-a { max-height: 0; overflow: hidden; transition: max-height .4s ease; background: var(--s2); }
+    .fq.open .fq-a { max-height: 220px; }
+    .fq-a-inner { padding: 18px 26px 22px; color: var(--mt); font-size: .935rem; line-height: 1.75; border-top: 1px solid var(--bd); }
 
-    /* ─── FAQ ─── */
-    #faq { padding: 120px 0; }
-    .faq-list { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
-    .faq-item {
-      border: 1px solid var(--border); border-radius: 14px;
-      overflow: hidden; transition: border-color .2s;
-    }
-    .faq-item.open, .faq-item:hover { border-color: rgba(246,199,68,.3); }
-    .faq-question {
-      width: 100%; display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 24px; background: var(--card);
-      border: none; cursor: pointer; text-align: left;
-      font-family: var(--font-body); font-size: 1rem; font-weight: 600;
-      color: var(--white); gap: 16px; transition: background .2s;
-    }
-    .faq-question:hover { background: #1a1714; }
-    .faq-chevron {
-      flex-shrink: 0; width: 20px; height: 20px;
-      color: var(--gold); transition: transform .3s;
-    }
-    .faq-item.open .faq-chevron { transform: rotate(180deg); }
-    .faq-answer { max-height: 0; overflow: hidden; transition: max-height .35s ease; background: var(--card); }
-    .faq-item.open .faq-answer { max-height: 200px; }
-    .faq-answer-inner {
-      padding: 16px 24px 20px; color: var(--muted); font-size: .95rem; line-height: 1.7;
-      border-top: 1px solid var(--border);
-    }
+    /* ═══ FOOTER ═══ */
+    footer { background: var(--bg); border-top: 1px solid var(--bd); padding: 56px 0 40px; }
+    .foot-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 40px; flex-wrap: wrap; margin-bottom: 40px; }
+    .foot-brand { max-width: 320px; }
+    .foot-brand .fb-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .foot-brand .fb-logo .nav-logo-box { width: 34px; height: 34px; font-size: .8rem; }
+    .foot-brand .fb-logo span { font-family: var(--syne); font-weight: 800; font-size: .95rem; letter-spacing: .06em; color: var(--wh); }
+    .foot-brand p { font-size: .85rem; color: var(--mt); line-height: 1.7; }
+    .foot-links { display: flex; gap: 60px; flex-wrap: wrap; }
+    .fl-col h4 { font-family: var(--syne); font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--mt); margin-bottom: 16px; }
+    .fl-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .fl-col a { font-size: .875rem; color: var(--mt); transition: color .2s; }
+    .fl-col a:hover { color: var(--g); }
+    .foot-bottom { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-top: 1px solid var(--bd); padding-top: 24px; }
+    .foot-bottom p { font-size: .8rem; color: var(--mt); }
+    .foot-badge { display: flex; align-items: center; gap: 6px; font-size: .8rem; color: var(--mt); }
+    .foot-badge span { color: var(--g); font-weight: 600; }
 
-    /* ─── FOOTER ─── */
-    footer { border-top: 1px solid var(--border); padding: 48px 0; background: var(--surface); }
-    .footer-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 20px;
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 1024px) {
+      .bento { grid-template-columns: repeat(6, 1fr); }
+      .bc-1,.bc-2,.bc-3{grid-column:span 2}
+      .bc-4,.bc-5,.bc-6,.bc-7{grid-column:span 3}
+      .bc-em{grid-column:span 6}
+      .bc-em .em-stat { display: none; }
+      .culture-inner { grid-template-columns: 1fr; gap: 60px; }
+      .culture-deco { display: none; }
+      .fc.f1,.fc.f2 { display: none; }
     }
-    .footer-copy { color: var(--muted); font-size: .85rem; margin-top: 8px; }
-    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
-    .footer-links a { color: var(--muted); text-decoration: none; font-size: .85rem; transition: color .2s; }
-    .footer-links a:hover { color: var(--gold); }
-
-    /* ─── SCROLL REVEAL ─── */
-    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
-    .reveal.visible { opacity: 1; transform: none; }
-    .reveal-delay-1 { transition-delay: .1s; }
-    .reveal-delay-2 { transition-delay: .2s; }
-    .reveal-delay-3 { transition-delay: .3s; }
-    .reveal-delay-4 { transition-delay: .4s; }
-    .reveal-delay-5 { transition-delay: .5s; }
-    .reveal-delay-6 { transition-delay: .6s; }
-
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 900px) {
-      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
-      .hero-visual { display: none; }
-      .stats-grid { grid-template-columns: repeat(2,1fr); }
-      .stat-item:nth-child(2) { border-right: none; }
-      .stat-item:nth-child(3),
-      .stat-item:nth-child(4) { border-top: 1px solid var(--border); }
-      .features-grid { grid-template-columns: repeat(2,1fr); }
-      .feat-card:nth-child(3n) { border-right: 1px solid var(--border); }
-      .feat-card:nth-child(2n) { border-right: none; }
-      .feat-card:nth-last-child(-n+3) { border-bottom: 1px solid var(--border); }
-      .feat-card:nth-last-child(-n+2) { border-bottom: none; }
-      .steps { grid-template-columns: repeat(2,1fr); gap: 40px; }
-      .steps::before { display: none; }
-      .culture-layout { grid-template-columns: 1fr; gap: 48px; }
-      .download-box { padding: 48px 32px; }
-    }
-    @media (max-width: 640px) {
+    @media (max-width: 768px) {
       .nav-links, .nav-cta { display: none; }
-      .hamburger { display: flex; }
-      .features-grid { grid-template-columns: 1fr; }
-      .feat-card { border-right: none !important; }
-      .feat-card:nth-last-child(n) { border-bottom: 1px solid var(--border); }
-      .feat-card:last-child { border-bottom: none; }
-      .steps { grid-template-columns: 1fr; }
-      .culture-cards { grid-template-columns: 1fr; }
-      .culture-card:first-child { grid-column: span 1; }
-      .download-box { padding: 40px 24px; }
-      .hero-desc { font-size: 1rem; }
+      .burger { display: flex; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .bento { grid-template-columns: 1fr; }
+      .bc-1,.bc-2,.bc-3,.bc-4,.bc-5,.bc-6,.bc-7,.bc-em { grid-column: span 1; }
+      .bc-em { flex-direction: column; }
+      .how-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+      .how-grid::before { display: none; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .stat-col:nth-child(2) { border-right: none; }
+      .stat-col:nth-child(3) { border-top: 1px solid var(--bd); }
+      .stat-col:nth-child(4) { border-top: 1px solid var(--bd); border-right: none; }
+      .foot-top { flex-direction: column; }
+      .foot-links { gap: 36px; }
+    }
+    @media (max-width: 480px) {
+      .how-grid { grid-template-columns: 1fr; }
+      .hero-h1 { font-size: 4.5rem; }
+      .dl-h { font-size: 4rem; }
     }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav id="navbar">
-  <div class="container">
-    <div class="nav-inner">
-      <a href="#inicio" class="nav-logo">
-        <div class="logo-mark">AB</div>
-        <span class="logo-text">AFROBARBER</span>
+<nav id="nav">
+  <div class="wrap">
+    <div class="nav-row">
+      <a href="#hero" class="nav-brand">
+        <div class="nav-logo-box">AB</div>
+        <span class="nav-brand-name">AFROBARBER</span>
       </a>
       <ul class="nav-links">
-        <li><a href="#recursos">Recursos</a></li>
-        <li><a href="#gameplay">Como Jogar</a></li>
-        <li><a href="#cultura">Cultura</a></li>
+        <li><a href="#features">Recursos</a></li>
+        <li><a href="#how">Como Jogar</a></li>
+        <li><a href="#culture">Cultura</a></li>
         <li><a href="#faq">FAQ</a></li>
       </ul>
-      <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn btn-primary nav-cta">
-        Baixar Grátis
-      </a>
-      <button class="hamburger" id="hamburger" aria-label="Abrir menu">
+      <div class="nav-cta">
+        <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-gold">Baixar Grátis</a>
+      </div>
+      <button class="burger" id="burger" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
     </div>
   </div>
 </nav>
 
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#recursos" class="mobile-link">Recursos</a>
-  <a href="#gameplay" class="mobile-link">Como Jogar</a>
-  <a href="#cultura" class="mobile-link">Cultura</a>
-  <a href="#faq" class="mobile-link">FAQ</a>
-  <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn btn-primary">Baixar Grátis</a>
+<div class="mob-nav" id="mobNav">
+  <a href="#features" class="mnl">Recursos</a>
+  <a href="#how" class="mnl">Como Jogar</a>
+  <a href="#culture" class="mnl">Cultura</a>
+  <a href="#faq" class="mnl">FAQ</a>
+  <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-gold">Baixar Grátis</a>
 </div>
 
-<!-- HERO -->
-<section id="inicio">
-  <div class="hero-bg"></div>
-  <div class="hero-grid-lines"></div>
-  <div class="container">
+<section id="hero">
+  <div class="hero-noise"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-deco" aria-hidden="true">AB</div>
+  <div class="wrap">
     <div class="hero-inner">
-      <div class="hero-content">
-        <div class="hero-eyebrow">
-          <span class="tag">Simulador de Barbearia Afro</span>
-        </div>
-        <h1>
-          Corte com <span class="accent">propósito,</span>
-          <span class="line-2">construa um legado.</span>
+      <div class="hero-left">
+        <div class="hero-eyebrow"><span class="chip">Simulador de Barbearia Afro</span></div>
+        <h1 class="hero-h1">
+          CORTE<br/>
+          COM <em>PRO-</em><br/>
+          <span class="dim">PÓSITO.</span>
         </h1>
-        <p class="hero-desc">
-          Gerencie sua barbearia, sirva clientes, invista no seu negócio e celebre a cultura afro. Um jogo com identidade — para quem tem orgulho das raízes.
+        <p class="hero-body">
+          Gerencie sua barbearia, atenda clientes, cuide das finanças e construa seu legado. Um jogo com alma, identidade e cultura afro.
         </p>
-        <div class="hero-cta">
-          <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-play">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 20.5v-17c0-.83 1.01-1.3 1.7-.8l14 8.5c.63.38.63 1.32 0 1.7l-14 8.5c-.69.5-1.7.03-1.7-.8z"/></svg>
-            <span>
-              <span style="display:block;font-size:.7rem;font-weight:400;opacity:.8;">Disponível no</span>
-              <span style="display:block;font-weight:700;">Google Play</span>
-            </span>
+        <div class="hero-btns">
+          <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-gold">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.83 1.01-1.3 1.7-.8l14 8.5c.63.38.63 1.32 0 1.7l-14 8.5c-.69.5-1.7.03-1.7-.8z"/></svg>
+            Google Play — Grátis
           </a>
-          <a href="#gameplay" class="btn btn-outline">Como Jogar</a>
+          <a href="#how" class="btn-ghost">Ver Gameplay ↓</a>
         </div>
-        <div class="hero-pills">
-          <span class="pill">✂️ Cortes Afro Autênticos</span>
-          <span class="pill">📅 Agenda Inteligente</span>
-          <span class="pill">💰 Gestão Financeira</span>
-          <span class="pill">🏆 Missões e XP</span>
+        <div class="hero-tags">
+          <span class="htag">✂ Cortes Afro</span>
+          <span class="htag">📅 Agenda</span>
+          <span class="htag">💰 Finanças</span>
+          <span class="htag">🎯 Missões</span>
+          <span class="htag">🏪 Loja</span>
         </div>
       </div>
-      <div class="hero-visual">
-        <div style="position:relative;">
-          <div class="hero-card">
-            <div class="hero-card-emoji">✂️</div>
-            <div class="hero-card-title">AFROBARBER</div>
-            <div class="hero-card-sub">Simulador de Barbearia</div>
-            <div class="hero-card-values">
-              <span>RESPEITO</span>
-              <span>FOCO</span>
-              <span>DISCIPLINA</span>
-              <span>SUCESSO</span>
+      <div class="hero-right">
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="phone-glow"></div>
+            <div class="phone-icon">✂️</div>
+            <div class="phone-brand">AFROBARBER</div>
+            <div class="phone-sub">Simulador de Barbearia</div>
+            <div class="phone-pills">
+              <span class="phone-pill">Respeito</span>
+              <span class="phone-pill">Foco</span>
+              <span class="phone-pill">Disciplina</span>
+              <span class="phone-pill">Sucesso</span>
             </div>
-            <div class="hero-card-badge">✦ Grátis no Google Play</div>
+            <div class="phone-badge">✦ Grátis no Google Play</div>
           </div>
-          <div class="floating-stat a1">
-            <span style="font-size:1.3rem;">🏆</span>
-            <div>
-              <div class="stat-val">+50</div>
-              <div class="stat-lbl">Missões</div>
-            </div>
+          <div class="fc f1">
+            <span style="font-size:1.3rem">🏆</span>
+            <div><div class="fv">+50</div><div class="fl">Missões disponíveis</div></div>
           </div>
-          <div class="floating-stat a2">
-            <span style="font-size:1.3rem;">⭐</span>
-            <div>
-              <div class="stat-val">Nível MAX</div>
-              <div class="stat-lbl">Evolua seu barbeiro</div>
-            </div>
+          <div class="fc f2">
+            <span style="font-size:1.3rem">⭐</span>
+            <div><div class="fv">Nível MAX</div><div class="fl">Evolua seu barbeiro</div></div>
           </div>
         </div>
       </div>
@@ -636,320 +515,338 @@
   </div>
 </section>
 
-<!-- STATS BAR -->
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item"><span class="dot"></span>Gestão de Barbearia</span>
+    <span class="marquee-item"><span class="dot"></span>Cortes Afro Autênticos</span>
+    <span class="marquee-item"><span class="dot"></span>Cultura &amp; Identidade</span>
+    <span class="marquee-item"><span class="dot"></span>Controle Financeiro</span>
+    <span class="marquee-item"><span class="dot"></span>Missões &amp; XP</span>
+    <span class="marquee-item"><span class="dot"></span>Agenda Inteligente</span>
+    <span class="marquee-item"><span class="dot"></span>Loja &amp; Upgrades</span>
+    <span class="marquee-item"><span class="dot"></span>Comunidade</span>
+    <span class="marquee-item"><span class="dot"></span>Gestão de Barbearia</span>
+    <span class="marquee-item"><span class="dot"></span>Cortes Afro Autênticos</span>
+    <span class="marquee-item"><span class="dot"></span>Cultura &amp; Identidade</span>
+    <span class="marquee-item"><span class="dot"></span>Controle Financeiro</span>
+    <span class="marquee-item"><span class="dot"></span>Missões &amp; XP</span>
+    <span class="marquee-item"><span class="dot"></span>Agenda Inteligente</span>
+    <span class="marquee-item"><span class="dot"></span>Loja &amp; Upgrades</span>
+    <span class="marquee-item"><span class="dot"></span>Comunidade</span>
+  </div>
+</div>
+
+<section id="features">
+  <div class="wrap">
+    <div class="sh" data-r>
+      <span class="chip">Recursos do Jogo</span>
+      <h2>TUDO QUE SUA<br/><span class="gold">BARBEARIA</span> PRECISA</h2>
+      <p>Sete sistemas completos construídos para você sentir que está realmente administrando um negócio.</p>
+    </div>
+    <div class="bento">
+      <div class="bc bc-1" data-r>
+        <div class="bc-ico">✂️</div>
+        <div class="bc-title">Cortes Realistas</div>
+        <div class="bc-text">Tranças, dreads, degradê, twist — estilos autênticos ligados à identidade afro.</div>
+        <div class="bc-num">01</div>
+      </div>
+      <div class="bc bc-2 d1" data-r>
+        <div class="bc-ico">📅</div>
+        <div class="bc-title">Agenda Inteligente</div>
+        <div class="bc-text">Organize horários, controle o fluxo de clientes e nunca deixe a barbearia parada.</div>
+        <div class="bc-num">02</div>
+      </div>
+      <div class="bc bc-3 d2" data-r>
+        <div class="bc-ico">💰</div>
+        <div class="bc-title">Controle Financeiro</div>
+        <div class="bc-text">Receitas, despesas, caixa, investimentos. Aprenda a gerir dinheiro enquanto joga.</div>
+        <div class="bc-num">03</div>
+      </div>
+      <div class="bc bc-em" data-r>
+        <span class="em-icon">🚀</span>
+        <div class="em-body">
+          <div class="bc-title">Evolução sem limite — do primeiro corte ao topo da comunidade</div>
+          <div class="bc-text">Cada atendimento gera XP. Cada XP desbloqueia upgrades. Cada upgrade muda sua barbearia. O ciclo não para.</div>
+        </div>
+        <div class="em-stat">∞<small>Possibilidades</small></div>
+      </div>
+      <div class="bc bc-4" data-r>
+        <div class="bc-ico">🏪</div>
+        <div class="bc-title">Loja &amp; Upgrades</div>
+        <div class="bc-text">Móveis, equipamentos, produtos premium. Personalize cada canto da sua barbearia.</div>
+        <div class="bc-num">04</div>
+      </div>
+      <div class="bc bc-5 d1" data-r>
+        <div class="bc-ico">🎯</div>
+        <div class="bc-title">Missões &amp; Conquistas</div>
+        <div class="bc-text">Desafios diários, objetivos de longo prazo e recompensas exclusivas que mantêm o jogo sempre fresco. Nunca falta o que fazer.</div>
+        <div class="bc-num">05</div>
+      </div>
+      <div class="bc bc-6" data-r>
+        <div class="bc-ico">🤝</div>
+        <div class="bc-title">Reputação &amp; Comunidade</div>
+        <div class="bc-text">Atenda bem, ganhe respeito, torne-se referência no bairro. A barbearia é o coração da comunidade — e a sua pode ser a melhor.</div>
+        <div class="bc-num">06</div>
+      </div>
+      <div class="bc bc-7 d1" data-r>
+        <div class="bc-ico">☁️</div>
+        <div class="bc-title">Progresso na Nuvem</div>
+        <div class="bc-text">Salvo automaticamente via Unity Cloud Save. Troque de dispositivo sem perder nada.</div>
+        <div class="bc-num">07</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="sh" data-r>
+      <span class="chip">Como Jogar</span>
+      <h2>4 PASSOS.<br/><span class="gold">INFINITO</span> PROGRESSO.</h2>
+      <p>A mecânica é simples. A profundidade não tem fim. Cada turno é uma escolha que muda seu negócio.</p>
+    </div>
+    <div class="how-grid">
+      <div class="how-step" data-r>
+        <div class="step-ring">01</div>
+        <div class="step-emoji">🚪</div>
+        <div class="step-name">Receba Clientes</div>
+        <div class="step-info">Clientes chegam com pedidos únicos. Organize a fila e decida a ordem de atendimento.</div>
+      </div>
+      <div class="how-step d2" data-r>
+        <div class="step-ring">02</div>
+        <div class="step-emoji">📋</div>
+        <div class="step-name">Entenda o Pedido</div>
+        <div class="step-info">Confira o serviço, preço e dificuldade. Cada cliente espera um resultado diferente.</div>
+      </div>
+      <div class="how-step d3" data-r>
+        <div class="step-ring">03</div>
+        <div class="step-emoji">✂️</div>
+        <div class="step-name">Execute o Corte</div>
+        <div class="step-info">Use as ferramentas certas, siga o pedido e entregue um atendimento impecável.</div>
+      </div>
+      <div class="how-step d4" data-r>
+        <div class="step-ring">04</div>
+        <div class="step-emoji">📈</div>
+        <div class="step-name">Evolua &amp; Reinvista</div>
+        <div class="step-info">Receba pagamento, ganhe XP, desbloqueie upgrades e leve sua barbearia mais longe.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="stats">
-  <div class="container">
-    <div class="stats-grid">
-      <div class="stat-item reveal">
-        <div class="stat-num">100%</div>
-        <div class="stat-desc">Grátis para jogar</div>
-      </div>
-      <div class="stat-item reveal reveal-delay-1">
-        <div class="stat-num">6+</div>
-        <div class="stat-desc">Sistemas de jogo</div>
-      </div>
-      <div class="stat-item reveal reveal-delay-2">
-        <div class="stat-num">∞</div>
-        <div class="stat-desc">Possibilidades de negócio</div>
-      </div>
-      <div class="stat-item reveal reveal-delay-3">
-        <div class="stat-num">1</div>
-        <div class="stat-desc">Identidade — a sua</div>
-      </div>
+  <div class="wrap">
+    <div class="stats-row">
+      <div class="stat-col" data-r><div class="stat-n">100%</div><div class="stat-l">Grátis para baixar</div></div>
+      <div class="stat-col d1" data-r><div class="stat-n">7+</div><div class="stat-l">Sistemas de jogo</div></div>
+      <div class="stat-col d2" data-r><div class="stat-n">50+</div><div class="stat-l">Missões disponíveis</div></div>
+      <div class="stat-col d3" data-r><div class="stat-n">∞</div><div class="stat-l">Horas de gameplay</div></div>
     </div>
   </div>
 </section>
 
-<!-- FEATURES -->
-<section id="recursos">
-  <div class="container">
-    <div class="section-label"><span class="tag reveal">Recursos do Jogo</span></div>
-    <h2 class="section-title reveal">Tudo que uma barbearia<br/><span>de verdade</span> precisa</h2>
-    <p class="section-sub reveal">Do primeiro cliente à barbearia dos sonhos — cada detalhe foi pensado para você crescer.</p>
-    <div class="features-grid">
-      <div class="feat-card reveal">
-        <div class="feat-icon">✂️</div>
-        <div class="feat-title">Cortes Realistas</div>
-        <div class="feat-desc">Estilos autênticos da cultura afro: tranças, dreads, degradê, twist e muito mais. Cada corte tem história e identidade.</div>
-      </div>
-      <div class="feat-card reveal reveal-delay-1">
-        <div class="feat-icon">📅</div>
-        <div class="feat-title">Agenda Inteligente</div>
-        <div class="feat-desc">Gerencie o fluxo de clientes sem deixar ninguém esperando. Organize horários e maximize sua eficiência.</div>
-      </div>
-      <div class="feat-card reveal reveal-delay-2">
-        <div class="feat-icon">💰</div>
-        <div class="feat-title">Controle Financeiro</div>
-        <div class="feat-desc">Acompanhe receitas, despesas e fluxo de caixa. Invista no seu negócio e veja o dinheiro multiplicar.</div>
-      </div>
-      <div class="feat-card reveal reveal-delay-3">
-        <div class="feat-icon">🏪</div>
-        <div class="feat-title">Loja & Upgrades</div>
-        <div class="feat-desc">Compre móveis, equipamentos e produtos premium. Monte a barbearia que sempre sonhou, do seu jeito.</div>
-      </div>
-      <div class="feat-card reveal reveal-delay-4">
-        <div class="feat-icon">🎯</div>
-        <div class="feat-title">Missões & XP</div>
-        <div class="feat-desc">Complete desafios, ganhe XP e desbloqueie recompensas exclusivas. Sempre tem um próximo nível para alcançar.</div>
-      </div>
-      <div class="feat-card reveal reveal-delay-5">
-        <div class="feat-icon">🤝</div>
-        <div class="feat-title">Reputação & Comunidade</div>
-        <div class="feat-desc">Construa sua reputação no bairro. Clientes fiéis, boca a boca e prestígio — o seu legado começa aqui.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- GAMEPLAY -->
-<section id="gameplay">
-  <div class="container">
-    <div class="section-label"><span class="tag reveal">Como Jogar</span></div>
-    <h2 class="section-title reveal">Quatro passos para a<br/><span>barbearia perfeita</span></h2>
-    <p class="section-sub reveal">Simples de aprender, difícil de largar. Cada atendimento é uma nova chance de evoluir.</p>
-    <div class="steps">
-      <div class="step reveal">
-        <div class="step-num">01</div>
-        <div class="step-icon">🚪</div>
-        <div class="step-title">Receba Clientes</div>
-        <div class="step-desc">Clientes chegam com demandas diversas. Organize a fila e comece o atendimento.</div>
-      </div>
-      <div class="step reveal reveal-delay-2">
-        <div class="step-num">02</div>
-        <div class="step-icon">📋</div>
-        <div class="step-title">Entenda o Pedido</div>
-        <div class="step-desc">Cada cliente quer um estilo único. Leia o pedido e prepare as ferramentas certas.</div>
-      </div>
-      <div class="step reveal reveal-delay-3">
-        <div class="step-num">03</div>
-        <div class="step-icon">✂️</div>
-        <div class="step-title">Execute o Corte</div>
-        <div class="step-desc">Cadeira, tesoura, máquina — use os equipamentos certos e entregue um serviço impecável.</div>
-      </div>
-      <div class="step reveal reveal-delay-4">
-        <div class="step-num">04</div>
-        <div class="step-icon">🚀</div>
-        <div class="step-title">Evolua & Cresça</div>
-        <div class="step-desc">Receba pagamento, ganhe XP, desbloqueie upgrades e leve sua barbearia ao próximo nível.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CULTURE -->
-<section id="cultura">
-  <div class="container">
-    <div class="culture-layout">
-      <div class="culture-text">
-        <div class="section-label">
-          <span class="tag reveal">Identidade &amp; Cultura</span>
+<section id="culture">
+  <div class="culture-bg"></div>
+  <div class="culture-deco" aria-hidden="true">AFRO</div>
+  <div class="wrap">
+    <div class="culture-inner">
+      <div class="culture-left">
+        <div class="sect-chip"><span class="chip">Identidade &amp; Cultura</span></div>
+        <h2 data-r="l">MAIS QUE UM JOGO.<br/><em>UM MANIFESTO.</em></h2>
+        <p data-r="l" class="d1">AfroBarber celebra a barbearia como espaço de resistência, cultura e comunidade. Cada corte, cada cliente, cada detalhe carrega significado.</p>
+        <p data-r="l" class="d2">Representatividade não é detalhe — é o núcleo. Um jogo que honra a estética afro, a musicalidade das raízes e a força de quem constrói algo do zero.</p>
+        <div class="values" data-r="l" class="d3">
+          <div class="val"><span class="val-num">01</span><div><div class="val-title">Respeito</div><div class="val-desc">Pela história, pela cultura, pelo cliente</div></div></div>
+          <div class="val"><span class="val-num">02</span><div><div class="val-title">Foco</div><div class="val-desc">No ofício, na excelência, no crescimento</div></div></div>
+          <div class="val"><span class="val-num">03</span><div><div class="val-title">Disciplina</div><div class="val-desc">Para construir algo que dura além do jogo</div></div></div>
+          <div class="val"><span class="val-num">04</span><div><div class="val-title">Sucesso</div><div class="val-desc">Definido por você, conquistado por você</div></div></div>
         </div>
-        <h2 class="reveal">
-          Mais que um jogo —<br/>
-          <span>um manifesto cultural</span>
-        </h2>
-        <p class="reveal">
-          AfroBarber nasce da valorização da barbearia como espaço de cultura, resistência e comunidade. Aqui, cada corte carrega um legado.
-        </p>
-        <p class="reveal">
-          Representatividade importa. Nosso jogo celebra a estética afro, a musicalidade das raízes e a força de quem constrói algo do zero.
-        </p>
-        <div class="culture-values">
-          <div class="culture-value reveal">
-            <span class="cv-icon">✊</span>
-            <div>
-              <div class="cv-label">Respeito</div>
-              <div class="cv-desc">Pela história, pela cultura, pelo cliente</div>
-            </div>
-          </div>
-          <div class="culture-value reveal reveal-delay-1">
-            <span class="cv-icon">🎯</span>
-            <div>
-              <div class="cv-label">Foco</div>
-              <div class="cv-desc">No ofício, na excelência, no crescimento</div>
-            </div>
-          </div>
-          <div class="culture-value reveal reveal-delay-2">
-            <span class="cv-icon">🔥</span>
-            <div>
-              <div class="cv-label">Disciplina</div>
-              <div class="cv-desc">Para construir algo que dura</div>
-            </div>
-          </div>
-          <div class="culture-value reveal reveal-delay-3">
-            <span class="cv-icon">🌟</span>
-            <div>
-              <div class="cv-label">Sucesso</div>
-              <div class="cv-desc">Definido por você, conquistado por você</div>
-            </div>
-          </div>
+        <div class="cta-row" data-r="l" class="d4">
+          <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-gold">Baixar e Jogar</a>
+          <a href="#faq" class="btn-ghost">Saiba mais</a>
         </div>
       </div>
-      <div class="culture-cards">
-        <div class="culture-card reveal">
-          <div class="culture-card-icon">🎵</div>
-          <div class="culture-card-title">Música &amp; Atmosfera</div>
-          <div class="culture-card-text">Trilha sonora imersiva que captura a energia da barbearia — o ritmo que embala cada corte e transforma o ambiente.</div>
+      <div class="culture-right">
+        <div class="cul-card" data-r="r">
+          <div class="cul-icon">🎵</div>
+          <div><div class="cul-title">Música &amp; Atmosfera</div><div class="cul-text">Trilha sonora imersiva que captura a energia real da barbearia — o som certo para cada momento do atendimento.</div></div>
         </div>
-        <div class="culture-card reveal reveal-delay-1">
-          <div class="culture-card-icon">💇</div>
-          <div class="culture-card-title">Estilos Autênticos</div>
-          <div class="culture-card-text">Cortes que celebram a beleza e a diversidade da estética afro-brasileira.</div>
+        <div class="cul-card d1" data-r="r">
+          <div class="cul-icon">💇</div>
+          <div><div class="cul-title">Estilos que Representam</div><div class="cul-text">Cortes que celebram a beleza, a diversidade e a riqueza da estética afro-brasileira — autênticos e respeitosos.</div></div>
         </div>
-        <div class="culture-card reveal reveal-delay-2">
-          <div class="culture-card-icon">🤝</div>
-          <div class="culture-card-title">Comunidade Forte</div>
-          <div class="culture-card-text">A barbearia é o coração do bairro — construa laços, ganhe respeito e deixe sua marca na história.</div>
+        <div class="cul-card d2" data-r="r">
+          <div class="cul-icon">🤝</div>
+          <div><div class="cul-title">Comunidade no Centro</div><div class="cul-text">A barbearia é onde histórias se cruzam. Construa laços, ganhe respeito e deixe sua marca dentro e fora do jogo.</div></div>
+        </div>
+        <div class="cul-card d3" data-r="r">
+          <div class="cul-icon">📱</div>
+          <div><div class="cul-title">Para Todas as Idades</div><div class="cul-text">Sem violência, sem conteúdo adulto. Pensado para inspirar e educar — acessível a toda a família.</div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- DOWNLOAD -->
 <section id="download">
-  <div class="container">
-    <div class="download-box">
-      <span class="tag">Disponível Agora</span>
-      <h2>Sua barbearia.<br/><span>Seu legado.</span></h2>
-      <p>Gratuito, sem complicação. Baixe agora e comece do zero — ou direto no topo. Você decide o caminho.</p>
-      <div class="download-actions">
-        <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-play-lg">
-          <span class="store-icon">▶</span>
-          <div>
-            <span class="btn-sub">Baixar grátis no</span>
-            <span class="btn-main">Google Play</span>
-          </div>
+  <div class="dl-bg"></div>
+  <div class="dl-grid-lines"></div>
+  <div class="wrap">
+    <div class="dl-inner">
+      <div data-r><span class="chip">Disponível Agora</span></div>
+      <h2 class="dl-h" data-r>SUA BARBEARIA.<br/><em>SEU LEGADO.</em></h2>
+      <p class="dl-p d1" data-r>Gratuito. Sem complicação. Baixe agora e comece a construir o negócio que sempre quis — um corte de cada vez.</p>
+      <div class="dl-btns d2" data-r>
+        <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-store">
+          <span class="si">▶</span>
+          <div class="st"><small>Disponível no</small><strong>Google Play</strong></div>
         </a>
+      </div>
+      <div class="trust-row d3" data-r>
+        <span class="trust-item">✅ 100% Gratuito</span>
+        <span class="trust-item">📶 Jogue Offline</span>
+        <span class="trust-item">👨‍👩‍👧 Para Todas as Idades</span>
+        <span class="trust-item">☁️ Progresso na Nuvem</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FAQ -->
 <section id="faq">
-  <div class="container">
-    <div class="section-label"><span class="tag reveal">FAQ</span></div>
-    <h2 class="section-title reveal">Perguntas <span>frequentes</span></h2>
-    <p class="section-sub reveal">Tem dúvidas? A gente responde.</p>
-    <div class="faq-list">
-      <div class="faq-item reveal">
-        <button class="faq-question" aria-expanded="false">
-          O jogo é gratuito?
-          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+  <div class="wrap">
+    <div class="sh" data-r>
+      <span class="chip">FAQ</span>
+      <h2>PERGUNTAS<br/><span class="gold">FREQUENTES</span></h2>
+      <p>Tudo que você precisa saber antes de baixar.</p>
+    </div>
+    <div class="faq-wrap">
+      <div class="fq" data-r>
+        <button class="fq-q" aria-expanded="false">O jogo é realmente gratuito?
+          <span class="fq-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
         </button>
-        <div class="faq-answer" role="region">
-          <div class="faq-answer-inner">Sim, 100% gratuito! Baixe no Google Play sem pagar nada. O jogo oferece uma experiência completa sem necessidade de compras obrigatórias.</div>
-        </div>
+        <div class="fq-a"><div class="fq-a-inner">Sim, 100% gratuito. Baixe pelo Google Play sem pagar nada. O jogo entrega uma experiência completa sem necessidade de compras obrigatórias.</div></div>
       </div>
-      <div class="faq-item reveal reveal-delay-1">
-        <button class="faq-question" aria-expanded="false">
-          Precisa de internet para jogar?
-          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      <div class="fq d1" data-r>
+        <button class="fq-q" aria-expanded="false">Precisa de conexão com internet?
+          <span class="fq-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
         </button>
-        <div class="faq-answer" role="region">
-          <div class="faq-answer-inner">Você pode jogar offline! A conexão é necessária apenas para sincronizar seu progresso na nuvem e acessar placares globais.</div>
-        </div>
+        <div class="fq-a"><div class="fq-a-inner">Você pode jogar sem internet. A conexão é usada apenas para sincronizar seu progresso na nuvem e acessar placares globais via Unity Services.</div></div>
       </div>
-      <div class="faq-item reveal reveal-delay-2">
-        <button class="faq-question" aria-expanded="false">
-          Quais dispositivos são compatíveis?
-          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      <div class="fq d2" data-r>
+        <button class="fq-q" aria-expanded="false">Em quais dispositivos funciona?
+          <span class="fq-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
         </button>
-        <div class="faq-answer" role="region">
-          <div class="faq-answer-inner">AfroBarber roda em dispositivos Android. Recomendamos Android 7.0 ou superior para a melhor experiência de jogo.</div>
-        </div>
+        <div class="fq-a"><div class="fq-a-inner">AfroBarber roda em Android. Recomendamos Android 7.0 ou superior para a experiência mais fluida.</div></div>
       </div>
-      <div class="faq-item reveal reveal-delay-3">
-        <button class="faq-question" aria-expanded="false">
-          O conteúdo é adequado para todas as idades?
-          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      <div class="fq d3" data-r>
+        <button class="fq-q" aria-expanded="false">O conteúdo é adequado para crianças?
+          <span class="fq-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
         </button>
-        <div class="faq-answer" role="region">
-          <div class="faq-answer-inner">Sim! O jogo não contém violência, drogas ou conteúdo adulto. É adequado para todas as idades e foi pensado para ser inspirador e educativo.</div>
-        </div>
+        <div class="fq-a"><div class="fq-a-inner">Sim. O jogo não contém violência, drogas ou conteúdo adulto. É pensado para ser inspirador e educativo para todas as idades.</div></div>
       </div>
-      <div class="faq-item reveal reveal-delay-4">
-        <button class="faq-question" aria-expanded="false">
-          Meu progresso fica salvo?
-          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      <div class="fq d4" data-r>
+        <button class="fq-q" aria-expanded="false">Meu progresso é salvo se trocar de celular?
+          <span class="fq-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
         </button>
-        <div class="faq-answer" role="region">
-          <div class="faq-answer-inner">Sim. O progresso é salvo na nuvem via Unity Cloud Save, permitindo que você continue de onde parou em qualquer dispositivo Android.</div>
-        </div>
+        <div class="fq-a"><div class="fq-a-inner">Sim. O progresso é sincronizado automaticamente via Unity Cloud Save. Troque de dispositivo sem perder nada do que você construiu.</div></div>
+      </div>
+      <div class="fq d5" data-r>
+        <button class="fq-q" aria-expanded="false">Como entrar em contato ou reportar um problema?
+          <span class="fq-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </button>
+        <div class="fq-a"><div class="fq-a-inner">Entre em contato pelo e-mail marcelobraga.dev@gmail.com. Respondemos o mais rápido possível e valorizamos cada feedback.</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <div class="container">
-    <div class="footer-inner">
-      <div>
-        <a href="#inicio" class="nav-logo">
-          <div class="logo-mark">AB</div>
-          <span class="logo-text">AFROBARBER</span>
-        </a>
-        <p class="footer-copy">© 2026 AfroBarber. Todos os direitos reservados.</p>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <div class="fb-logo">
+          <div class="nav-logo-box">AB</div>
+          <span>AFROBARBER</span>
+        </div>
+        <p>Simulador de barbearia com identidade. Gerencie, evolua, celebre a cultura afro e construa o seu legado.</p>
       </div>
-      <nav class="footer-links" aria-label="Links do rodapé">
-        <a href="#inicio">Início</a>
-        <a href="#recursos">Recursos</a>
-        <a href="#download">Download</a>
-        <a href="privacy-policy.html">Política de Privacidade</a>
-      </nav>
+      <div class="foot-links">
+        <div class="fl-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="#hero">Início</a></li>
+            <li><a href="#features">Recursos</a></li>
+            <li><a href="#how">Como Jogar</a></li>
+            <li><a href="#culture">Cultura</a></li>
+          </ul>
+        </div>
+        <div class="fl-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="privacy-policy.html">Política de Privacidade</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="fl-col">
+          <h4>Download</h4>
+          <ul>
+            <li><a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener">Google Play</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2026 AfroBarber. Todos os direitos reservados.</p>
+      <div class="foot-badge">Feito com <span>♥</span> e identidade</div>
     </div>
   </div>
 </footer>
 
 <script>
-  // Sticky nav
-  const nav = document.getElementById('navbar');
+(function () {
+  const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 20);
+    nav.classList.toggle('stuck', window.scrollY > 40);
   }, { passive: true });
 
-  // Mobile menu toggle
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  hamburger.addEventListener('click', () => {
-    const open = mobileMenu.classList.toggle('open');
-    hamburger.setAttribute('aria-expanded', open);
+  const burger = document.getElementById('burger');
+  const mobNav = document.getElementById('mobNav');
+  burger.addEventListener('click', () => {
+    const on = mobNav.classList.toggle('on');
+    burger.setAttribute('aria-expanded', on);
   });
-  document.querySelectorAll('.mobile-link, .mobile-menu .btn').forEach(link => {
-    link.addEventListener('click', () => {
-      mobileMenu.classList.remove('open');
-      hamburger.setAttribute('aria-expanded', 'false');
+  mobNav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobNav.classList.remove('on');
+      burger.setAttribute('aria-expanded', 'false');
     });
   });
 
-  // FAQ accordion
-  document.querySelectorAll('.faq-question').forEach(btn => {
+  document.querySelectorAll('.bc').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+      card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+    });
+  });
+
+  document.querySelectorAll('.fq-q').forEach(btn => {
     btn.addEventListener('click', () => {
-      const item = btn.closest('.faq-item');
-      const wasOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item').forEach(i => {
-        i.classList.remove('open');
-        i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+      const item = btn.closest('.fq');
+      const was = item.classList.contains('open');
+      document.querySelectorAll('.fq').forEach(f => {
+        f.classList.remove('open');
+        f.querySelector('.fq-q').setAttribute('aria-expanded', 'false');
       });
-      if (!wasOpen) {
-        item.classList.add('open');
-        btn.setAttribute('aria-expanded', 'true');
-      }
+      if (!was) { item.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
     });
   });
 
-  // Scroll reveal com IntersectionObserver
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
-    });
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  document.querySelectorAll('[data-r]').forEach(el => io.observe(el));
+})();
 </script>
 </body>
 </html>

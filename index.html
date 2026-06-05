@@ -7,696 +7,661 @@
   <meta name="description" content="Gerencie sua barbearia, sirva clientes, evolua seu negócio e celebre a cultura afro. Baixe grátis no Google Play." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
   <style>
-    /* ═══════════════════════════════════════════
-       RESET & TOKENS
-    ═══════════════════════════════════════════ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      /* Brand palette — light, vibrant, tech */
-      --pk:    #FF6B35;   /* primary: warm coral-orange */
-      --pkd:   #E55020;   /* primary dark */
-      --pkl:   #FF9166;   /* primary light */
-      --ac:    #7C3AED;   /* accent: electric purple */
-      --acl:   #A78BFA;   /* accent light */
-      --em:    #10B981;   /* emerald for positive/free */
-      --sky:   #0EA5E9;   /* sky blue */
-
-      /* Surfaces — bright, clean */
-      --bg:    #F8F5F1;   /* warm off-white */
-      --s0:    #FFFFFF;
-      --s1:    #F2EDE7;
-      --s2:    #EAE3DB;
-      --s3:    #DDD5CB;
-
-      /* Text */
-      --tx:    #1A1310;   /* near-black warm */
-      --t2:    #4A3F35;   /* dark brown mid */
-      --mt:    #7A6E65;   /* muted text */
-      --wh:    #FFFFFF;
-
-      /* Borders */
-      --bd:    rgba(26,19,16,.1);
-      --bd2:   rgba(255,107,53,.25);
-
-      /* Fonts */
-      --head:  'Bebas Neue', sans-serif;
-      --syne:  'Syne', sans-serif;
-      --body:  'Inter', sans-serif;
-
-      /* Shadows */
-      --sh1:   0 2px 12px rgba(26,19,16,.08);
-      --sh2:   0 8px 32px rgba(26,19,16,.12);
-      --sh3:   0 20px 64px rgba(26,19,16,.16);
+      --pk:   #FF6B35;
+      --pkd:  #E55020;
+      --pkl:  #FF9166;
+      --ac:   #7C3AED;
+      --acl:  #A78BFA;
+      --em:   #10B981;
+      --sky:  #0EA5E9;
+      --bg:   #F7F4F0;
+      --s0:   #FFFFFF;
+      --s1:   #F0EBE4;
+      --s2:   #E8E0D6;
+      --tx:   #1A1310;
+      --t2:   #3D3028;
+      --mt:   #7A6E65;
+      --bd:   rgba(26,19,16,.09);
+      --bd2:  rgba(255,107,53,.22);
+      --head: 'Bebas Neue', sans-serif;
+      --syne: 'Syne', sans-serif;
+      --body: 'Inter', sans-serif;
+      --r:    20px;
+      --sh1:  0 2px 8px rgba(26,19,16,.07);
+      --sh2:  0 8px 28px rgba(26,19,16,.11);
+      --sh3:  0 20px 56px rgba(26,19,16,.15);
     }
-    html { scroll-behavior: smooth; font-size: 16px; }
+    html { scroll-behavior: smooth; }
     body { font-family: var(--body); background: var(--bg); color: var(--tx); overflow-x: hidden; line-height: 1.6; }
     a { text-decoration: none; color: inherit; }
-    img { display: block; max-width: 100%; }
 
-    /* ═══════════════════════════════════════════
-       UTILITIES
-    ═══════════════════════════════════════════ */
-    .wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+    /* ─── UTILS ─── */
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
 
-    .chip {
+    .tag {
       display: inline-flex; align-items: center; gap: 7px;
-      background: rgba(255,107,53,.1); border: 1px solid rgba(255,107,53,.25);
-      color: var(--pk); font-family: var(--body); font-size: .72rem;
-      font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      font-family: var(--body); font-size: .7rem; font-weight: 700;
+      letter-spacing: .13em; text-transform: uppercase;
       padding: 6px 14px; border-radius: 100px;
     }
-    .chip::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--pk); flex-shrink: 0; animation: blink 2s ease-in-out infinite; }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+    .tag-pk  { background: rgba(255,107,53,.1);  color: var(--pk);  border: 1px solid rgba(255,107,53,.22); }
+    .tag-ac  { background: rgba(124,58,237,.1);  color: var(--ac);  border: 1px solid rgba(124,58,237,.22); }
+    .tag-em  { background: rgba(16,185,129,.1);  color: var(--em);  border: 1px solid rgba(16,185,129,.22); }
+    .tag-sky { background: rgba(14,165,233,.1);  color: var(--sky); border: 1px solid rgba(14,165,233,.22); }
+    .tag::before { content:''; width:5px; height:5px; border-radius:50%; background:currentColor; animation: blink 2s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
 
-    .chip-purple {
-      background: rgba(124,58,237,.1); border-color: rgba(124,58,237,.25); color: var(--ac);
-    }
-    .chip-purple::before { background: var(--ac); }
-
-    .chip-green {
-      background: rgba(16,185,129,.1); border-color: rgba(16,185,129,.25); color: var(--em);
-    }
-    .chip-green::before { background: var(--em); }
-
-    /* BUTTONS */
-    .btn-primary {
+    .btn-pk {
       display: inline-flex; align-items: center; gap: 10px;
-      background: var(--pk); color: var(--wh);
-      font-family: var(--syne); font-weight: 700; font-size: .95rem;
-      padding: 15px 30px; border-radius: 12px; border: none; cursor: pointer;
-      box-shadow: 0 4px 20px rgba(255,107,53,.35);
+      background: var(--pk); color: #fff;
+      font-family: var(--syne); font-weight: 700; font-size: .92rem;
+      padding: 15px 32px; border-radius: 14px; border: none; cursor: pointer;
+      box-shadow: 0 4px 24px rgba(255,107,53,.38);
       transition: transform .2s, box-shadow .2s, background .2s;
     }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(255,107,53,.45); background: var(--pkd); }
+    .btn-pk:hover { transform: translateY(-2px); box-shadow: 0 10px 40px rgba(255,107,53,.48); background: var(--pkd); }
 
-    .btn-secondary {
+    .btn-out {
       display: inline-flex; align-items: center; gap: 10px;
       background: var(--s0); color: var(--tx);
-      font-family: var(--syne); font-weight: 700; font-size: .95rem;
-      padding: 14px 30px; border-radius: 12px;
-      border: 1.5px solid var(--bd); cursor: pointer;
-      box-shadow: var(--sh1);
+      font-family: var(--syne); font-weight: 700; font-size: .92rem;
+      padding: 14px 32px; border-radius: 14px;
+      border: 1.5px solid var(--bd); cursor: pointer; box-shadow: var(--sh1);
       transition: border-color .2s, transform .2s, box-shadow .2s;
     }
-    .btn-secondary:hover { border-color: var(--pk); transform: translateY(-2px); box-shadow: var(--sh2); }
+    .btn-out:hover { border-color: var(--pk); transform: translateY(-2px); box-shadow: var(--sh2); }
 
-    .btn-purple {
-      display: inline-flex; align-items: center; gap: 10px;
-      background: var(--ac); color: var(--wh);
-      font-family: var(--syne); font-weight: 700; font-size: .95rem;
-      padding: 15px 30px; border-radius: 12px; border: none; cursor: pointer;
-      box-shadow: 0 4px 20px rgba(124,58,237,.35);
-      transition: transform .2s, box-shadow .2s;
-    }
-    .btn-purple:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(124,58,237,.45); }
-
-    /* SECTION HEADERS */
-    .sh { text-align: center; margin-bottom: 64px; }
+    .sh { text-align: center; margin-bottom: 60px; }
     .sh h2 {
-      font-family: var(--head); font-size: clamp(3rem, 6vw, 5.5rem);
-      line-height: .95; letter-spacing: .01em;
-      color: var(--tx); margin: 16px 0 20px;
+      font-family: var(--head); font-size: clamp(2.8rem, 5.5vw, 5rem);
+      line-height: .92; color: var(--tx); margin: 14px 0 18px;
     }
-    .sh h2 .pk { color: var(--pk); }
-    .sh h2 .ac { color: var(--ac); }
-    .sh p { color: var(--mt); font-size: 1.05rem; max-width: 520px; margin: 0 auto; }
+    .sh p { color: var(--mt); font-size: 1rem; max-width: 500px; margin: 0 auto; }
 
-    /* SCROLL REVEAL */
-    [data-r] { opacity: 0; transform: translateY(32px); transition: opacity .7s ease, transform .7s ease; }
-    [data-r="l"] { transform: translateX(-32px); }
-    [data-r="r"] { transform: translateX(32px); }
-    [data-r].in { opacity: 1; transform: none; }
-    .d1{transition-delay:.08s} .d2{transition-delay:.16s} .d3{transition-delay:.24s}
-    .d4{transition-delay:.32s} .d5{transition-delay:.4s}  .d6{transition-delay:.48s}
+    [data-r] { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+    [data-r="l"] { transform: translateX(-28px); }
+    [data-r="r"] { transform: translateX(28px); }
+    [data-r].in  { opacity: 1; transform: none; }
+    .d1{transition-delay:.07s} .d2{transition-delay:.14s} .d3{transition-delay:.21s}
+    .d4{transition-delay:.28s} .d5{transition-delay:.35s}
 
-    /* ═══════════════════════════════════════════
-       NAVBAR
-    ═══════════════════════════════════════════ */
+    /* ─── NAV ─── */
     #nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      transition: background .35s, box-shadow .35s;
+      transition: background .3s, box-shadow .3s;
     }
     #nav.stuck {
-      background: rgba(248,245,241,.94);
-      backdrop-filter: blur(24px) saturate(1.8);
-      -webkit-backdrop-filter: blur(24px) saturate(1.8);
+      background: rgba(247,244,240,.95);
+      backdrop-filter: blur(20px) saturate(1.8);
+      -webkit-backdrop-filter: blur(20px) saturate(1.8);
       box-shadow: 0 1px 0 var(--bd), var(--sh1);
     }
     .nav-row {
       display: flex; align-items: center; justify-content: space-between;
-      height: 72px; gap: 24px;
+      height: 68px; gap: 20px;
     }
-    .nav-brand { display: flex; align-items: center; gap: 11px; }
-    .nav-logo-box {
-      width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0;
+    .nav-brand { display: flex; align-items: center; gap: 10px; }
+    .nav-logo {
+      width: 36px; height: 36px; border-radius: 9px;
       background: linear-gradient(135deg, var(--pk) 0%, var(--ac) 100%);
       display: flex; align-items: center; justify-content: center;
-      font-family: var(--syne); font-size: .82rem; font-weight: 800; color: var(--wh);
-      box-shadow: 0 4px 14px rgba(255,107,53,.35);
+      font-family: var(--syne); font-size: .8rem; font-weight: 800; color: #fff;
+      box-shadow: 0 3px 12px rgba(255,107,53,.32);
     }
-    .nav-brand-name {
-      font-family: var(--syne); font-weight: 800; font-size: 1rem;
-      letter-spacing: .06em; color: var(--tx);
-    }
-    .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
-    .nav-links a {
-      font-size: .875rem; font-weight: 500; color: var(--mt);
-      transition: color .2s;
-    }
+    .nav-name { font-family: var(--syne); font-weight: 800; font-size: .95rem; letter-spacing: .06em; }
+    .nav-links { display: flex; align-items: center; gap: 34px; list-style: none; }
+    .nav-links a { font-size: .855rem; font-weight: 500; color: var(--mt); transition: color .2s; }
     .nav-links a:hover { color: var(--tx); }
-    .nav-cta { display: flex; align-items: center; gap: 12px; }
-    .burger { display: none; background: none; border: none; cursor: pointer; padding: 4px; flex-direction: column; gap: 5px; }
+    .burger { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; padding: 4px; }
     .burger span { display: block; width: 22px; height: 2px; background: var(--tx); border-radius: 2px; transition: .3s; }
     .mob-nav {
-      display: none; position: fixed; inset: 72px 0 0; z-index: 199;
-      background: rgba(248,245,241,.97); backdrop-filter: blur(28px);
-      flex-direction: column; align-items: center; justify-content: center; gap: 40px;
+      display: none; position: fixed; inset: 68px 0 0; z-index: 199;
+      background: rgba(247,244,240,.97); backdrop-filter: blur(24px);
+      flex-direction: column; align-items: center; justify-content: center; gap: 36px;
     }
     .mob-nav.on { display: flex; }
-    .mob-nav a { font-family: var(--syne); font-size: 1.6rem; font-weight: 700; color: var(--tx); }
+    .mob-nav a { font-family: var(--syne); font-size: 1.5rem; font-weight: 700; }
 
-    /* ═══════════════════════════════════════════
-       HERO
-    ═══════════════════════════════════════════ */
+    /* ─── HERO ─── */
     #hero {
-      min-height: 100svh; display: flex; align-items: center;
-      padding: 120px 0 80px; position: relative; overflow: hidden;
-      background: linear-gradient(160deg, #FFF9F5 0%, var(--bg) 60%, #EDE5FB 100%);
+      min-height: 100svh;
+      padding: 100px 0 0;
+      position: relative; overflow: hidden;
+      background: linear-gradient(155deg, #FFF8F4 0%, var(--bg) 45%, #EEE6FB 100%);
+      display: flex; flex-direction: column;
     }
-    .hero-blob-1 {
-      position: absolute; width: 560px; height: 560px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,107,53,.18) 0%, transparent 65%);
-      top: -100px; right: -100px; pointer-events: none;
+    /* background blobs */
+    .h-blob {
+      position: absolute; border-radius: 50%; pointer-events: none;
     }
-    .hero-blob-2 {
-      position: absolute; width: 400px; height: 400px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(124,58,237,.12) 0%, transparent 65%);
-      bottom: 0; left: -60px; pointer-events: none;
+    .h-blob-1 {
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(255,107,53,.13) 0%, transparent 65%);
+      top: -200px; right: -180px;
     }
-    .hero-dots {
+    .h-blob-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(124,58,237,.1) 0%, transparent 65%);
+      bottom: 100px; left: -120px;
+    }
+    .h-blob-3 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(16,185,129,.08) 0%, transparent 65%);
+      bottom: 200px; right: 10%;
+    }
+    /* dot grid */
+    .h-dots {
       position: absolute; inset: 0; pointer-events: none;
-      background-image: radial-gradient(circle, rgba(26,19,16,.08) 1px, transparent 1px);
-      background-size: 32px 32px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 70%);
-      -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 70%);
+      background-image: radial-gradient(circle, rgba(26,19,16,.07) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: radial-gradient(ellipse 90% 90% at 50% 40%, black 10%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse 90% 90% at 50% 40%, black 10%, transparent 70%);
     }
-    .hero-deco {
-      position: absolute; right: -2vw; bottom: -6vw; z-index: 0;
-      font-family: var(--head); font-size: clamp(12rem, 24vw, 26rem);
-      line-height: .85; letter-spacing: -.02em;
-      color: transparent;
-      -webkit-text-stroke: 2px rgba(255,107,53,.07);
-      pointer-events: none; user-select: none;
+    /* top content */
+    .hero-top {
+      position: relative; z-index: 1; flex: 1;
+      display: flex; align-items: center;
     }
-    .hero-inner {
-      position: relative; z-index: 1;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+    .hero-grid {
+      display: grid; grid-template-columns: 1fr 420px; gap: 56px; align-items: center;
     }
-    .hero-eyebrow { margin-bottom: 24px; }
+    /* left copy */
+    .hero-label { margin-bottom: 22px; }
     .hero-h1 {
       font-family: var(--head);
-      font-size: clamp(4rem, 8.5vw, 8.5rem);
-      line-height: .88; letter-spacing: .01em;
-      color: var(--tx); margin-bottom: 28px;
+      font-size: clamp(3.8rem, 8vw, 8rem);
+      line-height: .875; letter-spacing: .005em;
+      color: var(--tx); margin-bottom: 26px;
     }
-    .hero-h1 em { font-style: normal; color: var(--pk); }
-    .hero-h1 .ac { color: var(--ac); }
+    .hero-h1 .c-pk  { color: var(--pk); }
+    .hero-h1 .c-ac  { color: var(--ac); }
     .hero-body {
-      font-size: 1.05rem; color: var(--mt); max-width: 440px;
-      line-height: 1.75; margin-bottom: 36px;
+      font-size: 1.05rem; color: var(--mt);
+      max-width: 420px; line-height: 1.8; margin-bottom: 36px;
     }
-    .hero-btns { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 48px; }
-    .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-    .htag {
-      font-size: .78rem; color: var(--mt);
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 44px; }
+    .hero-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill {
+      font-size: .77rem; font-weight: 500; color: var(--mt);
       background: var(--s0); border: 1px solid var(--bd);
-      border-radius: 100px; padding: 6px 14px;
-      box-shadow: var(--sh1);
-      transition: color .2s, border-color .2s, box-shadow .2s;
+      border-radius: 100px; padding: 6px 14px; box-shadow: var(--sh1);
+      transition: color .2s, border-color .2s;
     }
-    .htag:hover { color: var(--pk); border-color: rgba(255,107,53,.35); box-shadow: var(--sh2); }
+    .pill:hover { color: var(--pk); border-color: rgba(255,107,53,.3); }
 
-    /* phone mockup */
-    .hero-right { display: flex; justify-content: center; align-items: center; }
-    .phone-wrap { position: relative; }
-    .phone {
-      width: 260px; aspect-ratio: 9/18;
-      background: linear-gradient(145deg, var(--s0) 0%, #F5EFE6 100%);
-      border: 1.5px solid rgba(255,107,53,.2);
-      border-radius: 44px;
-      display: flex; flex-direction: column; align-items: center;
-      justify-content: center; gap: 18px;
-      position: relative; overflow: hidden;
-      box-shadow: 0 40px 80px rgba(26,19,16,.18), 0 0 0 1px rgba(255,107,53,.08), inset 0 1px 0 rgba(255,255,255,.9);
+    /* right — app card */
+    .app-card {
+      background: var(--s0);
+      border: 1.5px solid var(--bd);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: var(--sh3);
+      position: relative;
     }
-    .phone::before {
-      content: '';
-      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-      width: 90px; height: 28px; background: var(--s2);
-      border-radius: 0 0 18px 18px; z-index: 2;
+    .app-card-top {
+      padding: 36px 32px 28px;
+      background: linear-gradient(145deg, #FFF4EE 0%, #F5EEF9 100%);
+      border-bottom: 1px solid var(--bd);
+      display: flex; flex-direction: column; align-items: flex-start; gap: 16px;
     }
-    .phone-glow {
-      position: absolute; top: -20px; width: 180px; height: 180px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,107,53,.15) 0%, transparent 65%);
+    .app-card-logo {
+      width: 64px; height: 64px; border-radius: 16px;
+      background: linear-gradient(135deg, var(--pk) 0%, var(--ac) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--syne); font-size: 1.3rem; font-weight: 800; color: #fff;
+      box-shadow: 0 6px 20px rgba(255,107,53,.35);
     }
-    .phone-icon { font-size: 4.8rem; position: relative; z-index: 1; filter: drop-shadow(0 4px 12px rgba(255,107,53,.3)); }
-    .phone-brand {
-      font-family: var(--syne); font-size: 1.2rem; font-weight: 800;
-      letter-spacing: .1em; color: var(--tx); position: relative; z-index: 1;
+    .app-card-name {
+      font-family: var(--syne); font-weight: 800; font-size: 1.35rem;
+      letter-spacing: .04em; color: var(--tx);
     }
-    .phone-sub {
-      font-size: .65rem; letter-spacing: .2em; text-transform: uppercase;
-      color: var(--pk); position: relative; z-index: 1; font-weight: 600;
-    }
-    .phone-pills {
-      display: flex; flex-wrap: wrap; justify-content: center;
-      gap: 5px; padding: 0 22px; position: relative; z-index: 1;
-    }
-    .phone-pill {
-      font-size: .58rem; font-weight: 700; letter-spacing: .08em;
-      text-transform: uppercase; color: var(--ac);
-      background: rgba(124,58,237,.08); border: 1px solid rgba(124,58,237,.2);
-      border-radius: 6px; padding: 4px 9px;
-    }
-    .phone-badge {
-      position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
-      white-space: nowrap; font-size: .65rem; font-weight: 700;
-      letter-spacing: .08em; color: var(--em);
-      background: rgba(16,185,129,.08); border: 1px solid rgba(16,185,129,.25);
-      border-radius: 100px; padding: 5px 14px; z-index: 1;
-    }
-    /* floating cards */
-    .fc {
-      position: absolute;
-      background: var(--s0); border: 1px solid var(--bd);
-      border-radius: 14px; padding: 10px 16px;
+    .app-card-desc { font-size: .88rem; color: var(--mt); line-height: 1.6; }
+    .app-rating {
       display: flex; align-items: center; gap: 10px;
-      font-size: .78rem; white-space: nowrap;
-      box-shadow: var(--sh2);
     }
-    .fc.f1 { top: 18%; right: calc(100% + 24px); animation: flt 5s ease-in-out infinite; }
-    .fc.f2 { bottom: 26%; left: calc(100% + 24px); animation: flt 5s ease-in-out 2s infinite; }
-    .fc .fi { font-size: 1.4rem; }
-    .fc .fv { font-family: var(--syne); font-weight: 700; font-size: .92rem; color: var(--tx); }
-    .fc .fl { font-size: .68rem; color: var(--mt); }
-    @keyframes flt { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-
-    /* ═══════════════════════════════════════════
-       MARQUEE
-    ═══════════════════════════════════════════ */
-    .marquee-wrap {
-      border-top: 1px solid var(--bd); border-bottom: 1px solid var(--bd);
-      background: var(--s0); overflow: hidden; padding: 18px 0;
-      box-shadow: var(--sh1);
+    .stars { display: flex; gap: 3px; }
+    .star {
+      width: 14px; height: 14px;
+      background: var(--pk); border-radius: 2px;
+      clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
     }
-    .marquee-track {
-      display: flex;
-      animation: marquee 24s linear infinite;
-      width: max-content;
+    .star.half { background: linear-gradient(90deg, var(--pk) 60%, var(--s2) 60%); }
+    .rating-text { font-size: .82rem; color: var(--mt); font-weight: 500; }
+    /* mini stats inside card */
+    .app-mini-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+      background: var(--bd); border-top: 1px solid var(--bd);
     }
-    .marquee-track:hover { animation-play-state: paused; }
-    @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-    .marquee-item {
-      display: flex; align-items: center; gap: 18px;
-      padding: 0 32px; white-space: nowrap;
+    .ams {
+      background: var(--s0); padding: 20px 24px;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .ams-n {
+      font-family: var(--head); font-size: 2.2rem; line-height: 1;
+    }
+    .ams:nth-child(1) .ams-n { color: var(--pk); }
+    .ams:nth-child(2) .ams-n { color: var(--ac); }
+    .ams:nth-child(3) .ams-n { color: var(--em); }
+    .ams:nth-child(4) .ams-n { color: var(--sky); }
+    .ams-l { font-size: .75rem; color: var(--mt); font-weight: 500; }
+    /* download strip inside card */
+    .app-card-dl {
+      padding: 20px 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      border-top: 1px solid var(--bd);
+    }
+    .app-card-dl span { font-size: .82rem; color: var(--mt); font-weight: 500; }
+    .btn-dl-sm {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--tx); color: #fff;
       font-family: var(--syne); font-size: .8rem; font-weight: 700;
+      padding: 10px 20px; border-radius: 10px;
+      transition: background .2s, transform .2s;
+    }
+    .btn-dl-sm:hover { background: var(--pk); transform: translateY(-1px); }
+    .btn-dl-sm svg { flex-shrink: 0; }
+
+    /* bottom scroll bar */
+    .hero-scroll-strip {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--bd);
+      background: var(--s0);
+      padding: 16px 0;
+      margin-top: 72px;
+      overflow: hidden;
+    }
+    .scroll-track {
+      display: flex; width: max-content;
+      animation: scroll-l 26s linear infinite;
+    }
+    .scroll-track:hover { animation-play-state: paused; }
+    @keyframes scroll-l { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+    .scroll-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 0 32px; white-space: nowrap;
+      font-family: var(--syne); font-size: .76rem; font-weight: 700;
       letter-spacing: .12em; text-transform: uppercase; color: var(--mt);
     }
-    .marquee-item .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--pk); flex-shrink: 0; }
-    .marquee-item:nth-child(4n+1) .dot { background: var(--pk); }
-    .marquee-item:nth-child(4n+2) .dot { background: var(--ac); }
-    .marquee-item:nth-child(4n+3) .dot { background: var(--em); }
-    .marquee-item:nth-child(4n+4) .dot { background: var(--sky); }
+    .scroll-sep { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
 
-    /* ═══════════════════════════════════════════
-       BENTO — FEATURES
-    ═══════════════════════════════════════════ */
-    #features { padding: 120px 0; }
+    /* ─── FEATURES ─── */
+    #features { padding: 110px 0; }
     .bento {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 16px;
+      display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px;
     }
-    .bc {
-      background: var(--s0); border: 1.5px solid var(--bd);
-      border-radius: 22px; padding: 32px;
-      transition: border-color .25s, transform .25s, box-shadow .25s;
-      position: relative; overflow: hidden;
-      box-shadow: var(--sh1);
-    }
-    .bc:hover { border-color: rgba(255,107,53,.3); transform: translateY(-4px); box-shadow: var(--sh3); }
-    .bc::before {
-      content: ''; position: absolute; inset: 0; border-radius: 22px; opacity: 0;
-      background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,107,53,.07) 0%, transparent 55%);
-      transition: opacity .3s; pointer-events: none;
-    }
-    .bc:hover::before { opacity: 1; }
-    /* grid spans */
-    .bc-1 { grid-column: span 4; }
-    .bc-2 { grid-column: span 4; }
-    .bc-3 { grid-column: span 4; }
+    /* spans */
+    .bc-1,.bc-2,.bc-3 { grid-column: span 4; }
     .bc-4 { grid-column: span 5; }
     .bc-5 { grid-column: span 7; }
     .bc-6 { grid-column: span 7; }
     .bc-7 { grid-column: span 5; }
-    .bc-em { grid-column: span 12; display: flex; align-items: center; gap: 24px; background: linear-gradient(135deg, rgba(255,107,53,.06) 0%, rgba(124,58,237,.06) 100%); border-color: rgba(255,107,53,.2); }
-    /* icon accent colors */
-    .bc-1 .bc-ico { background: rgba(255,107,53,.1); border-color: rgba(255,107,53,.2); }
-    .bc-2 .bc-ico { background: rgba(124,58,237,.1); border-color: rgba(124,58,237,.2); }
-    .bc-3 .bc-ico { background: rgba(16,185,129,.1); border-color: rgba(16,185,129,.2); }
-    .bc-4 .bc-ico { background: rgba(14,165,233,.1); border-color: rgba(14,165,233,.2); }
-    .bc-5 .bc-ico { background: rgba(255,107,53,.1); border-color: rgba(255,107,53,.2); }
-    .bc-6 .bc-ico { background: rgba(124,58,237,.1); border-color: rgba(124,58,237,.2); }
-    .bc-7 .bc-ico { background: rgba(16,185,129,.1); border-color: rgba(16,185,129,.2); }
-    /* card internals */
-    .bc-ico {
-      width: 54px; height: 54px; border-radius: 14px;
-      border: 1.5px solid var(--bd);
+    .bc-wide { grid-column: span 12; }
+
+    .bc {
+      background: var(--s0); border: 1.5px solid var(--bd);
+      border-radius: var(--r); padding: 30px;
+      position: relative; overflow: hidden;
+      box-shadow: var(--sh1);
+      transition: border-color .25s, transform .25s, box-shadow .25s;
+    }
+    .bc:hover { border-color: rgba(255,107,53,.28); transform: translateY(-4px); box-shadow: var(--sh3); }
+    /* spotlight */
+    .bc::after {
+      content: ''; position: absolute; inset: 0; border-radius: inherit; opacity: 0; pointer-events: none;
+      background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,107,53,.06) 0%, transparent 55%);
+      transition: opacity .3s;
+    }
+    .bc:hover::after { opacity: 1; }
+
+    /* color bar on left */
+    .bc::before {
+      content: ''; position: absolute; left: 0; top: 20%; bottom: 20%; width: 3px; border-radius: 0 3px 3px 0;
+      background: var(--pk); opacity: 0; transition: opacity .3s;
+    }
+    .bc:hover::before { opacity: 1; }
+    .bc-2::before, .bc-6::before { background: var(--ac); }
+    .bc-3::before, .bc-7::before { background: var(--em); }
+    .bc-4::before { background: var(--sky); }
+
+    /* card icon box */
+    .bc-mark {
+      width: 44px; height: 44px; border-radius: 12px; margin-bottom: 20px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.6rem; margin-bottom: 22px;
-      transition: transform .3s;
     }
-    .bc:hover .bc-ico { transform: scale(1.1) rotate(-4deg); }
-    .bc-title {
-      font-family: var(--syne); font-weight: 700; font-size: 1.05rem;
-      color: var(--tx); margin-bottom: 10px;
-    }
-    .bc-text { color: var(--mt); font-size: .88rem; line-height: 1.65; }
-    .bc-num {
-      font-family: var(--head); font-size: 5.5rem; line-height: 1;
+    .bc-1 .bc-mark { background: rgba(255,107,53,.1); }
+    .bc-2 .bc-mark { background: rgba(124,58,237,.1); }
+    .bc-3 .bc-mark { background: rgba(16,185,129,.1); }
+    .bc-4 .bc-mark { background: rgba(14,165,233,.1); }
+    .bc-5 .bc-mark { background: rgba(255,107,53,.1); }
+    .bc-6 .bc-mark { background: rgba(124,58,237,.1); }
+    .bc-7 .bc-mark { background: rgba(16,185,129,.1); }
+
+    /* SVG icon size */
+    .bc-mark svg { width: 22px; height: 22px; }
+
+    .bc-idx {
+      position: absolute; right: 22px; bottom: 14px;
+      font-family: var(--head); font-size: 5rem; line-height: 1;
       color: transparent; -webkit-text-stroke: 1.5px rgba(26,19,16,.05);
-      position: absolute; right: 22px; bottom: 8px;
       pointer-events: none;
     }
-    /* em card */
-    .bc-em .em-icon { font-size: 3rem; flex-shrink: 0; }
-    .bc-em .bc-title { font-size: 1.35rem; margin-bottom: 6px; }
-    .bc-em .bc-text { max-width: 540px; }
-    .bc-em .em-stat {
-      margin-left: auto; flex-shrink: 0; text-align: right;
-      font-family: var(--head); font-size: 4.5rem; line-height: 1;
-      color: var(--pk);
+    .bc-title {
+      font-family: var(--syne); font-weight: 700; font-size: 1.02rem;
+      color: var(--tx); margin-bottom: 9px;
     }
-    .bc-em .em-stat small { display: block; font-family: var(--body); font-size: .75rem; color: var(--mt); letter-spacing: .05em; margin-top: 4px; }
+    .bc-text { color: var(--mt); font-size: .87rem; line-height: 1.65; }
 
-    /* ═══════════════════════════════════════════
-       HOW TO PLAY
-    ═══════════════════════════════════════════ */
-    #how { padding: 120px 0; background: linear-gradient(160deg, #EDE5FB 0%, #F8F5F1 50%, #E8F5F0 100%); position: relative; overflow: hidden; }
-    #how::before {
-      content: '';
-      position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
-      width: 700px; height: 400px; pointer-events: none;
-      background: radial-gradient(ellipse, rgba(124,58,237,.06) 0%, transparent 65%);
+    /* wide feature card */
+    .bc-wide-inner {
+      display: flex; align-items: center; gap: 32px;
     }
-    .how-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px;
+    .bc-wide-bar {
+      flex-shrink: 0; width: 4px; height: 80px; border-radius: 4px;
+      background: linear-gradient(180deg, var(--pk) 0%, var(--ac) 100%);
+    }
+    .bc-wide-body { flex: 1; }
+    .bc-wide-body .bc-title { font-size: 1.2rem; }
+    .bc-wide-stat {
+      flex-shrink: 0; text-align: right;
+      font-family: var(--head); font-size: 4rem; line-height: 1; color: var(--pk);
+    }
+    .bc-wide-stat small { display: block; font-family: var(--body); font-size: .72rem; color: var(--mt); margin-top: 4px; letter-spacing: .04em; }
+
+    /* ─── HOW TO PLAY ─── */
+    #how {
+      padding: 110px 0;
+      background: linear-gradient(160deg, #EEE6FB 0%, #F7F4F0 40%, #E6F5F1 100%);
+    }
+    .steps {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
       position: relative; z-index: 1;
     }
-    .how-grid::before {
+    /* connector line */
+    .steps::before {
       content: '';
-      position: absolute; top: 28px; left: calc(12.5% + 28px); right: calc(12.5% + 28px);
-      height: 2px;
-      background: repeating-linear-gradient(90deg, var(--pk) 0, var(--pk) 8px, transparent 8px, transparent 18px);
-      opacity: .3;
+      position: absolute; top: 38px; left: calc(12.5% + 36px); right: calc(12.5% + 36px);
+      height: 2px; border-radius: 1px;
+      background: repeating-linear-gradient(90deg, var(--pk) 0, var(--pk) 8px, transparent 8px, transparent 20px);
+      opacity: .25;
     }
-    .how-step { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px; }
-    .step-ring {
-      width: 56px; height: 56px; border-radius: 50%;
-      background: var(--s0); border: 2px solid var(--bd);
+    .step { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .step-num {
+      width: 76px; height: 76px; border-radius: 50%;
+      border: 2px solid var(--bd); background: var(--s0);
       display: flex; align-items: center; justify-content: center;
-      font-family: var(--head); font-size: 1.4rem; color: var(--pk);
+      font-family: var(--head); font-size: 1.5rem;
       position: relative; z-index: 1; box-shadow: var(--sh1);
-      transition: background .3s, border-color .3s, box-shadow .3s, transform .3s;
+      margin-bottom: 20px;
+      transition: transform .3s, box-shadow .3s, border-color .3s;
     }
-    .how-step:nth-child(2) .step-ring { color: var(--ac); }
-    .how-step:nth-child(3) .step-ring { color: var(--em); }
-    .how-step:nth-child(4) .step-ring { color: var(--sky); }
-    .how-step:hover .step-ring { transform: scale(1.1); border-color: var(--pk); box-shadow: 0 0 0 6px rgba(255,107,53,.12), var(--sh2); }
-    .how-step:nth-child(2):hover .step-ring { border-color: var(--ac); box-shadow: 0 0 0 6px rgba(124,58,237,.12), var(--sh2); }
-    .how-step:nth-child(3):hover .step-ring { border-color: var(--em); box-shadow: 0 0 0 6px rgba(16,185,129,.12), var(--sh2); }
-    .how-step:nth-child(4):hover .step-ring { border-color: var(--sky); box-shadow: 0 0 0 6px rgba(14,165,233,.12), var(--sh2); }
-    .step-card {
-      background: var(--s0); border: 1.5px solid var(--bd); border-radius: 18px; padding: 24px 20px;
-      box-shadow: var(--sh1); transition: box-shadow .3s, transform .3s;
-    }
-    .how-step:hover .step-card { box-shadow: var(--sh2); transform: translateY(-4px); }
-    .step-emoji { font-size: 2.4rem; margin-bottom: 10px; }
-    .step-name {
-      font-family: var(--syne); font-weight: 700; font-size: 1rem; color: var(--tx); margin-bottom: 8px;
-    }
-    .step-info { font-size: .85rem; color: var(--mt); line-height: 1.6; }
+    .step:nth-child(1) .step-num { color: var(--pk); }
+    .step:nth-child(2) .step-num { color: var(--ac); }
+    .step:nth-child(3) .step-num { color: var(--em); }
+    .step:nth-child(4) .step-num { color: var(--sky); }
+    .step:hover .step-num { transform: scale(1.08); box-shadow: var(--sh2); }
+    .step:nth-child(1):hover .step-num { border-color: var(--pk); box-shadow: 0 0 0 6px rgba(255,107,53,.1), var(--sh2); }
+    .step:nth-child(2):hover .step-num { border-color: var(--ac); box-shadow: 0 0 0 6px rgba(124,58,237,.1), var(--sh2); }
+    .step:nth-child(3):hover .step-num { border-color: var(--em); box-shadow: 0 0 0 6px rgba(16,185,129,.1), var(--sh2); }
+    .step:nth-child(4):hover .step-num { border-color: var(--sky); box-shadow: 0 0 0 6px rgba(14,165,233,.1), var(--sh2); }
 
-    /* ═══════════════════════════════════════════
-       STATS
-    ═══════════════════════════════════════════ */
-    #stats { padding: 80px 0; background: var(--s0); border-top: 1px solid var(--bd); border-bottom: 1px solid var(--bd); box-shadow: var(--sh1); }
-    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); }
-    .stat-col {
-      text-align: center; padding: 16px 24px;
-      border-right: 1px solid var(--bd);
+    .step-body {
+      background: var(--s0); border: 1.5px solid var(--bd);
+      border-radius: 18px; padding: 24px 20px;
+      box-shadow: var(--sh1); width: 100%;
+      transition: box-shadow .3s, transform .3s;
     }
-    .stat-col:last-child { border-right: none; }
+    .step:hover .step-body { box-shadow: var(--sh2); transform: translateY(-3px); }
+    .step-title { font-family: var(--syne); font-weight: 700; font-size: .98rem; color: var(--tx); margin-bottom: 8px; }
+    .step-text  { font-size: .84rem; color: var(--mt); line-height: 1.6; }
+
+    /* ─── STATS ─── */
+    #stats {
+      background: var(--s0); border-top: 1px solid var(--bd); border-bottom: 1px solid var(--bd);
+    }
+    .stats-row { display: grid; grid-template-columns: repeat(4,1fr); }
+    .stat {
+      padding: 60px 24px; text-align: center;
+      border-right: 1px solid var(--bd);
+      transition: background .2s;
+    }
+    .stat:last-child { border-right: none; }
+    .stat:hover { background: var(--bg); }
     .stat-n {
-      font-family: var(--head); font-size: clamp(3rem, 5vw, 4.5rem);
+      font-family: var(--head); font-size: clamp(2.8rem, 4.5vw, 4.2rem);
       line-height: 1; margin-bottom: 8px;
     }
-    .stat-col:nth-child(1) .stat-n { color: var(--pk); }
-    .stat-col:nth-child(2) .stat-n { color: var(--ac); }
-    .stat-col:nth-child(3) .stat-n { color: var(--em); }
-    .stat-col:nth-child(4) .stat-n { color: var(--sky); }
-    .stat-l { font-size: .85rem; color: var(--mt); font-weight: 500; }
+    .stat:nth-child(1) .stat-n { color: var(--pk); }
+    .stat:nth-child(2) .stat-n { color: var(--ac); }
+    .stat:nth-child(3) .stat-n { color: var(--em); }
+    .stat:nth-child(4) .stat-n { color: var(--sky); }
+    .stat-l { font-size: .83rem; color: var(--mt); font-weight: 500; }
 
-    /* ═══════════════════════════════════════════
-       CULTURE — MANIFESTO
-    ═══════════════════════════════════════════ */
-    #culture { padding: 140px 0; position: relative; overflow: hidden; background: var(--bg); }
+    /* ─── CULTURE ─── */
+    #culture {
+      padding: 120px 0;
+      background: var(--bg);
+      position: relative; overflow: hidden;
+    }
     .culture-deco {
-      position: absolute; right: -5vw; top: 50%; transform: translateY(-50%);
-      font-family: var(--head); font-size: clamp(10rem, 20vw, 22rem);
-      line-height: 1; writing-mode: vertical-lr;
-      color: transparent; -webkit-text-stroke: 2px rgba(124,58,237,.06);
-      pointer-events: none; z-index: 0; user-select: none;
+      position: absolute; right: -4vw; top: 50%; transform: translateY(-50%);
+      font-family: var(--head); font-size: clamp(10rem, 20vw, 20rem);
+      writing-mode: vertical-lr; line-height: 1;
+      color: transparent; -webkit-text-stroke: 2px rgba(124,58,237,.05);
+      pointer-events: none; user-select: none;
     }
-    .culture-inner {
+    .culture-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start;
       position: relative; z-index: 1;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
     }
-    .culture-left .sect-chip { margin-bottom: 24px; }
     .culture-left h2 {
-      font-family: var(--head); font-size: clamp(3.2rem, 5.5vw, 5.5rem);
-      line-height: .9; color: var(--tx); margin-bottom: 32px;
+      font-family: var(--head); font-size: clamp(3rem, 5vw, 5rem);
+      line-height: .9; color: var(--tx); margin: 14px 0 28px;
     }
     .culture-left h2 em { font-style: normal; color: var(--ac); display: block; }
-    .culture-left p { color: var(--mt); line-height: 1.85; margin-bottom: 18px; font-size: 1rem; }
-    .culture-left .cta-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 36px; }
-    .values { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+    .culture-left p { color: var(--mt); line-height: 1.85; margin-bottom: 16px; font-size: .98rem; }
+    .culture-left .btns { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+    /* values list */
+    .vals { display: flex; flex-direction: column; gap: 8px; margin-top: 28px; }
     .val {
-      display: flex; align-items: center; gap: 16px;
+      display: flex; align-items: center; gap: 14px;
       background: var(--s0); border: 1.5px solid var(--bd);
-      border-radius: 14px; padding: 16px 20px;
-      box-shadow: var(--sh1);
+      border-radius: 14px; padding: 15px 20px; box-shadow: var(--sh1);
       transition: border-color .2s, transform .2s, box-shadow .2s;
     }
-    .val:nth-child(1):hover { border-color: rgba(255,107,53,.4); box-shadow: var(--sh2); transform: translateX(4px); }
-    .val:nth-child(2):hover { border-color: rgba(124,58,237,.4); box-shadow: var(--sh2); transform: translateX(4px); }
-    .val:nth-child(3):hover { border-color: rgba(16,185,129,.4); box-shadow: var(--sh2); transform: translateX(4px); }
-    .val:nth-child(4):hover { border-color: rgba(14,165,233,.4); box-shadow: var(--sh2); transform: translateX(4px); }
-    .val-num {
-      font-family: var(--head); font-size: 2rem;
-      line-height: 1; flex-shrink: 0; width: 36px;
-    }
-    .val:nth-child(1) .val-num { color: var(--pk); }
-    .val:nth-child(2) .val-num { color: var(--ac); }
-    .val:nth-child(3) .val-num { color: var(--em); }
-    .val:nth-child(4) .val-num { color: var(--sky); }
-    .val-title { font-family: var(--syne); font-weight: 700; font-size: .95rem; color: var(--tx); }
-    .val-desc { font-size: .82rem; color: var(--mt); margin-top: 2px; }
-    /* culture cards */
-    .culture-right { display: flex; flex-direction: column; gap: 14px; }
-    .cul-card {
+    .val:nth-child(1):hover { border-color: rgba(255,107,53,.35); transform: translateX(5px); box-shadow: var(--sh2); }
+    .val:nth-child(2):hover { border-color: rgba(124,58,237,.35); transform: translateX(5px); box-shadow: var(--sh2); }
+    .val:nth-child(3):hover { border-color: rgba(16,185,129,.35); transform: translateX(5px); box-shadow: var(--sh2); }
+    .val:nth-child(4):hover { border-color: rgba(14,165,233,.35); transform: translateX(5px); box-shadow: var(--sh2); }
+    .val-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .val:nth-child(1) .val-dot { background: var(--pk); }
+    .val:nth-child(2) .val-dot { background: var(--ac); }
+    .val:nth-child(3) .val-dot { background: var(--em); }
+    .val:nth-child(4) .val-dot { background: var(--sky); }
+    .val-title { font-family: var(--syne); font-weight: 700; font-size: .92rem; color: var(--tx); }
+    .val-desc  { font-size: .8rem; color: var(--mt); margin-top: 1px; }
+    /* culture right cards */
+    .culture-cards { display: flex; flex-direction: column; gap: 12px; }
+    .cc {
       background: var(--s0); border: 1.5px solid var(--bd);
-      border-radius: 18px; padding: 28px;
-      display: flex; align-items: flex-start; gap: 18px;
+      border-radius: 18px; padding: 24px 26px;
+      display: flex; gap: 18px; align-items: flex-start;
       box-shadow: var(--sh1);
       transition: border-color .25s, transform .25s, box-shadow .25s;
     }
-    .cul-card:nth-child(1):hover { border-color: rgba(255,107,53,.3); transform: translateY(-3px); box-shadow: var(--sh2); }
-    .cul-card:nth-child(2):hover { border-color: rgba(124,58,237,.3); transform: translateY(-3px); box-shadow: var(--sh2); }
-    .cul-card:nth-child(3):hover { border-color: rgba(16,185,129,.3); transform: translateY(-3px); box-shadow: var(--sh2); }
-    .cul-card:nth-child(4):hover { border-color: rgba(14,165,233,.3); transform: translateY(-3px); box-shadow: var(--sh2); }
-    .cul-icon {
-      width: 48px; height: 48px; flex-shrink: 0; border-radius: 12px;
-      display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+    .cc:nth-child(1):hover { border-color: rgba(255,107,53,.3); transform: translateY(-3px); box-shadow: var(--sh2); }
+    .cc:nth-child(2):hover { border-color: rgba(124,58,237,.3); transform: translateY(-3px); box-shadow: var(--sh2); }
+    .cc:nth-child(3):hover { border-color: rgba(16,185,129,.3); transform: translateY(-3px); box-shadow: var(--sh2); }
+    .cc:nth-child(4):hover { border-color: rgba(14,165,233,.3); transform: translateY(-3px); box-shadow: var(--sh2); }
+    .cc-icon {
+      width: 44px; height: 44px; border-radius: 11px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
     }
-    .cul-card:nth-child(1) .cul-icon { background: rgba(255,107,53,.1); border: 1.5px solid rgba(255,107,53,.2); }
-    .cul-card:nth-child(2) .cul-icon { background: rgba(124,58,237,.1); border: 1.5px solid rgba(124,58,237,.2); }
-    .cul-card:nth-child(3) .cul-icon { background: rgba(16,185,129,.1); border: 1.5px solid rgba(16,185,129,.2); }
-    .cul-card:nth-child(4) .cul-icon { background: rgba(14,165,233,.1); border: 1.5px solid rgba(14,165,233,.2); }
-    .cul-title { font-family: var(--syne); font-weight: 700; font-size: 1rem; color: var(--tx); margin-bottom: 6px; }
-    .cul-text { font-size: .875rem; color: var(--mt); line-height: 1.65; }
+    .cc:nth-child(1) .cc-icon { background: rgba(255,107,53,.1); }
+    .cc:nth-child(2) .cc-icon { background: rgba(124,58,237,.1); }
+    .cc:nth-child(3) .cc-icon { background: rgba(16,185,129,.1); }
+    .cc:nth-child(4) .cc-icon { background: rgba(14,165,233,.1); }
+    .cc-icon svg { width: 20px; height: 20px; }
+    .cc-title { font-family: var(--syne); font-weight: 700; font-size: .95rem; color: var(--tx); margin-bottom: 5px; }
+    .cc-text  { font-size: .84rem; color: var(--mt); line-height: 1.6; }
 
-    /* ═══════════════════════════════════════════
-       DOWNLOAD CTA
-    ═══════════════════════════════════════════ */
-    #download { padding: 140px 0; position: relative; overflow: hidden; }
+    /* ─── DOWNLOAD CTA ─── */
+    #download {
+      padding: 120px 0; position: relative; overflow: hidden;
+    }
     .dl-bg {
       position: absolute; inset: 0;
-      background: linear-gradient(135deg, #FFF0E8 0%, #F0E8FF 50%, #E8F5F0 100%);
+      background: linear-gradient(135deg, #FFF2EA 0%, #F2EAFE 50%, #E6F9F4 100%);
     }
-    .dl-grid-lines {
+    .dl-grid {
       position: absolute; inset: 0; pointer-events: none;
-      background-image: linear-gradient(rgba(26,19,16,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(26,19,16,.06) 1px, transparent 1px);
-      background-size: 60px 60px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 70%);
-      -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 70%);
+      background-image:
+        linear-gradient(rgba(26,19,16,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,19,16,.05) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 15%, transparent 68%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 15%, transparent 68%);
     }
     .dl-inner { position: relative; z-index: 1; text-align: center; }
-    .dl-inner .chip { margin-bottom: 32px; }
+    .dl-inner .tag { margin-bottom: 28px; }
     .dl-h {
-      font-family: var(--head); font-size: clamp(4rem, 9vw, 9rem);
-      line-height: .88; color: var(--tx); margin-bottom: 24px; letter-spacing: .01em;
+      font-family: var(--head); font-size: clamp(3.6rem, 8.5vw, 8.5rem);
+      line-height: .88; color: var(--tx); margin-bottom: 22px; letter-spacing: .005em;
     }
-    .dl-h em { font-style: normal; color: var(--pk); }
-    .dl-h .ac { color: var(--ac); }
-    .dl-p { color: var(--mt); font-size: 1.1rem; max-width: 520px; margin: 0 auto 44px; line-height: 1.75; }
-    .dl-btns { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
-    .btn-store {
+    .dl-h .c-pk { color: var(--pk); }
+    .dl-h .c-ac { color: var(--ac); }
+    .dl-p { color: var(--mt); font-size: 1.05rem; max-width: 500px; margin: 0 auto 40px; line-height: 1.8; }
+    .dl-btns { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 44px; }
+    .store-btn {
       display: inline-flex; align-items: center; gap: 14px;
       background: var(--s0); border: 2px solid var(--bd);
-      border-radius: 16px; padding: 16px 30px;
-      box-shadow: var(--sh2);
+      border-radius: 16px; padding: 16px 28px; box-shadow: var(--sh2);
       transition: border-color .25s, transform .25s, box-shadow .25s;
     }
-    .btn-store:hover { border-color: var(--pk); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(255,107,53,.2); }
-    .btn-store .si { font-size: 2rem; }
-    .btn-store .st small { display: block; font-size: .68rem; color: var(--mt); letter-spacing: .06em; text-transform: uppercase; font-weight: 500; }
-    .btn-store .st strong { display: block; font-family: var(--syne); font-size: 1.05rem; font-weight: 700; color: var(--tx); }
-    .trust-row {
-      display: flex; align-items: center; justify-content: center; gap: 28px;
-      margin-top: 52px; flex-wrap: wrap;
+    .store-btn:hover { border-color: var(--pk); transform: translateY(-4px); box-shadow: 0 20px 56px rgba(255,107,53,.18); }
+    .store-btn svg { width: 28px; height: 28px; }
+    .store-btn-text small { display: block; font-size: .66rem; color: var(--mt); letter-spacing: .06em; text-transform: uppercase; font-weight: 500; }
+    .store-btn-text strong { display: block; font-family: var(--syne); font-size: 1rem; font-weight: 700; color: var(--tx); }
+    /* trust badges */
+    .trust {
+      display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;
     }
-    .trust-item {
-      display: flex; align-items: center; gap: 8px; font-size: .82rem; color: var(--mt);
+    .trust-b {
+      display: flex; align-items: center; gap: 8px;
       background: var(--s0); border: 1px solid var(--bd); border-radius: 100px;
-      padding: 8px 16px; box-shadow: var(--sh1); font-weight: 500;
+      padding: 8px 16px; box-shadow: var(--sh1);
+      font-size: .8rem; color: var(--mt); font-weight: 500;
     }
-    .trust-item .ti { font-size: 1rem; }
+    .trust-b svg { width: 15px; height: 15px; flex-shrink: 0; }
 
-    /* ═══════════════════════════════════════════
-       FAQ
-    ═══════════════════════════════════════════ */
-    #faq { padding: 120px 0; background: var(--s1); }
-    .faq-wrap { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+    /* ─── FAQ ─── */
+    #faq { padding: 110px 0; background: var(--s1); }
+    .faq-list { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
     .fq {
-      border: 1.5px solid var(--bd); border-radius: 18px; overflow: hidden;
-      background: var(--s0); box-shadow: var(--sh1);
+      background: var(--s0); border: 1.5px solid var(--bd);
+      border-radius: 16px; overflow: hidden; box-shadow: var(--sh1);
       transition: border-color .2s, box-shadow .2s;
     }
-    .fq:hover, .fq.open { border-color: rgba(255,107,53,.3); box-shadow: var(--sh2); }
-    .fq.open { border-color: rgba(255,107,53,.4); }
-    .fq-q {
-      width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px;
-      padding: 22px 26px; background: transparent; border: none; cursor: pointer;
-      font-family: var(--syne); font-size: .98rem; font-weight: 700;
+    .fq:hover, .fq.open { border-color: rgba(255,107,53,.28); box-shadow: var(--sh2); }
+    .fq-btn {
+      width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 14px;
+      padding: 20px 24px; background: transparent; border: none; cursor: pointer;
+      font-family: var(--syne); font-size: .95rem; font-weight: 700;
       color: var(--tx); text-align: left; transition: color .2s;
     }
-    .fq-q:hover { color: var(--pk); }
-    .fq.open .fq-q { color: var(--pk); }
-    .fq-icon {
+    .fq-btn:hover, .fq.open .fq-btn { color: var(--pk); }
+    .fq-arr {
       flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
-      background: rgba(255,107,53,.08); border: 1.5px solid rgba(255,107,53,.2);
+      background: rgba(255,107,53,.07); border: 1.5px solid rgba(255,107,53,.18);
       display: flex; align-items: center; justify-content: center;
-      transition: background .25s, transform .35s;
+      transition: background .25s;
     }
-    .fq-icon svg { width: 12px; height: 12px; stroke: var(--pk); transition: transform .35s; }
-    .fq.open .fq-icon { background: rgba(255,107,53,.15); }
-    .fq.open .fq-icon svg { transform: rotate(180deg); }
-    .fq-a { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
-    .fq.open .fq-a { max-height: 220px; }
-    .fq-a-inner {
-      padding: 4px 26px 22px; color: var(--mt); font-size: .935rem; line-height: 1.75;
-      border-top: 1px solid var(--bd); padding-top: 18px;
+    .fq-arr svg { width: 11px; height: 11px; stroke: var(--pk); transition: transform .35s; }
+    .fq.open .fq-arr { background: rgba(255,107,53,.14); }
+    .fq.open .fq-arr svg { transform: rotate(180deg); }
+    .fq-body { max-height: 0; overflow: hidden; transition: max-height .38s ease; }
+    .fq.open .fq-body { max-height: 200px; }
+    .fq-inner {
+      border-top: 1px solid var(--bd);
+      padding: 16px 24px 20px;
+      color: var(--mt); font-size: .9rem; line-height: 1.75;
     }
 
-    /* ═══════════════════════════════════════════
-       FOOTER
-    ═══════════════════════════════════════════ */
-    footer {
-      background: var(--tx); color: rgba(255,255,255,.7);
-      padding: 56px 0 40px;
-    }
-    .foot-top {
+    /* ─── FOOTER ─── */
+    footer { background: var(--tx); color: rgba(255,255,255,.6); padding: 52px 0 36px; }
+    .foot-row {
       display: flex; align-items: flex-start; justify-content: space-between;
-      gap: 40px; flex-wrap: wrap; margin-bottom: 40px;
+      gap: 40px; flex-wrap: wrap; margin-bottom: 36px;
     }
-    .foot-brand { max-width: 300px; }
-    .foot-brand .fb-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-    .foot-brand .nav-logo-box { width: 34px; height: 34px; font-size: .8rem; }
-    .foot-brand .fb-name { font-family: var(--syne); font-weight: 800; font-size: .95rem; letter-spacing: .06em; color: #fff; }
-    .foot-brand p { font-size: .85rem; line-height: 1.7; }
-    .foot-links { display: flex; gap: 60px; flex-wrap: wrap; }
-    .fl-col h4 { font-family: var(--syne); font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 16px; }
-    .fl-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .fl-col a { font-size: .875rem; transition: color .2s; }
-    .fl-col a:hover { color: var(--pkl); }
+    .foot-left { max-width: 280px; }
+    .foot-brand { display: flex; align-items: center; gap: 9px; margin-bottom: 12px; }
+    .foot-logo {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: linear-gradient(135deg, var(--pk) 0%, var(--ac) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--syne); font-size: .75rem; font-weight: 800; color: #fff;
+    }
+    .foot-name { font-family: var(--syne); font-weight: 800; font-size: .9rem; letter-spacing: .06em; color: #fff; }
+    .foot-left p { font-size: .83rem; line-height: 1.7; }
+    .foot-links { display: flex; gap: 52px; flex-wrap: wrap; }
+    .fl h4 { font-family: var(--syne); font-size: .7rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 14px; }
+    .fl ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .fl a { font-size: .85rem; transition: color .2s; }
+    .fl a:hover { color: var(--pkl); }
     .foot-bottom {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 16px; flex-wrap: wrap;
-      border-top: 1px solid rgba(255,255,255,.1); padding-top: 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,.08); padding-top: 22px;
     }
-    .foot-bottom p { font-size: .8rem; }
-    .foot-badge { display: flex; align-items: center; gap: 6px; font-size: .8rem; }
-    .foot-badge span { color: var(--pkl); font-weight: 600; }
+    .foot-bottom p { font-size: .78rem; }
+    .foot-heart { font-size: .78rem; }
+    .foot-heart span { color: var(--pkl); }
 
-    /* ═══════════════════════════════════════════
-       RESPONSIVE
-    ═══════════════════════════════════════════ */
+    /* ─── RESPONSIVE ─── */
     @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .app-card { display: none; }
       .bento { grid-template-columns: repeat(6, 1fr); }
       .bc-1,.bc-2,.bc-3 { grid-column: span 2; }
       .bc-4,.bc-5,.bc-6,.bc-7 { grid-column: span 3; }
-      .bc-em { grid-column: span 6; }
-      .bc-em .em-stat { display: none; }
-      .culture-inner { grid-template-columns: 1fr; gap: 60px; }
+      .bc-wide { grid-column: span 6; }
+      .bc-wide-stat { display: none; }
+      .culture-grid { grid-template-columns: 1fr; gap: 56px; }
       .culture-deco { display: none; }
-      .fc.f1,.fc.f2 { display: none; }
     }
     @media (max-width: 768px) {
-      .nav-links, .nav-cta { display: none; }
+      .nav-links, #nav .btn-pk { display: none; }
       .burger { display: flex; }
-      .hero-inner { grid-template-columns: 1fr; }
-      .hero-right { display: none; }
       .bento { grid-template-columns: 1fr; }
-      .bc-1,.bc-2,.bc-3,.bc-4,.bc-5,.bc-6,.bc-7,.bc-em { grid-column: span 1; }
-      .bc-em { flex-direction: column; }
-      .how-grid { grid-template-columns: repeat(2, 1fr); gap: 28px; }
-      .how-grid::before { display: none; }
-      .stats-row { grid-template-columns: repeat(2, 1fr); }
-      .stat-col:nth-child(2) { border-right: none; }
-      .stat-col:nth-child(3) { border-top: 1px solid var(--bd); }
-      .stat-col:nth-child(4) { border-top: 1px solid var(--bd); border-right: none; }
-      .foot-links { gap: 36px; }
-      .foot-top { flex-direction: column; }
+      .bc-1,.bc-2,.bc-3,.bc-4,.bc-5,.bc-6,.bc-7,.bc-wide { grid-column: span 1; }
+      .bc-wide-inner { flex-direction: column; gap: 20px; }
+      .steps { grid-template-columns: repeat(2,1fr); gap: 24px; }
+      .steps::before { display: none; }
+      .stats-row { grid-template-columns: repeat(2,1fr); }
+      .stat:nth-child(2) { border-right: none; }
+      .stat:nth-child(3) { border-top: 1px solid var(--bd); }
+      .stat:nth-child(4) { border-top: 1px solid var(--bd); border-right: none; }
+      .foot-row { flex-direction: column; }
+      .foot-links { gap: 32px; }
     }
     @media (max-width: 480px) {
-      .how-grid { grid-template-columns: 1fr; }
-      .hero-h1 { font-size: 4.2rem; }
-      .dl-h { font-size: 3.8rem; }
+      .steps { grid-template-columns: 1fr; }
+      .hero-h1 { font-size: 3.8rem; }
+      .dl-h { font-size: 3.4rem; }
     }
   </style>
 </head>
 <body>
 
-<!-- ═══ NAVBAR ═══ -->
+<!-- NAV -->
 <nav id="nav">
   <div class="wrap">
     <div class="nav-row">
       <a href="#hero" class="nav-brand">
-        <div class="nav-logo-box">AB</div>
-        <span class="nav-brand-name">AFROBARBER</span>
+        <div class="nav-logo">AB</div>
+        <span class="nav-name">AFROBARBER</span>
       </a>
       <ul class="nav-links">
         <li><a href="#features">Recursos</a></li>
@@ -704,333 +669,345 @@
         <li><a href="#culture">Cultura</a></li>
         <li><a href="#faq">FAQ</a></li>
       </ul>
-      <div class="nav-cta">
-        <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-primary">
-          Baixar Grátis
-        </a>
-      </div>
-      <button class="burger" id="burger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
+      <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-pk">Baixar Grátis</a>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </div>
 </nav>
 
-<!-- MOBILE NAV -->
 <div class="mob-nav" id="mobNav">
-  <a href="#features" class="mnl">Recursos</a>
-  <a href="#how" class="mnl">Como Jogar</a>
-  <a href="#culture" class="mnl">Cultura</a>
-  <a href="#faq" class="mnl">FAQ</a>
-  <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-primary">Baixar Grátis</a>
+  <a href="#features">Recursos</a>
+  <a href="#how">Como Jogar</a>
+  <a href="#culture">Cultura</a>
+  <a href="#faq">FAQ</a>
+  <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-pk">Baixar Grátis</a>
 </div>
 
-<!-- ═══ HERO ═══ -->
+<!-- HERO -->
 <section id="hero">
-  <div class="hero-blob-1"></div>
-  <div class="hero-blob-2"></div>
-  <div class="hero-dots"></div>
-  <div class="hero-deco" aria-hidden="true">AB</div>
-  <div class="wrap">
-    <div class="hero-inner">
-      <div class="hero-left">
-        <div class="hero-eyebrow">
-          <span class="chip">Simulador de Barbearia Afro</span>
+  <div class="h-blob h-blob-1"></div>
+  <div class="h-blob h-blob-2"></div>
+  <div class="h-blob h-blob-3"></div>
+  <div class="h-dots"></div>
+
+  <div class="hero-top">
+    <div class="wrap" style="width:100%">
+      <div class="hero-grid">
+        <!-- LEFT -->
+        <div>
+          <div class="hero-label" data-r>
+            <span class="tag tag-pk">Simulador de Barbearia Afro</span>
+          </div>
+          <h1 class="hero-h1" data-r class="d1">
+            GERENCIE.<br/>
+            EVOLUA.<br/>
+            <span class="c-pk">CELEBRE</span><br/>
+            <span class="c-ac">CULTURA.</span>
+          </h1>
+          <p class="hero-body" data-r class="d2">
+            AfroBarber é um simulador de barbearia com alma. Atenda clientes, cuide das finanças, complete missões e construa um legado com identidade afro.
+          </p>
+          <div class="hero-actions" data-r class="d3">
+            <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-pk">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.83 1.01-1.3 1.7-.8l14 8.5c.63.38.63 1.32 0 1.7l-14 8.5c-.69.5-1.7.03-1.7-.8z"/></svg>
+              Google Play — Grátis
+            </a>
+            <a href="#how" class="btn-out">Como funciona</a>
+          </div>
+          <div class="hero-pills" data-r class="d4">
+            <span class="pill">Cortes Afro</span>
+            <span class="pill">Agenda</span>
+            <span class="pill">Finanças</span>
+            <span class="pill">Missões</span>
+            <span class="pill">Loja</span>
+            <span class="pill">Para todas as idades</span>
+          </div>
         </div>
-        <h1 class="hero-h1">
-          CORTE<br/>
-          COM <em>PRO-</em><br/>
-          <span class="ac">PÓSITO.</span>
-        </h1>
-        <p class="hero-body">
-          Gerencie sua barbearia, atenda clientes, cuide das finanças e construa seu legado. Um jogo com alma, identidade e cultura afro.
-        </p>
-        <div class="hero-btns">
-          <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-primary">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.83 1.01-1.3 1.7-.8l14 8.5c.63.38.63 1.32 0 1.7l-14 8.5c-.69.5-1.7.03-1.7-.8z"/></svg>
-            Google Play — Grátis
-          </a>
-          <a href="#how" class="btn-secondary">Ver Gameplay ↓</a>
-        </div>
-        <div class="hero-tags">
-          <span class="htag">✂ Cortes Afro</span>
-          <span class="htag">📅 Agenda</span>
-          <span class="htag">💰 Finanças</span>
-          <span class="htag">🎯 Missões</span>
-          <span class="htag">🏪 Loja</span>
-        </div>
-      </div>
-      <div class="hero-right">
-        <div class="phone-wrap">
-          <div class="phone">
-            <div class="phone-glow"></div>
-            <div class="phone-icon">✂️</div>
-            <div class="phone-brand">AFROBARBER</div>
-            <div class="phone-sub">Simulador de Barbearia</div>
-            <div class="phone-pills">
-              <span class="phone-pill">Respeito</span>
-              <span class="phone-pill">Foco</span>
-              <span class="phone-pill">Disciplina</span>
-              <span class="phone-pill">Sucesso</span>
+
+        <!-- RIGHT — app card -->
+        <div class="app-card" data-r="r">
+          <div class="app-card-top">
+            <div class="app-card-logo">AB</div>
+            <div>
+              <div class="app-card-name">AfroBarber</div>
+              <div class="app-card-desc">Simulador de barbearia com cultura e identidade afro</div>
             </div>
-            <div class="phone-badge">✦ Grátis no Google Play</div>
+            <div class="app-rating">
+              <div class="stars">
+                <div class="star"></div><div class="star"></div><div class="star"></div>
+                <div class="star"></div><div class="star half"></div>
+              </div>
+              <span class="rating-text">Grátis · Android</span>
+            </div>
           </div>
-          <div class="fc f1">
-            <span class="fi">🏆</span>
-            <div><div class="fv">+50</div><div class="fl">Missões disponíveis</div></div>
+          <div class="app-mini-stats">
+            <div class="ams"><span class="ams-n">100%</span><span class="ams-l">Gratuito</span></div>
+            <div class="ams"><span class="ams-n">7+</span><span class="ams-l">Sistemas</span></div>
+            <div class="ams"><span class="ams-n">50+</span><span class="ams-l">Missões</span></div>
+            <div class="ams"><span class="ams-n">∞</span><span class="ams-l">Gameplay</span></div>
           </div>
-          <div class="fc f2">
-            <span class="fi">⭐</span>
-            <div><div class="fv">Nível MAX</div><div class="fl">Evolua seu barbeiro</div></div>
+          <div class="app-card-dl">
+            <span>Disponível agora no Google Play</span>
+            <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-dl-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5v-17c0-.83 1.01-1.3 1.7-.8l14 8.5c.63.38.63 1.32 0 1.7l-14 8.5c-.69.5-1.7.03-1.7-.8z"/></svg>
+              Baixar
+            </a>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- scroll strip -->
+  <div class="hero-scroll-strip">
+    <div class="scroll-track" aria-hidden="true">
+      <span class="scroll-item"><span class="scroll-sep" style="background:var(--pk)"></span>Gestão de Barbearia</span>
+      <span class="scroll-item"><span class="scroll-sep" style="background:var(--ac)"></span>Cortes Afro Autênticos</span>
+      <span class="scroll-item"><span class="scroll-sep" style="background:var(--em)"></span>Cultura &amp; Identidade</span>
+      <span class="scroll-item"><span class="scroll-sep" style="background:var(--sky)"></span>Controle Financeiro</span>
+      <span class="scroll-item"><span class="scroll-sep" style="background:var(--pk)"></span>Missões &amp; XP</span>
+      <span class="scroll-item"><span class="scroll-sep" style="background:var(--ac)"></span>Agenda Inteligente</span>
+      <span class="scroll-item"><span class="scroll-sep" style="background:var(--em)"></span>Loja &amp; Upgrades</span>
+      <span class="scroll-item"><span class="scroll-sep" style="background:var(--sky)"></span>Para Todas as Idades</span>
+      <span class="scroll-item"><span class="scroll-sep" style="background:var(--pk)"></span>Gestão de Barbearia</span>
+      <span class="scroll-item"><span class="scroll-sep" style="background:var(--ac)"></span>Cortes Afro Autênticos</span>
+      <span class="scroll-item"><span class="scroll-sep" style="background:var(--em)"></span>Cultura &amp; Identidade</span>
+      <span class="scroll-item"><span class="scroll-sep" style="background:var(--sky)"></span>Controle Financeiro</span>
+      <span class="scroll-item"><span class="scroll-sep" style="background:var(--pk)"></span>Missões &amp; XP</span>
+      <span class="scroll-item"><span class="scroll-sep" style="background:var(--ac)"></span>Agenda Inteligente</span>
+      <span class="scroll-item"><span class="scroll-sep" style="background:var(--em)"></span>Loja &amp; Upgrades</span>
+      <span class="scroll-item"><span class="scroll-sep" style="background:var(--sky)"></span>Para Todas as Idades</span>
+    </div>
+  </div>
 </section>
 
-<!-- ═══ MARQUEE ═══ -->
-<div class="marquee-wrap" aria-hidden="true">
-  <div class="marquee-track">
-    <span class="marquee-item"><span class="dot"></span>Gestão de Barbearia</span>
-    <span class="marquee-item"><span class="dot"></span>Cortes Afro Autênticos</span>
-    <span class="marquee-item"><span class="dot"></span>Cultura &amp; Identidade</span>
-    <span class="marquee-item"><span class="dot"></span>Controle Financeiro</span>
-    <span class="marquee-item"><span class="dot"></span>Missões &amp; XP</span>
-    <span class="marquee-item"><span class="dot"></span>Agenda Inteligente</span>
-    <span class="marquee-item"><span class="dot"></span>Loja &amp; Upgrades</span>
-    <span class="marquee-item"><span class="dot"></span>Para Todas as Idades</span>
-    <span class="marquee-item"><span class="dot"></span>Gestão de Barbearia</span>
-    <span class="marquee-item"><span class="dot"></span>Cortes Afro Autênticos</span>
-    <span class="marquee-item"><span class="dot"></span>Cultura &amp; Identidade</span>
-    <span class="marquee-item"><span class="dot"></span>Controle Financeiro</span>
-    <span class="marquee-item"><span class="dot"></span>Missões &amp; XP</span>
-    <span class="marquee-item"><span class="dot"></span>Agenda Inteligente</span>
-    <span class="marquee-item"><span class="dot"></span>Loja &amp; Upgrades</span>
-    <span class="marquee-item"><span class="dot"></span>Para Todas as Idades</span>
-  </div>
-</div>
-
-<!-- ═══ FEATURES — BENTO ═══ -->
+<!-- FEATURES -->
 <section id="features">
   <div class="wrap">
     <div class="sh" data-r>
-      <span class="chip">Recursos do Jogo</span>
-      <h2>TUDO QUE SUA<br/><span class="pk">BARBEARIA</span> PRECISA</h2>
-      <p>Seis sistemas completos construídos para você sentir que está realmente administrando um negócio.</p>
+      <span class="tag tag-pk">Recursos do Jogo</span>
+      <h2>TUDO QUE SUA<br/><span style="color:var(--pk)">BARBEARIA</span> PRECISA</h2>
+      <p>Sete sistemas completos para você sentir que está realmente administrando um negócio.</p>
     </div>
     <div class="bento">
 
       <div class="bc bc-1" data-r>
-        <div class="bc-ico">✂️</div>
+        <div class="bc-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--pk)" stroke-width="2" stroke-linecap="round">
+            <path d="M6 2v4M6 18v4M18 2v4M18 18v4M2 6h4M18 6h4M2 18h4M18 18h4M6 6l12 12M18 6L6 18"/>
+          </svg>
+        </div>
         <div class="bc-title">Cortes Realistas</div>
         <div class="bc-text">Tranças, dreads, degradê, twist — estilos autênticos ligados à identidade afro. Cada corte conta uma história.</div>
-        <div class="bc-num">01</div>
+        <div class="bc-idx">01</div>
       </div>
 
       <div class="bc bc-2" data-r class="d1">
-        <div class="bc-ico">📅</div>
+        <div class="bc-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2" stroke-linecap="round">
+            <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+        </div>
         <div class="bc-title">Agenda Inteligente</div>
         <div class="bc-text">Organize horários, controle o fluxo de clientes e nunca deixe a barbearia parada.</div>
-        <div class="bc-num">02</div>
+        <div class="bc-idx">02</div>
       </div>
 
       <div class="bc bc-3" data-r class="d2">
-        <div class="bc-ico">💰</div>
+        <div class="bc-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--em)" stroke-width="2" stroke-linecap="round">
+            <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+          </svg>
+        </div>
         <div class="bc-title">Controle Financeiro</div>
         <div class="bc-text">Receitas, despesas, caixa, investimentos. Aprenda a gerir dinheiro enquanto joga.</div>
-        <div class="bc-num">03</div>
+        <div class="bc-idx">03</div>
       </div>
 
-      <div class="bc bc-em" data-r>
-        <span class="em-icon">🚀</span>
-        <div class="em-body">
-          <div class="bc-title">Evolução sem limite — do primeiro corte ao topo da comunidade</div>
-          <div class="bc-text">Cada atendimento gera XP. Cada XP desbloqueia upgrades. Cada upgrade muda sua barbearia. O ciclo não para.</div>
+      <!-- wide card -->
+      <div class="bc bc-wide" data-r>
+        <div class="bc-wide-inner">
+          <div class="bc-wide-bar"></div>
+          <div class="bc-wide-body">
+            <div class="bc-title">Evolução sem limite — do primeiro corte ao topo da comunidade</div>
+            <div class="bc-text">Cada atendimento gera XP. Cada XP desbloqueia upgrades. Cada upgrade transforma sua barbearia. O ciclo não para.</div>
+          </div>
+          <div class="bc-wide-stat">∞<small>Possibilidades</small></div>
         </div>
-        <div class="em-stat">∞<small>Possibilidades</small></div>
       </div>
 
       <div class="bc bc-4" data-r>
-        <div class="bc-ico">🏪</div>
+        <div class="bc-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="2" stroke-linecap="round">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+        </div>
         <div class="bc-title">Loja &amp; Upgrades</div>
         <div class="bc-text">Móveis, equipamentos, produtos premium. Personalize cada canto da sua barbearia e impressione os clientes.</div>
-        <div class="bc-num">04</div>
+        <div class="bc-idx">04</div>
       </div>
 
       <div class="bc bc-5" data-r class="d1">
-        <div class="bc-ico">🎯</div>
+        <div class="bc-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--pk)" stroke-width="2" stroke-linecap="round">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
         <div class="bc-title">Missões &amp; Conquistas</div>
         <div class="bc-text">Desafios diários, objetivos de longo prazo e recompensas exclusivas que mantêm o jogo sempre fresco. Nunca falta o que fazer.</div>
-        <div class="bc-num">05</div>
+        <div class="bc-idx">05</div>
       </div>
 
       <div class="bc bc-6" data-r>
-        <div class="bc-ico">🤝</div>
+        <div class="bc-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2" stroke-linecap="round">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+          </svg>
+        </div>
         <div class="bc-title">Reputação &amp; Comunidade</div>
         <div class="bc-text">Atenda bem, ganhe respeito, torne-se referência no bairro. A barbearia é o coração da comunidade — e a sua pode ser a melhor.</div>
-        <div class="bc-num">06</div>
+        <div class="bc-idx">06</div>
       </div>
 
       <div class="bc bc-7" data-r class="d1">
-        <div class="bc-ico">☁️</div>
+        <div class="bc-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--em)" stroke-width="2" stroke-linecap="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
         <div class="bc-title">Progresso na Nuvem</div>
-        <div class="bc-text">Salvo automaticamente via Unity Cloud Save. Troque de dispositivo sem perder nada.</div>
-        <div class="bc-num">07</div>
+        <div class="bc-text">Salvo automaticamente via Unity Cloud Save. Troque de dispositivo sem perder nada do que construiu.</div>
+        <div class="bc-idx">07</div>
       </div>
 
     </div>
   </div>
 </section>
 
-<!-- ═══ HOW TO PLAY ═══ -->
+<!-- HOW TO PLAY -->
 <section id="how">
   <div class="wrap">
     <div class="sh" data-r>
-      <span class="chip chip-purple">Como Jogar</span>
-      <h2>4 PASSOS.<br/><span class="ac">INFINITO</span> PROGRESSO.</h2>
+      <span class="tag tag-ac">Como Jogar</span>
+      <h2>4 PASSOS.<br/><span style="color:var(--ac)">INFINITO</span> PROGRESSO.</h2>
       <p>A mecânica é simples. A profundidade não tem fim. Cada turno é uma escolha que muda seu negócio.</p>
     </div>
-    <div class="how-grid">
-      <div class="how-step" data-r>
-        <div class="step-ring">01</div>
-        <div class="step-card">
-          <div class="step-emoji">🚪</div>
-          <div class="step-name">Receba Clientes</div>
-          <div class="step-info">Clientes chegam com pedidos únicos. Organize a fila e decida a ordem de atendimento.</div>
+    <div class="steps">
+      <div class="step" data-r>
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <div class="step-title">Receba Clientes</div>
+          <div class="step-text">Clientes chegam com pedidos únicos. Organize a fila e decida a ordem de atendimento com estratégia.</div>
         </div>
       </div>
-      <div class="how-step" data-r class="d2">
-        <div class="step-ring">02</div>
-        <div class="step-card">
-          <div class="step-emoji">📋</div>
-          <div class="step-name">Entenda o Pedido</div>
-          <div class="step-info">Confira o serviço, preço e dificuldade. Cada cliente espera um resultado diferente.</div>
+      <div class="step" data-r class="d2">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <div class="step-title">Entenda o Pedido</div>
+          <div class="step-text">Confira o serviço, preço e nível de dificuldade. Cada cliente espera um resultado diferente e tem sua personalidade.</div>
         </div>
       </div>
-      <div class="how-step" data-r class="d3">
-        <div class="step-ring">03</div>
-        <div class="step-card">
-          <div class="step-emoji">✂️</div>
-          <div class="step-name">Execute o Corte</div>
-          <div class="step-info">Use as ferramentas certas, siga o pedido e entregue um atendimento impecável.</div>
+      <div class="step" data-r class="d3">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <div class="step-title">Execute o Corte</div>
+          <div class="step-text">Use as ferramentas certas, siga o pedido e entregue um atendimento impecável para conquistar avaliações altas.</div>
         </div>
       </div>
-      <div class="how-step" data-r class="d4">
-        <div class="step-ring">04</div>
-        <div class="step-card">
-          <div class="step-emoji">📈</div>
-          <div class="step-name">Evolua &amp; Reinvista</div>
-          <div class="step-info">Receba pagamento, ganhe XP, desbloqueie upgrades e leve sua barbearia mais longe.</div>
+      <div class="step" data-r class="d4">
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <div class="step-title">Evolua &amp; Reinvista</div>
+          <div class="step-text">Receba pagamento, ganhe XP, desbloqueie upgrades e leve sua barbearia cada vez mais longe.</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ STATS ═══ -->
+<!-- STATS -->
 <section id="stats">
   <div class="wrap">
     <div class="stats-row">
-      <div class="stat-col" data-r>
-        <div class="stat-n">100%</div>
-        <div class="stat-l">Grátis para baixar</div>
-      </div>
-      <div class="stat-col" data-r class="d1">
-        <div class="stat-n">7+</div>
-        <div class="stat-l">Sistemas de jogo</div>
-      </div>
-      <div class="stat-col" data-r class="d2">
-        <div class="stat-n">50+</div>
-        <div class="stat-l">Missões disponíveis</div>
-      </div>
-      <div class="stat-col" data-r class="d3">
-        <div class="stat-n">∞</div>
-        <div class="stat-l">Horas de gameplay</div>
-      </div>
+      <div class="stat" data-r><div class="stat-n">100%</div><div class="stat-l">Grátis para baixar</div></div>
+      <div class="stat" data-r class="d1"><div class="stat-n">7+</div><div class="stat-l">Sistemas de jogo</div></div>
+      <div class="stat" data-r class="d2"><div class="stat-n">50+</div><div class="stat-l">Missões disponíveis</div></div>
+      <div class="stat" data-r class="d3"><div class="stat-n">∞</div><div class="stat-l">Horas de gameplay</div></div>
     </div>
   </div>
 </section>
 
-<!-- ═══ CULTURE ═══ -->
+<!-- CULTURE -->
 <section id="culture">
   <div class="culture-deco" aria-hidden="true">AFRO</div>
   <div class="wrap">
-    <div class="culture-inner">
-      <div class="culture-left">
-        <div class="sect-chip"><span class="chip chip-purple">Identidade &amp; Cultura</span></div>
-        <h2 data-r="l">
+    <div class="culture-grid">
+      <div>
+        <span class="tag tag-ac" data-r="l">Identidade &amp; Cultura</span>
+        <h2 data-r="l" class="d1">
           MAIS QUE UM JOGO.
           <em>UM MANIFESTO.</em>
         </h2>
-        <p data-r="l" class="d1">
+        <p data-r="l" class="d2">
           AfroBarber celebra a barbearia como espaço de resistência, cultura e comunidade. Cada corte, cada cliente, cada detalhe carrega significado.
         </p>
-        <p data-r="l" class="d2">
-          Representatividade não é detalhe — é o núcleo. Desenvolvemos um jogo que honra a estética afro, a musicalidade das raízes e a força de quem constrói algo do zero.
+        <p data-r="l" class="d3">
+          Representatividade não é detalhe — é o núcleo. Um jogo que honra a estética afro, a musicalidade das raízes e a força de quem constrói algo do zero.
         </p>
-        <div class="values" data-r="l" class="d3">
-          <div class="val">
-            <span class="val-num">01</span>
-            <div>
-              <div class="val-title">Respeito</div>
-              <div class="val-desc">Pela história, pela cultura, pelo cliente</div>
-            </div>
-          </div>
-          <div class="val">
-            <span class="val-num">02</span>
-            <div>
-              <div class="val-title">Foco</div>
-              <div class="val-desc">No ofício, na excelência, no crescimento</div>
-            </div>
-          </div>
-          <div class="val">
-            <span class="val-num">03</span>
-            <div>
-              <div class="val-title">Disciplina</div>
-              <div class="val-desc">Para construir algo que dura além do jogo</div>
-            </div>
-          </div>
-          <div class="val">
-            <span class="val-num">04</span>
-            <div>
-              <div class="val-title">Sucesso</div>
-              <div class="val-desc">Definido por você, conquistado por você</div>
-            </div>
-          </div>
+        <div class="vals" data-r="l" class="d3">
+          <div class="val"><div class="val-dot"></div><div><div class="val-title">Respeito</div><div class="val-desc">Pela história, pela cultura, pelo cliente</div></div></div>
+          <div class="val"><div class="val-dot"></div><div><div class="val-title">Foco</div><div class="val-desc">No ofício, na excelência, no crescimento</div></div></div>
+          <div class="val"><div class="val-dot"></div><div><div class="val-title">Disciplina</div><div class="val-desc">Para construir algo que dura além do jogo</div></div></div>
+          <div class="val"><div class="val-dot"></div><div><div class="val-title">Sucesso</div><div class="val-desc">Definido por você, conquistado por você</div></div></div>
         </div>
-        <div class="cta-row" data-r="l" class="d4">
-          <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-primary">Baixar e Jogar</a>
-          <a href="#faq" class="btn-secondary">Saiba mais</a>
+        <div class="btns" data-r="l" class="d4">
+          <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-pk">Baixar e Jogar</a>
+          <a href="#faq" class="btn-out">Saiba mais</a>
         </div>
       </div>
-      <div class="culture-right">
-        <div class="cul-card" data-r="r">
-          <div class="cul-icon">🎵</div>
+      <div class="culture-cards">
+        <div class="cc" data-r="r">
+          <div class="cc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--pk)" stroke-width="2" stroke-linecap="round">
+              <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+            </svg>
+          </div>
           <div>
-            <div class="cul-title">Música &amp; Atmosfera</div>
-            <div class="cul-text">Trilha sonora imersiva que captura a energia real da barbearia. O som certo para cada momento do atendimento.</div>
+            <div class="cc-title">Música &amp; Atmosfera</div>
+            <div class="cc-text">Trilha sonora imersiva que captura a energia real da barbearia. O som certo para cada momento do atendimento.</div>
           </div>
         </div>
-        <div class="cul-card" data-r="r" class="d1">
-          <div class="cul-icon">💇</div>
+        <div class="cc" data-r="r" class="d1">
+          <div class="cc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2" stroke-linecap="round">
+              <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+            </svg>
+          </div>
           <div>
-            <div class="cul-title">Estilos que Representam</div>
-            <div class="cul-text">Cortes que celebram a beleza, a diversidade e a riqueza da estética afro-brasileira — autênticos e respeitosos.</div>
+            <div class="cc-title">Estilos que Representam</div>
+            <div class="cc-text">Cortes que celebram a beleza, diversidade e riqueza da estética afro-brasileira — autênticos e respeitosos.</div>
           </div>
         </div>
-        <div class="cul-card" data-r="r" class="d2">
-          <div class="cul-icon">🤝</div>
+        <div class="cc" data-r="r" class="d2">
+          <div class="cc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--em)" stroke-width="2" stroke-linecap="round">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+            </svg>
+          </div>
           <div>
-            <div class="cul-title">Comunidade no Centro</div>
-            <div class="cul-text">A barbearia é onde histórias se cruzam. Construa laços, ganhe respeito e deixe sua marca — dentro e fora do jogo.</div>
+            <div class="cc-title">Comunidade no Centro</div>
+            <div class="cc-text">A barbearia é onde histórias se cruzam. Construa laços, ganhe respeito e deixe sua marca dentro e fora do jogo.</div>
           </div>
         </div>
-        <div class="cul-card" data-r="r" class="d3">
-          <div class="cul-icon">📱</div>
+        <div class="cc" data-r="r" class="d3">
+          <div class="cc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="2" stroke-linecap="round">
+              <rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+            </svg>
+          </div>
           <div>
-            <div class="cul-title">Para Todas as Idades</div>
-            <div class="cul-text">Sem violência, sem conteúdo adulto. Um jogo pensado para inspirar e educar, acessível a toda a família.</div>
+            <div class="cc-title">Para Todas as Idades</div>
+            <div class="cc-text">Sem violência, sem conteúdo adulto. Um jogo inspirador e educativo, acessível a toda a família.</div>
           </div>
         </div>
       </div>
@@ -1038,125 +1015,119 @@
   </div>
 </section>
 
-<!-- ═══ DOWNLOAD CTA ═══ -->
+<!-- DOWNLOAD CTA -->
 <section id="download">
   <div class="dl-bg"></div>
-  <div class="dl-grid-lines"></div>
+  <div class="dl-grid"></div>
   <div class="wrap">
     <div class="dl-inner">
-      <div data-r><span class="chip chip-green">Disponível Agora — Grátis</span></div>
-      <h2 class="dl-h" data-r>
-        SUA BARBEARIA.<br/><em>SEU</em> <span class="ac">LEGADO.</span>
+      <div data-r><span class="tag tag-em">Disponível Agora — 100% Grátis</span></div>
+      <h2 class="dl-h" data-r class="d1">
+        SUA BARBEARIA.<br/>
+        <span class="c-pk">SEU</span> <span class="c-ac">LEGADO.</span>
       </h2>
-      <p class="dl-p" data-r class="d1">
+      <p class="dl-p" data-r class="d2">
         Gratuito. Sem complicação. Baixe agora e comece a construir o negócio que sempre quis — um corte de cada vez.
       </p>
-      <div class="dl-btns" data-r class="d2">
-        <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-store">
-          <span class="si">▶</span>
-          <div class="st">
+      <div class="dl-btns" data-r class="d3">
+        <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="store-btn">
+          <svg viewBox="0 0 24 24" fill="var(--tx)"><path d="M3.18 23.76c.3.17.64.24.99.19l12.6-12.6-3.54-3.54L3.18 23.76zm17.46-12.18L18 10.04l-3.47 3.47 3.47 3.47 2.65-1.53c.76-.43.76-1.49-.01-1.87zM1.07 1.07C.76 1.38.57 1.84.57 2.43v19.14c0 .59.19 1.05.5 1.36L2.11 22 14.71 9.39l-1.54-1.54L1.07 1.07zM3.18.24L13.17 6.2l-3.54 3.54L1.07 1.18c-.03-.02.01-.08.1-.16L3.18.24z"/></svg>
+          <div class="store-btn-text">
             <small>Disponível no</small>
             <strong>Google Play</strong>
           </div>
         </a>
       </div>
-      <div class="trust-row" data-r class="d3">
-        <span class="trust-item"><span class="ti">✅</span> 100% Gratuito</span>
-        <span class="trust-item"><span class="ti">📶</span> Jogue Offline</span>
-        <span class="trust-item"><span class="ti">👨‍👩‍👧</span> Para Todas as Idades</span>
-        <span class="trust-item"><span class="ti">☁️</span> Progresso na Nuvem</span>
+      <div class="trust" data-r class="d4">
+        <span class="trust-b">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--em)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          100% Gratuito
+        </span>
+        <span class="trust-b">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--sky)" stroke-width="2"><path d="M1 6l11 7L23 6M2 4h20a1 1 0 011 1v14a1 1 0 01-1 1H2a1 1 0 01-1-1V5a1 1 0 011-1z"/></svg>
+          Jogue Offline
+        </span>
+        <span class="trust-b">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--pk)" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          Para Todas as Idades
+        </span>
+        <span class="trust-b">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Progresso na Nuvem
+        </span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ FAQ ═══ -->
+<!-- FAQ -->
 <section id="faq">
   <div class="wrap">
     <div class="sh" data-r>
-      <span class="chip">FAQ</span>
-      <h2>PERGUNTAS<br/><span class="pk">FREQUENTES</span></h2>
+      <span class="tag tag-pk">Dúvidas Frequentes</span>
+      <h2>PERGUNTAS<br/><span style="color:var(--pk)">FREQUENTES</span></h2>
       <p>Tudo que você precisa saber antes de baixar.</p>
     </div>
-    <div class="faq-wrap">
-
+    <div class="faq-list">
       <div class="fq" data-r>
-        <button class="fq-q" aria-expanded="false">
+        <button class="fq-btn" aria-expanded="false">
           O jogo é realmente gratuito?
-          <span class="fq-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
+          <span class="fq-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
         </button>
-        <div class="fq-a">
-          <div class="fq-a-inner">Sim, 100% gratuito. Baixe pelo Google Play sem pagar nada. O jogo entrega uma experiência completa sem necessidade de compras obrigatórias.</div>
-        </div>
+        <div class="fq-body"><div class="fq-inner">Sim, 100% gratuito. Baixe pelo Google Play sem pagar nada. O jogo entrega uma experiência completa sem necessidade de compras obrigatórias.</div></div>
       </div>
-
       <div class="fq" data-r class="d1">
-        <button class="fq-q" aria-expanded="false">
+        <button class="fq-btn" aria-expanded="false">
           Precisa de conexão com internet?
-          <span class="fq-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
+          <span class="fq-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
         </button>
-        <div class="fq-a">
-          <div class="fq-a-inner">Você pode jogar sem internet. A conexão é usada apenas para sincronizar seu progresso na nuvem e acessar placares globais via Unity Services.</div>
-        </div>
+        <div class="fq-body"><div class="fq-inner">Você pode jogar sem internet. A conexão é usada apenas para sincronizar seu progresso na nuvem e acessar placares globais via Unity Services.</div></div>
       </div>
-
       <div class="fq" data-r class="d2">
-        <button class="fq-q" aria-expanded="false">
+        <button class="fq-btn" aria-expanded="false">
           Em quais dispositivos funciona?
-          <span class="fq-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
+          <span class="fq-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
         </button>
-        <div class="fq-a">
-          <div class="fq-a-inner">AfroBarber roda em Android. Recomendamos Android 7.0 ou superior para a experiência mais fluida.</div>
-        </div>
+        <div class="fq-body"><div class="fq-inner">AfroBarber roda em Android. Recomendamos Android 7.0 ou superior para a experiência mais fluida.</div></div>
       </div>
-
       <div class="fq" data-r class="d3">
-        <button class="fq-q" aria-expanded="false">
+        <button class="fq-btn" aria-expanded="false">
           O conteúdo é adequado para crianças?
-          <span class="fq-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
+          <span class="fq-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
         </button>
-        <div class="fq-a">
-          <div class="fq-a-inner">Sim. O jogo não contém violência, drogas ou conteúdo adulto. É pensado para ser inspirador e educativo para todas as idades.</div>
-        </div>
+        <div class="fq-body"><div class="fq-inner">Sim. O jogo não contém violência, drogas ou conteúdo adulto. É pensado para ser inspirador e educativo para todas as idades.</div></div>
       </div>
-
       <div class="fq" data-r class="d4">
-        <button class="fq-q" aria-expanded="false">
+        <button class="fq-btn" aria-expanded="false">
           Meu progresso é salvo se trocar de celular?
-          <span class="fq-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
+          <span class="fq-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
         </button>
-        <div class="fq-a">
-          <div class="fq-a-inner">Sim. O progresso é sincronizado automaticamente via Unity Cloud Save. Troque de dispositivo sem perder nada do que você construiu.</div>
-        </div>
+        <div class="fq-body"><div class="fq-inner">Sim. O progresso é sincronizado automaticamente via Unity Cloud Save. Troque de dispositivo sem perder nada do que você construiu.</div></div>
       </div>
-
       <div class="fq" data-r class="d5">
-        <button class="fq-q" aria-expanded="false">
+        <button class="fq-btn" aria-expanded="false">
           Como entrar em contato ou reportar um problema?
-          <span class="fq-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
+          <span class="fq-arr"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></span>
         </button>
-        <div class="fq-a">
-          <div class="fq-a-inner">Entre em contato pelo e-mail marcelobraga.dev@gmail.com. Respondemos o mais rápido possível e valorizamos cada feedback.</div>
-        </div>
+        <div class="fq-body"><div class="fq-inner">Entre em contato pelo e-mail marcelobraga.dev@gmail.com. Respondemos o mais rápido possível e valorizamos cada feedback.</div></div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ═══ FOOTER ═══ -->
+<!-- FOOTER -->
 <footer>
   <div class="wrap">
-    <div class="foot-top">
-      <div class="foot-brand">
-        <div class="fb-logo">
-          <div class="nav-logo-box">AB</div>
-          <span class="fb-name">AFROBARBER</span>
+    <div class="foot-row">
+      <div class="foot-left">
+        <div class="foot-brand">
+          <div class="foot-logo">AB</div>
+          <span class="foot-name">AFROBARBER</span>
         </div>
         <p>Simulador de barbearia com identidade. Gerencie, evolua, celebre a cultura afro e construa o seu legado.</p>
       </div>
       <div class="foot-links">
-        <div class="fl-col">
+        <div class="fl">
           <h4>Navegação</h4>
           <ul>
             <li><a href="#hero">Início</a></li>
@@ -1165,14 +1136,14 @@
             <li><a href="#culture">Cultura</a></li>
           </ul>
         </div>
-        <div class="fl-col">
+        <div class="fl">
           <h4>Legal</h4>
           <ul>
             <li><a href="privacy-policy.html">Política de Privacidade</a></li>
             <li><a href="#faq">FAQ</a></li>
           </ul>
         </div>
-        <div class="fl-col">
+        <div class="fl">
           <h4>Download</h4>
           <ul>
             <li><a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener">Google Play</a></li>
@@ -1182,60 +1153,52 @@
     </div>
     <div class="foot-bottom">
       <p>© 2026 AfroBarber. Todos os direitos reservados.</p>
-      <div class="foot-badge">Feito com <span>♥</span> e identidade</div>
+      <div class="foot-heart">Feito com <span>♥</span> e identidade</div>
     </div>
   </div>
 </footer>
 
 <script>
-(function () {
+(function(){
+  /* nav scroll */
   const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('stuck', window.scrollY > 40);
-  }, { passive: true });
+  window.addEventListener('scroll', ()=>{ nav.classList.toggle('stuck', scrollY > 40); }, {passive:true});
 
+  /* burger */
   const burger = document.getElementById('burger');
-  const mobNav = document.getElementById('mobNav');
-  burger.addEventListener('click', () => {
-    const on = mobNav.classList.toggle('on');
+  const mob    = document.getElementById('mobNav');
+  burger.addEventListener('click', ()=>{
+    const on = mob.classList.toggle('on');
     burger.setAttribute('aria-expanded', on);
   });
-  mobNav.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
-      mobNav.classList.remove('on');
-      burger.setAttribute('aria-expanded', 'false');
+  mob.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+    mob.classList.remove('on'); burger.setAttribute('aria-expanded','false');
+  }));
+
+  /* bento spotlight */
+  document.querySelectorAll('.bc').forEach(c=>{
+    c.addEventListener('mousemove', e=>{
+      const r = c.getBoundingClientRect();
+      c.style.setProperty('--mx', ((e.clientX-r.left)/r.width*100).toFixed(1)+'%');
+      c.style.setProperty('--my', ((e.clientY-r.top)/r.height*100).toFixed(1)+'%');
     });
   });
 
-  document.querySelectorAll('.bc').forEach(card => {
-    card.addEventListener('mousemove', e => {
-      const r = card.getBoundingClientRect();
-      card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
-      card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+  /* FAQ */
+  document.querySelectorAll('.fq-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const fq  = btn.closest('.fq');
+      const was = fq.classList.contains('open');
+      document.querySelectorAll('.fq').forEach(f=>{ f.classList.remove('open'); f.querySelector('.fq-btn').setAttribute('aria-expanded','false'); });
+      if(!was){ fq.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
     });
   });
 
-  document.querySelectorAll('.fq-q').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const item = btn.closest('.fq');
-      const was = item.classList.contains('open');
-      document.querySelectorAll('.fq').forEach(f => {
-        f.classList.remove('open');
-        f.querySelector('.fq-q').setAttribute('aria-expanded', 'false');
-      });
-      if (!was) {
-        item.classList.add('open');
-        btn.setAttribute('aria-expanded', 'true');
-      }
-    });
-  });
-
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('[data-r]').forEach(el => io.observe(el));
+  /* scroll reveal */
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{threshold:.1});
+  document.querySelectorAll('[data-r]').forEach(el=>io.observe(el));
 })();
 </script>
 </body>

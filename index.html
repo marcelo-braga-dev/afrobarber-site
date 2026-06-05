@@ -1,945 +1,955 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AfroBarber | Simulador de Barbearia Afro</title>
-    <meta name="description" content="AfroBarber é um jogo mobile de simulação, gestão e cultura afro. Atenda clientes, organize sua agenda, evolua sua barbearia e construa seu legado." />
-
-    <style>
-        :root {
-            --black: #050505;
-            --black-2: #0c0c0c;
-            --dark: #11100e;
-            --dark-soft: #191612;
-            --gold: #f6c744;
-            --gold-2: #d4af37;
-            --white: #f7f3ea;
-            --muted: #cfc4b2;
-            --brown: #3a2419;
-            --border: rgba(246, 199, 68, 0.28);
-            --shadow: 0 28px 90px rgba(0, 0, 0, 0.55);
-            --radius: 24px;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: var(--black);
-            color: var(--white);
-            overflow-x: hidden;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        .container {
-            width: min(1180px, calc(100% - 32px));
-            margin: 0 auto;
-        }
-
-        .navbar {
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            background: rgba(0, 0, 0, 0.88);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(246, 199, 68, 0.18);
-        }
-
-        .nav-inner {
-            min-height: 82px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 28px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 900;
-            font-size: 1.75rem;
-            line-height: 0.9;
-            letter-spacing: -1px;
-        }
-
-        .logo-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
-            display: grid;
-            place-items: center;
-            color: #050505;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--gold), #fff0a8);
-            box-shadow: 0 0 30px rgba(246, 199, 68, 0.22);
-        }
-
-        .logo span {
-            color: var(--gold);
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            color: var(--white);
-            font-size: 0.95rem;
-            font-weight: 700;
-        }
-
-        .nav-links a {
-            opacity: 0.86;
-            transition: 0.2s ease;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: var(--gold);
-            opacity: 1;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            border: 0;
-            cursor: pointer;
-            font-weight: 900;
-            border-radius: 8px;
-            padding: 16px 24px;
-            transition: 0.25s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--gold), #ffe489);
-            color: #080808;
-            box-shadow: 0 12px 34px rgba(246, 199, 68, 0.28);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 18px 45px rgba(246, 199, 68, 0.38);
-        }
-
-        .btn-outline {
-            color: var(--gold);
-            border: 1px solid var(--border);
-            background: rgba(246, 199, 68, 0.06);
-        }
-
-        .hero {
-            position: relative;
-            min-height: 720px;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-            background:
-                linear-gradient(90deg, #050505 0%, rgba(5, 5, 5, 0.94) 33%, rgba(5, 5, 5, 0.34) 68%, rgba(5, 5, 5, 0.72) 100%),
-                radial-gradient(circle at 72% 34%, rgba(246, 199, 68, 0.18), transparent 34%),
-                linear-gradient(135deg, #1b120c 0%, #090909 60%);
-        }
-
-        .hero::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(246, 199, 68, 0.055) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(246, 199, 68, 0.045) 1px, transparent 1px);
-            background-size: 58px 58px;
-            opacity: 0.16;
-            mask-image: linear-gradient(90deg, black, transparent 80%);
-        }
-
-        .hero::after {
-            content: "";
-            position: absolute;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            width: 56%;
-            background:
-                linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.76)),
-                radial-gradient(circle at 55% 35%, rgba(246, 199, 68, 0.18), transparent 28%),
-                linear-gradient(145deg, #2e1d13, #0a0a0a 68%);
-            clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%);
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            width: min(650px, 100%);
-            padding: 92px 0;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--gold);
-            font-weight: 900;
-            border: 1px solid var(--border);
-            border-radius: 999px;
-            padding: 10px 16px;
-            background: rgba(0, 0, 0, 0.35);
-            margin-bottom: 26px;
-            text-transform: uppercase;
-            font-size: 0.86rem;
-        }
-
-        .hero h1 {
-            font-size: clamp(3.2rem, 8vw, 7.6rem);
-            line-height: 0.88;
-            letter-spacing: -4px;
-            text-transform: uppercase;
-            margin-bottom: 28px;
-        }
-
-        .hero h1 span {
-            color: var(--gold);
-        }
-
-        .hero p {
-            color: var(--white);
-            font-size: 1.24rem;
-            line-height: 1.65;
-            max-width: 570px;
-            margin-bottom: 34px;
-        }
-
-        .hero-icons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            max-width: 560px;
-            margin: 34px 0;
-        }
-
-        .hero-icon {
-            text-align: center;
-            color: var(--white);
-        }
-
-        .hero-icon .symbol {
-            color: var(--gold);
-            font-size: 2.1rem;
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        .hero-icon strong {
-            display: block;
-            font-size: 0.95rem;
-            line-height: 1.35;
-        }
-
-        .hero-actions {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-
-        .hero-art {
-            position: absolute;
-            z-index: 3;
-            right: max(30px, calc((100vw - 1180px) / 2));
-            bottom: 0;
-            width: min(520px, 42vw);
-            height: 640px;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            pointer-events: none;
-        }
-
-        .character-card {
-            width: 100%;
-            height: 92%;
-            border-radius: 40px 40px 0 0;
-            background:
-                radial-gradient(circle at 50% 20%, rgba(246, 199, 68, 0.32), transparent 22%),
-                linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.24)),
-                linear-gradient(135deg, #1e1713, #060606);
-            border: 1px solid rgba(246, 199, 68, 0.18);
-            box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .character-card::before {
-            content: "AFRO\A BARBER";
-            white-space: pre;
-            position: absolute;
-            right: 34px;
-            bottom: 120px;
-            text-align: right;
-            font-weight: 900;
-            font-size: clamp(2.6rem, 5vw, 4.8rem);
-            line-height: 0.82;
-            color: rgba(255, 255, 255, 0.9);
-            text-shadow: 0 12px 30px rgba(0, 0, 0, 0.65);
-        }
-
-        .character-card::after {
-            content: "RESPEITO\A FOCO\A DISCIPLINA\A SUCESSO";
-            white-space: pre;
-            position: absolute;
-            top: 70px;
-            right: 36px;
-            color: var(--gold);
-            font-size: 1.4rem;
-            font-weight: 900;
-            line-height: 1.45;
-            text-align: right;
-            filter: drop-shadow(0 0 18px rgba(246, 199, 68, 0.28));
-        }
-
-        .section {
-            padding: 86px 0;
-            background: radial-gradient(circle at top, rgba(246, 199, 68, 0.06), transparent 36%), var(--black-2);
-        }
-
-        .section.alt {
-            background: linear-gradient(180deg, #090909, #120d0a 48%, #090909);
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 850px;
-            margin: 0 auto 42px;
-        }
-
-        .section-label {
-            color: var(--gold);
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-        }
-
-        .section-header h2 {
-            font-size: clamp(2.2rem, 4.4vw, 4rem);
-            line-height: 1.05;
-            letter-spacing: -2px;
-            margin-bottom: 18px;
-        }
-
-        .section-header p {
-            color: var(--muted);
-            line-height: 1.75;
-            font-size: 1.1rem;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 16px;
-        }
-
-        .feature-card {
-            min-height: 230px;
-            padding: 25px 18px;
-            border-radius: 14px;
-            text-align: center;
-            background: linear-gradient(180deg, rgba(246, 199, 68, 0.07), rgba(255, 255, 255, 0.03));
-            border: 1px solid var(--border);
-            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
-            transition: 0.25s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-6px);
-            background: linear-gradient(180deg, rgba(246, 199, 68, 0.13), rgba(255, 255, 255, 0.04));
-        }
-
-        .feature-card .icon {
-            display: block;
-            color: var(--gold);
-            font-size: 2.6rem;
-            margin-bottom: 20px;
-        }
-
-        .feature-card h3 {
-            font-size: 1rem;
-            margin-bottom: 12px;
-        }
-
-        .feature-card p {
-            color: var(--muted);
-            line-height: 1.55;
-            font-size: 0.88rem;
-        }
-
-        .culture-grid {
-            display: grid;
-            grid-template-columns: 0.82fr 1.18fr;
-            gap: 48px;
-            align-items: center;
-        }
-
-        .culture-text h2 {
-            font-size: clamp(2.2rem, 4.5vw, 4.1rem);
-            line-height: 1.03;
-            letter-spacing: -2px;
-            margin-bottom: 24px;
-        }
-
-        .culture-text h2 span {
-            color: var(--gold);
-        }
-
-        .culture-text p {
-            color: var(--muted);
-            line-height: 1.8;
-            font-size: 1.08rem;
-            margin-bottom: 24px;
-        }
-
-        .culture-cards {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-        }
-
-        .image-card {
-            min-height: 320px;
-            display: flex;
-            align-items: flex-end;
-            padding: 22px;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid rgba(246, 199, 68, 0.24);
-            background:
-                linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.78)),
-                radial-gradient(circle at 50% 25%, rgba(246, 199, 68, 0.24), transparent 42%),
-                linear-gradient(135deg, #352116, #070707);
-        }
-
-        .image-card:nth-child(2) {
-            background:
-                linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.78)),
-                radial-gradient(circle at 50% 25%, rgba(246, 199, 68, 0.18), transparent 42%),
-                linear-gradient(135deg, #17110e, #1d1711);
-        }
-
-        .image-card:nth-child(3) {
-            background:
-                linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.78)),
-                radial-gradient(circle at 50% 25%, rgba(246, 199, 68, 0.16), transparent 42%),
-                linear-gradient(135deg, #241810, #050505);
-        }
-
-        .image-card h3 {
-            font-size: 1.15rem;
-        }
-
-        .gameplay-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-        }
-
-        .step-card {
-            padding: 28px;
-            border-radius: var(--radius);
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(246, 199, 68, 0.2);
-        }
-
-        .step-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: var(--gold);
-            color: #050505;
-            font-weight: 900;
-            margin-bottom: 18px;
-        }
-
-        .step-card h3 {
-            margin-bottom: 12px;
-        }
-
-        .step-card p {
-            color: var(--muted);
-            line-height: 1.65;
-        }
-
-        .download {
-            padding: 92px 0;
-            background:
-                radial-gradient(circle at 84% 50%, rgba(246, 199, 68, 0.16), transparent 28%),
-                linear-gradient(180deg, #060606, #0e0c0a);
-        }
-
-        .download-box {
-            text-align: center;
-            padding: 58px 34px;
-            border-radius: 26px;
-            border: 1px solid var(--border);
-            background:
-                linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
-                radial-gradient(circle at top left, rgba(246, 199, 68, 0.13), transparent 36%);
-            box-shadow: var(--shadow);
-        }
-
-        .download-box h2 {
-            font-size: clamp(2.4rem, 5vw, 4.8rem);
-            line-height: 1;
-            letter-spacing: -2px;
-            margin-bottom: 16px;
-        }
-
-        .download-box h2 span {
-            color: var(--gold);
-        }
-
-        .download-box p {
-            color: var(--muted);
-            max-width: 780px;
-            margin: 0 auto 28px;
-            line-height: 1.75;
-            font-size: 1.1rem;
-        }
-
-        .store-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 14px;
-            padding: 16px 24px;
-            border-radius: 10px;
-            background: #030303;
-            border: 1px solid var(--gold);
-            box-shadow: 0 0 32px rgba(246, 199, 68, 0.15);
-        }
-
-        .store-button .play {
-            width: 38px;
-            height: 38px;
-            display: grid;
-            place-items: center;
-            border-radius: 8px;
-            color: #050505;
-            background: var(--gold);
-            font-weight: 900;
-        }
-
-        .store-button small {
-            display: block;
-            color: var(--muted);
-            text-align: left;
-            font-size: 0.78rem;
-        }
-
-        .store-button strong {
-            display: block;
-            color: var(--white);
-            font-size: 1.45rem;
-            line-height: 1;
-        }
-
-        .faq {
-            max-width: 760px;
-            margin: 36px auto 0;
-            display: grid;
-            gap: 12px;
-        }
-
-        details {
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: rgba(255, 255, 255, 0.035);
-            border-radius: 10px;
-            padding: 18px 20px;
-        }
-
-        summary {
-            cursor: pointer;
-            font-weight: 800;
-        }
-
-        details p {
-            color: var(--muted);
-            line-height: 1.65;
-            margin-top: 12px;
-        }
-
-        footer {
-            border-top: 1px solid rgba(246, 199, 68, 0.16);
-            background: #050505;
-            padding: 38px 0;
-            color: var(--muted);
-        }
-
-        .footer-inner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 24px;
-            flex-wrap: wrap;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 18px;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a:hover {
-            color: var(--gold);
-        }
-
-        @media (max-width: 1100px) {
-            .features-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-
-            .hero-art {
-                opacity: 0.45;
-                width: 48vw;
-            }
-        }
-
-        @media (max-width: 860px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero {
-                min-height: auto;
-            }
-
-            .hero::after,
-            .hero-art {
-                display: none;
-            }
-
-            .hero-content {
-                width: 100%;
-            }
-
-            .culture-grid,
-            .gameplay-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .culture-cards {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 620px) {
-            .nav-inner {
-                min-height: 72px;
-            }
-
-            .logo {
-                font-size: 1.25rem;
-            }
-
-            .logo-icon {
-                width: 40px;
-                height: 40px;
-            }
-
-            .navbar .btn {
-                display: none;
-            }
-
-            .hero h1 {
-                letter-spacing: -2px;
-            }
-
-            .hero-icons,
-            .features-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .hero p {
-                font-size: 1.05rem;
-            }
-        }
-
-        @media (max-width: 420px) {
-            .hero-icons,
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AfroBarber — Simulador de Barbearia</title>
+  <meta name="description" content="Gerencie sua barbearia, sirva clientes, evolua seu negócio e celebre a cultura afro. Baixe grátis no Google Play." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold:    #f6c744;
+      --gold-dim: #c9a630;
+      --black:   #060504;
+      --surface: #0e0c0a;
+      --card:    #141210;
+      --border:  rgba(246,199,68,.18);
+      --muted:   #7d7165;
+      --text:    #e8dece;
+      --white:   #f7f3ea;
+      --r:       20px;
+      --font-head: 'Syne', sans-serif;
+      --font-body: 'Space Grotesk', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--black);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ─── UTILS ─── */
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+    .tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(246,199,68,.1); border: 1px solid var(--border);
+      color: var(--gold); font-size: .75rem; font-weight: 600;
+      letter-spacing: .12em; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 100px;
+    }
+    .tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink:0; }
+    .section-label { display: flex; justify-content: center; margin-bottom: 20px; }
+    h2.section-title {
+      font-family: var(--font-head); font-size: clamp(2rem,4vw,2.9rem);
+      line-height: 1.1; text-align: center; color: var(--white);
+      margin-bottom: 16px;
+    }
+    h2.section-title span { color: var(--gold); }
+    p.section-sub {
+      text-align: center; color: var(--muted); max-width: 540px;
+      margin: 0 auto 60px; font-size: 1.05rem;
+    }
+
+    /* ─── NOISE TEXTURE ─── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      background-size: 200px; opacity: .5;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      transition: background .3s, box-shadow .3s;
+    }
+    nav.scrolled {
+      background: rgba(6,5,4,.88);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      box-shadow: 0 1px 0 var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; color: var(--white);
+    }
+    .nav-logo .logo-mark {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-head); font-size: .9rem; font-weight: 800;
+      color: var(--black); flex-shrink: 0;
+    }
+    .nav-logo .logo-text {
+      font-family: var(--font-head); font-size: 1.1rem; font-weight: 800;
+      letter-spacing: .06em;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none; color: var(--muted); font-size: .9rem;
+      font-weight: 500; transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-body); font-weight: 600; font-size: .9rem;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: transform .2s, box-shadow .2s, opacity .2s;
+    }
+    .btn:active { transform: scale(.97) !important; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dim) 100%);
+      color: var(--black); padding: 11px 22px; border-radius: 100px;
+      box-shadow: 0 4px 24px rgba(246,199,68,.25);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(246,199,68,.35); }
+    .btn-outline {
+      border: 1.5px solid var(--border); color: var(--white);
+      padding: 11px 22px; border-radius: 100px; background: transparent;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: .3s; }
+    .mobile-menu {
+      display: none; position: fixed; inset: 68px 0 0;
+      background: rgba(6,5,4,.97);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 36px; z-index: 99;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: var(--white); text-decoration: none; font-size: 1.3rem; font-weight: 600; }
+
+    /* ─── HERO ─── */
+    #inicio {
+      min-height: 100dvh;
+      display: flex; align-items: center;
+      padding: 120px 0 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 70% 50%, rgba(246,199,68,.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(246,199,68,.05) 0%, transparent 60%),
+        var(--black);
+    }
+    .hero-grid-lines {
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(246,199,68,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(246,199,68,.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
+    }
+    .hero-inner {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+    }
+    .hero-eyebrow { margin-bottom: 20px; }
+    h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+      line-height: 1.05; color: var(--white);
+      margin-bottom: 22px;
+    }
+    h1 .accent { color: var(--gold); }
+    h1 .line-2 { display: block; color: var(--muted); }
+    .hero-desc {
+      font-size: 1.1rem; color: var(--muted); max-width: 480px;
+      margin-bottom: 36px; line-height: 1.7;
+    }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 48px; }
+    .btn-play {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+      color: var(--black); padding: 14px 26px; border-radius: 100px;
+      font-family: var(--font-body); font-weight: 700; font-size: 1rem; text-decoration: none;
+      box-shadow: 0 6px 28px rgba(246,199,68,.3); transition: transform .2s, box-shadow .2s;
+    }
+    .btn-play:hover { transform: translateY(-3px); box-shadow: 0 10px 36px rgba(246,199,68,.4); }
+    .hero-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+    .pill {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+      border-radius: 100px; padding: 7px 14px; font-size: .82rem;
+      color: var(--muted); transition: border-color .2s, color .2s;
+    }
+    .pill:hover { border-color: var(--border); color: var(--text); }
+
+    /* Hero visual */
+    .hero-visual { display: flex; justify-content: center; align-items: center; }
+    .hero-card {
+      width: 280px; aspect-ratio: 9/16; max-height: 500px;
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 32px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 18px;
+      position: relative; overflow: hidden;
+      box-shadow: 0 40px 120px rgba(0,0,0,.7), 0 0 0 1px rgba(246,199,68,.08);
+    }
+    .hero-card::before {
+      content: '';
+      position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
+      width: 200px; height: 200px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(246,199,68,.18) 0%, transparent 70%);
+    }
+    .hero-card-emoji { font-size: 4.5rem; line-height: 1; position: relative; }
+    .hero-card-title {
+      font-family: var(--font-head); font-size: 1.4rem; font-weight: 800;
+      letter-spacing: .08em; text-align: center; color: var(--white);
+      position: relative;
+    }
+    .hero-card-sub {
+      font-size: .72rem; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--gold); text-align: center; position: relative;
+    }
+    .hero-card-values {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 6px;
+      padding: 0 20px; position: relative;
+    }
+    .hero-card-values span {
+      font-size: .65rem; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--muted); background: rgba(246,199,68,.07);
+      border: 1px solid rgba(246,199,68,.12); border-radius: 6px;
+      padding: 4px 8px;
+    }
+    .hero-card-badge {
+      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+      background: rgba(246,199,68,.12); border: 1px solid var(--border);
+      color: var(--gold); font-size: .7rem; font-weight: 600;
+      letter-spacing: .08em; padding: 6px 14px; border-radius: 100px;
+      white-space: nowrap;
+    }
+    .floating-stat {
+      position: absolute;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 10px 14px;
+      display: flex; align-items: center; gap: 8px;
+      font-size: .8rem; white-space: nowrap;
+      box-shadow: 0 8px 32px rgba(0,0,0,.5);
+    }
+    .floating-stat.a1 {
+      right: calc(100% + 16px); top: 28%;
+      animation: floatY 4s ease-in-out infinite;
+    }
+    .floating-stat.a2 {
+      left: calc(100% + 16px); top: 55%;
+      animation: floatY 4s ease-in-out 1.5s infinite;
+    }
+    .floating-stat .stat-val { font-family: var(--font-head); font-size: 1rem; font-weight: 700; color: var(--white); }
+    .floating-stat .stat-lbl { color: var(--muted); font-size: .72rem; }
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* ─── STATS BAR ─── */
+    #stats {
+      padding: 60px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      position: relative; overflow: hidden;
+    }
+    #stats::before {
+      content: '';
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+      width: 600px; height: 200px;
+      background: radial-gradient(ellipse, rgba(246,199,68,.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      position: relative; z-index: 1;
+    }
+    .stat-item {
+      text-align: center; padding: 24px;
+      border-right: 1px solid var(--border);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: var(--font-head); font-size: 2.6rem; font-weight: 800;
+      color: var(--gold); line-height: 1; margin-bottom: 6px;
+    }
+    .stat-desc { color: var(--muted); font-size: .88rem; }
+
+    /* ─── FEATURES ─── */
+    #recursos {
+      padding: 120px 0;
+      position: relative; overflow: hidden;
+    }
+    #recursos::before {
+      content: '';
+      position: absolute; right: -200px; top: 50%; transform: translateY(-50%);
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(246,199,68,.05) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .features-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border); border-radius: var(--r); overflow: hidden;
+    }
+    .feat-card {
+      background: var(--card); padding: 36px 32px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      transition: background .25s;
+      position: relative; overflow: hidden;
+    }
+    .feat-card:hover { background: #1a1714; }
+    .feat-card:nth-child(3n) { border-right: none; }
+    .feat-card:nth-last-child(-n+3) { border-bottom: none; }
+    .feat-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: rgba(246,199,68,.1); border: 1px solid rgba(246,199,68,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 20px;
+      transition: background .25s, transform .25s;
+    }
+    .feat-card:hover .feat-icon { background: rgba(246,199,68,.18); transform: scale(1.05); }
+    .feat-title {
+      font-family: var(--font-head); font-size: 1.1rem; font-weight: 700;
+      color: var(--white); margin-bottom: 10px;
+    }
+    .feat-desc { color: var(--muted); font-size: .9rem; line-height: 1.6; }
+
+    /* ─── GAMEPLAY ─── */
+    #gameplay {
+      padding: 120px 0;
+      background: var(--surface);
+      position: relative; overflow: hidden;
+    }
+    #gameplay::before {
+      content: '';
+      position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+      width: 800px; height: 400px;
+      background: radial-gradient(ellipse, rgba(246,199,68,.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .steps {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0; position: relative; z-index: 1;
+    }
+    .steps::before {
+      content: '';
+      position: absolute; top: 25px; left: calc(12.5% + 26px); right: calc(12.5% + 26px);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border) 10%, var(--border) 90%, transparent);
+    }
+    .step {
+      text-align: center; padding: 0 20px;
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+    }
+    .step-num {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--card); border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-head); font-size: 1.1rem; font-weight: 800;
+      color: var(--gold); position: relative; z-index: 1;
+      transition: background .3s, border-color .3s, transform .3s;
+    }
+    .step:hover .step-num {
+      background: rgba(246,199,68,.15); border-color: var(--gold); transform: scale(1.1);
+    }
+    .step-icon { font-size: 2rem; }
+    .step-title {
+      font-family: var(--font-head); font-weight: 700; font-size: 1rem; color: var(--white);
+    }
+    .step-desc { color: var(--muted); font-size: .85rem; line-height: 1.5; }
+
+    /* ─── CULTURE ─── */
+    #cultura {
+      padding: 120px 0;
+      position: relative; overflow: hidden;
+    }
+    .culture-layout {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .culture-text .section-label { justify-content: flex-start; margin-bottom: 16px; }
+    .culture-text h2 {
+      font-family: var(--font-head); font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      line-height: 1.1; color: var(--white); margin-bottom: 20px;
+    }
+    .culture-text h2 span { color: var(--gold); }
+    .culture-text p { color: var(--muted); line-height: 1.8; margin-bottom: 24px; }
+    .culture-values { display: flex; flex-direction: column; gap: 10px; }
+    .culture-value {
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(246,199,68,.05); border: 1px solid var(--border);
+      border-radius: 12px; padding: 14px 18px; transition: background .2s;
+    }
+    .culture-value:hover { background: rgba(246,199,68,.09); }
+    .cv-icon { font-size: 1.3rem; }
+    .cv-label { font-weight: 600; font-size: .9rem; color: var(--white); }
+    .cv-desc { font-size: .82rem; color: var(--muted); }
+    .culture-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .culture-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 28px 24px;
+      transition: transform .25s, border-color .25s;
+    }
+    .culture-card:hover { transform: translateY(-4px); border-color: rgba(246,199,68,.3); }
+    .culture-card:first-child { grid-column: span 2; }
+    .culture-card-icon { font-size: 2rem; margin-bottom: 12px; }
+    .culture-card-title {
+      font-family: var(--font-head); font-weight: 700; font-size: 1rem;
+      color: var(--white); margin-bottom: 8px;
+    }
+    .culture-card-text { color: var(--muted); font-size: .85rem; line-height: 1.6; }
+
+    /* ─── DOWNLOAD ─── */
+    #download { padding: 120px 0; background: var(--surface); }
+    .download-box {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 32px; padding: 72px 60px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .download-box::before {
+      content: '';
+      position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, rgba(246,199,68,.1) 0%, transparent 60%);
+    }
+    .download-box > * { position: relative; z-index: 1; }
+    .download-box h2 {
+      font-family: var(--font-head); font-size: clamp(2rem, 4.5vw, 3.2rem);
+      line-height: 1.1; color: var(--white); margin: 20px 0 16px;
+    }
+    .download-box h2 span { color: var(--gold); }
+    .download-box p { color: var(--muted); max-width: 500px; margin: 0 auto 40px; font-size: 1.05rem; }
+    .download-actions { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .btn-play-lg {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+      color: var(--black); padding: 16px 32px; border-radius: 16px;
+      font-family: var(--font-body); font-weight: 700; font-size: 1.1rem; text-decoration: none;
+      box-shadow: 0 8px 36px rgba(246,199,68,.3); transition: transform .2s, box-shadow .2s;
+    }
+    .btn-play-lg:hover { transform: translateY(-3px); box-shadow: 0 14px 48px rgba(246,199,68,.4); }
+    .btn-play-lg .btn-sub { display: block; font-size: .7rem; font-weight: 400; opacity: .7; }
+    .btn-play-lg .btn-main { display: block; font-size: 1rem; font-weight: 700; }
+    .store-icon { font-size: 1.8rem; }
+
+    /* ─── FAQ ─── */
+    #faq { padding: 120px 0; }
+    .faq-list { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
+    .faq-item {
+      border: 1px solid var(--border); border-radius: 14px;
+      overflow: hidden; transition: border-color .2s;
+    }
+    .faq-item.open, .faq-item:hover { border-color: rgba(246,199,68,.3); }
+    .faq-question {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 24px; background: var(--card);
+      border: none; cursor: pointer; text-align: left;
+      font-family: var(--font-body); font-size: 1rem; font-weight: 600;
+      color: var(--white); gap: 16px; transition: background .2s;
+    }
+    .faq-question:hover { background: #1a1714; }
+    .faq-chevron {
+      flex-shrink: 0; width: 20px; height: 20px;
+      color: var(--gold); transition: transform .3s;
+    }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height .35s ease; background: var(--card); }
+    .faq-item.open .faq-answer { max-height: 200px; }
+    .faq-answer-inner {
+      padding: 16px 24px 20px; color: var(--muted); font-size: .95rem; line-height: 1.7;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ─── FOOTER ─── */
+    footer { border-top: 1px solid var(--border); padding: 48px 0; background: var(--surface); }
+    .footer-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .footer-copy { color: var(--muted); font-size: .85rem; margin-top: 8px; }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: .85rem; transition: color .2s; }
+    .footer-links a:hover { color: var(--gold); }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+    .reveal-delay-4 { transition-delay: .4s; }
+    .reveal-delay-5 { transition-delay: .5s; }
+    .reveal-delay-6 { transition-delay: .6s; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+      .hero-visual { display: none; }
+      .stats-grid { grid-template-columns: repeat(2,1fr); }
+      .stat-item:nth-child(2) { border-right: none; }
+      .stat-item:nth-child(3),
+      .stat-item:nth-child(4) { border-top: 1px solid var(--border); }
+      .features-grid { grid-template-columns: repeat(2,1fr); }
+      .feat-card:nth-child(3n) { border-right: 1px solid var(--border); }
+      .feat-card:nth-child(2n) { border-right: none; }
+      .feat-card:nth-last-child(-n+3) { border-bottom: 1px solid var(--border); }
+      .feat-card:nth-last-child(-n+2) { border-bottom: none; }
+      .steps { grid-template-columns: repeat(2,1fr); gap: 40px; }
+      .steps::before { display: none; }
+      .culture-layout { grid-template-columns: 1fr; gap: 48px; }
+      .download-box { padding: 48px 32px; }
+    }
+    @media (max-width: 640px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .features-grid { grid-template-columns: 1fr; }
+      .feat-card { border-right: none !important; }
+      .feat-card:nth-last-child(n) { border-bottom: 1px solid var(--border); }
+      .feat-card:last-child { border-bottom: none; }
+      .steps { grid-template-columns: 1fr; }
+      .culture-cards { grid-template-columns: 1fr; }
+      .culture-card:first-child { grid-column: span 1; }
+      .download-box { padding: 40px 24px; }
+      .hero-desc { font-size: 1rem; }
+    }
+  </style>
 </head>
 <body>
-    <header class="navbar">
-        <div class="container nav-inner">
-            <a href="#inicio" class="logo" aria-label="AfroBarber">
-                <div class="logo-icon">AB</div>
-                <div>AFRO<br /><span>BARBER</span></div>
-            </a>
 
-            <nav class="nav-links" aria-label="Menu principal">
-                <a href="#inicio" class="active">Início</a>
-                <a href="#gameplay">Gameplay</a>
-                <a href="#recursos">Recursos</a>
-                <a href="#cultura">Cultura</a>
-                <a href="#faq">FAQ</a>
-            </nav>
+<!-- NAV -->
+<nav id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#inicio" class="nav-logo">
+        <div class="logo-mark">AB</div>
+        <span class="logo-text">AFROBARBER</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#recursos">Recursos</a></li>
+        <li><a href="#gameplay">Como Jogar</a></li>
+        <li><a href="#cultura">Cultura</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn btn-primary nav-cta">
+        Baixar Grátis
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
 
-            <a href="#download" class="btn btn-primary">Baixar agora</a>
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#recursos" class="mobile-link">Recursos</a>
+  <a href="#gameplay" class="mobile-link">Como Jogar</a>
+  <a href="#cultura" class="mobile-link">Cultura</a>
+  <a href="#faq" class="mobile-link">FAQ</a>
+  <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn btn-primary">Baixar Grátis</a>
+</div>
+
+<!-- HERO -->
+<section id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="tag">Simulador de Barbearia Afro</span>
         </div>
-    </header>
-
-    <main>
-        <section id="inicio" class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <div class="badge">O jogo brasileiro de barbearia afro</div>
-
-                    <h1>Corte com <span>propósito.</span></h1>
-
-                    <p>
-                        Viva a jornada de um barbeiro, conquiste clientes, fortaleça sua comunidade,
-                        gerencie sua agenda, cuide das finanças e construa seu legado na quebrada.
-                    </p>
-
-                    <div class="hero-icons">
-                        <div class="hero-icon">
-                            <span class="symbol">✂</span>
-                            <strong>Cortes<br />realistas</strong>
-                        </div>
-                        <div class="hero-icon">
-                            <span class="symbol">▣</span>
-                            <strong>Agenda<br />organizada</strong>
-                        </div>
-                        <div class="hero-icon">
-                            <span class="symbol">↗</span>
-                            <strong>Negócio<br />e finanças</strong>
-                        </div>
-                        <div class="hero-icon">
-                            <span class="symbol">★</span>
-                            <strong>Missões<br />e conquistas</strong>
-                        </div>
-                    </div>
-
-                    <div class="hero-actions">
-                        <a href="#download" class="store-button" aria-label="Disponível na Google Play">
-                            <span class="play">▶</span>
-                            <span>
-                                <small>Disponível em breve na</small>
-                                <strong>Google Play</strong>
-                            </span>
-                        </a>
-                        <a href="#gameplay" class="btn btn-outline">Conhecer o jogo</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="hero-art" aria-hidden="true">
-                <div class="character-card"></div>
-            </div>
-        </section>
-
-        <section id="recursos" class="section">
-            <div class="container">
-                <div class="section-header">
-                    <div class="section-label">Sobre o jogo</div>
-                    <h2>Mais que um jogo, uma vivência.</h2>
-                    <p>
-                        AfroBarber é um simulador de barbearia que coloca você no comando do seu próprio negócio.
-                        Atenda clientes, faça cortes únicos, gerencie recursos e evolua na comunidade.
-                    </p>
-                </div>
-
-                <div class="features-grid">
-                    <article class="feature-card">
-                        <span class="icon">✂</span>
-                        <h3>Cortes realistas</h3>
-                        <p>Diversos estilos de cortes, barbas e acabamentos ligados à identidade afro.</p>
-                    </article>
-
-                    <article class="feature-card">
-                        <span class="icon">▣</span>
-                        <h3>Agenda inteligente</h3>
-                        <p>Gerencie horários, evite atrasos e organize o fluxo de clientes da barbearia.</p>
-                    </article>
-
-                    <article class="feature-card">
-                        <span class="icon">$</span>
-                        <h3>Financeiro</h3>
-                        <p>Controle ganhos, gastos, saldo do caixa, investimentos e evolução do negócio.</p>
-                    </article>
-
-                    <article class="feature-card">
-                        <span class="icon">▤</span>
-                        <h3>Loja</h3>
-                        <p>Compre móveis, equipamentos, produtos e melhorias para sua barbearia.</p>
-                    </article>
-
-                    <article class="feature-card">
-                        <span class="icon">◎</span>
-                        <h3>Missões</h3>
-                        <p>Complete desafios, ganhe XP, desbloqueie recompensas e suba de nível.</p>
-                    </article>
-
-                    <article class="feature-card">
-                        <span class="icon">☷</span>
-                        <h3>Comunidade</h3>
-                        <p>Fortaleça sua reputação, atenda melhor os clientes e vire referência.</p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section id="gameplay" class="section alt">
-            <div class="container">
-                <div class="section-header">
-                    <div class="section-label">Gameplay</div>
-                    <h2>Administre a rotina da barbearia.</h2>
-                    <p>
-                        Cada cliente tem um pedido, um horário, uma expectativa e um serviço. Seu objetivo é atender bem,
-                        manter a fila funcionando e transformar cada atendimento em progresso.
-                    </p>
-                </div>
-
-                <div class="gameplay-grid">
-                    <article class="step-card">
-                        <div class="step-number">1</div>
-                        <h3>Receba clientes</h3>
-                        <p>NPCs chegam na barbearia, procuram atendimento e podem aguardar nos sofás disponíveis.</p>
-                    </article>
-
-                    <article class="step-card">
-                        <div class="step-number">2</div>
-                        <h3>Veja o pedido</h3>
-                        <p>Confira o serviço solicitado, o preço, a dificuldade, o tempo e os produtos necessários.</p>
-                    </article>
-
-                    <article class="step-card">
-                        <div class="step-number">3</div>
-                        <h3>Atenda na cadeira</h3>
-                        <p>Leve o cliente até a cadeira, realize o atendimento e entregue o corte correto.</p>
-                    </article>
-
-                    <article class="step-card">
-                        <div class="step-number">4</div>
-                        <h3>Receba e evolua</h3>
-                        <p>O cliente paga no caixa, você ganha dinheiro, XP e pode investir em melhorias.</p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section id="cultura" class="section">
-            <div class="container culture-grid">
-                <div class="culture-text">
-                    <div class="section-label">Cultura que inspira</div>
-                    <h2>Representatividade em cada <span>detalhe.</span></h2>
-                    <p>
-                        AfroBarber celebra a cultura negra, a música, os estilos e a força das comunidades.
-                        Aqui, você não é só um jogador: é parte de algo maior.
-                    </p>
-                    <p>
-                        O jogo foi pensado para unir diversão, gestão e aprendizado, mostrando que cabelo afro,
-                        barbearia e identidade carregam história, memória e pertencimento.
-                    </p>
-                    <a href="#download" class="btn btn-primary">Baixar e jogar</a>
-                </div>
-
-                <div class="culture-cards">
-                    <article class="image-card">
-                        <h3>Estilos autênticos</h3>
-                    </article>
-                    <article class="image-card">
-                        <h3>Música e ambiente</h3>
-                    </article>
-                    <article class="image-card">
-                        <h3>Comunidade forte</h3>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section id="download" class="download">
-            <div class="container">
-                <div class="download-box">
-                    <h2>Sua barbearia. Seu <span>legado.</span></h2>
-                    <p>
-                        Baixe AfroBarber e comece sua jornada: atenda clientes, organize sua agenda,
-                        evolua seu negócio e transforme sua barbearia em referência.
-                    </p>
-                    <a href="#" class="store-button" aria-label="Baixar na Google Play">
-                        <span class="play">▶</span>
-                        <span>
-                            <small>Disponível em breve na</small>
-                            <strong>Google Play</strong>
-                        </span>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <section id="faq" class="section">
-            <div class="container">
-                <div class="section-header">
-                    <div class="section-label">Perguntas frequentes</div>
-                    <h2>Dúvidas rápidas</h2>
-                </div>
-
-                <div class="faq">
-                    <details>
-                        <summary>O jogo é gratuito?</summary>
-                        <p>A página está preparada para divulgar o jogo como gratuito. Você pode alterar esse texto caso defina outro modelo de lançamento.</p>
-                    </details>
-
-                    <details>
-                        <summary>Precisa de internet para jogar?</summary>
-                        <p>O jogo pode ser planejado para funcionar offline, dependendo dos sistemas finais de anúncios, salvamento em nuvem ou atualizações.</p>
-                    </details>
-
-                    <details>
-                        <summary>Em quais dispositivos o jogo estará disponível?</summary>
-                        <p>O foco inicial é Android, com publicação pela Google Play Store.</p>
-                    </details>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container footer-inner">
-            <a href="#inicio" class="logo" aria-label="AfroBarber">
-                <div class="logo-icon">AB</div>
-                <div>AFRO<br /><span>BARBER</span></div>
-            </a>
-
-            <div>© 2026 AfroBarber. Todos os direitos reservados.</div>
-
-            <div class="footer-links">
-                <a href="#inicio">Início</a>
-                <a href="#recursos">Recursos</a>
-                <a href="#download">Download</a>
-                <a href="#">Política de Privacidade</a>
-            </div>
+        <h1>
+          Corte com <span class="accent">propósito,</span>
+          <span class="line-2">construa um legado.</span>
+        </h1>
+        <p class="hero-desc">
+          Gerencie sua barbearia, sirva clientes, invista no seu negócio e celebre a cultura afro. Um jogo com identidade — para quem tem orgulho das raízes.
+        </p>
+        <div class="hero-cta">
+          <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-play">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 20.5v-17c0-.83 1.01-1.3 1.7-.8l14 8.5c.63.38.63 1.32 0 1.7l-14 8.5c-.69.5-1.7.03-1.7-.8z"/></svg>
+            <span>
+              <span style="display:block;font-size:.7rem;font-weight:400;opacity:.8;">Disponível no</span>
+              <span style="display:block;font-weight:700;">Google Play</span>
+            </span>
+          </a>
+          <a href="#gameplay" class="btn btn-outline">Como Jogar</a>
         </div>
-    </footer>
+        <div class="hero-pills">
+          <span class="pill">✂️ Cortes Afro Autênticos</span>
+          <span class="pill">📅 Agenda Inteligente</span>
+          <span class="pill">💰 Gestão Financeira</span>
+          <span class="pill">🏆 Missões e XP</span>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div style="position:relative;">
+          <div class="hero-card">
+            <div class="hero-card-emoji">✂️</div>
+            <div class="hero-card-title">AFROBARBER</div>
+            <div class="hero-card-sub">Simulador de Barbearia</div>
+            <div class="hero-card-values">
+              <span>RESPEITO</span>
+              <span>FOCO</span>
+              <span>DISCIPLINA</span>
+              <span>SUCESSO</span>
+            </div>
+            <div class="hero-card-badge">✦ Grátis no Google Play</div>
+          </div>
+          <div class="floating-stat a1">
+            <span style="font-size:1.3rem;">🏆</span>
+            <div>
+              <div class="stat-val">+50</div>
+              <div class="stat-lbl">Missões</div>
+            </div>
+          </div>
+          <div class="floating-stat a2">
+            <span style="font-size:1.3rem;">⭐</span>
+            <div>
+              <div class="stat-val">Nível MAX</div>
+              <div class="stat-lbl">Evolua seu barbeiro</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<section id="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <div class="stat-num">100%</div>
+        <div class="stat-desc">Grátis para jogar</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-1">
+        <div class="stat-num">6+</div>
+        <div class="stat-desc">Sistemas de jogo</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-2">
+        <div class="stat-num">∞</div>
+        <div class="stat-desc">Possibilidades de negócio</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-3">
+        <div class="stat-num">1</div>
+        <div class="stat-desc">Identidade — a sua</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="recursos">
+  <div class="container">
+    <div class="section-label"><span class="tag reveal">Recursos do Jogo</span></div>
+    <h2 class="section-title reveal">Tudo que uma barbearia<br/><span>de verdade</span> precisa</h2>
+    <p class="section-sub reveal">Do primeiro cliente à barbearia dos sonhos — cada detalhe foi pensado para você crescer.</p>
+    <div class="features-grid">
+      <div class="feat-card reveal">
+        <div class="feat-icon">✂️</div>
+        <div class="feat-title">Cortes Realistas</div>
+        <div class="feat-desc">Estilos autênticos da cultura afro: tranças, dreads, degradê, twist e muito mais. Cada corte tem história e identidade.</div>
+      </div>
+      <div class="feat-card reveal reveal-delay-1">
+        <div class="feat-icon">📅</div>
+        <div class="feat-title">Agenda Inteligente</div>
+        <div class="feat-desc">Gerencie o fluxo de clientes sem deixar ninguém esperando. Organize horários e maximize sua eficiência.</div>
+      </div>
+      <div class="feat-card reveal reveal-delay-2">
+        <div class="feat-icon">💰</div>
+        <div class="feat-title">Controle Financeiro</div>
+        <div class="feat-desc">Acompanhe receitas, despesas e fluxo de caixa. Invista no seu negócio e veja o dinheiro multiplicar.</div>
+      </div>
+      <div class="feat-card reveal reveal-delay-3">
+        <div class="feat-icon">🏪</div>
+        <div class="feat-title">Loja & Upgrades</div>
+        <div class="feat-desc">Compre móveis, equipamentos e produtos premium. Monte a barbearia que sempre sonhou, do seu jeito.</div>
+      </div>
+      <div class="feat-card reveal reveal-delay-4">
+        <div class="feat-icon">🎯</div>
+        <div class="feat-title">Missões & XP</div>
+        <div class="feat-desc">Complete desafios, ganhe XP e desbloqueie recompensas exclusivas. Sempre tem um próximo nível para alcançar.</div>
+      </div>
+      <div class="feat-card reveal reveal-delay-5">
+        <div class="feat-icon">🤝</div>
+        <div class="feat-title">Reputação & Comunidade</div>
+        <div class="feat-desc">Construa sua reputação no bairro. Clientes fiéis, boca a boca e prestígio — o seu legado começa aqui.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GAMEPLAY -->
+<section id="gameplay">
+  <div class="container">
+    <div class="section-label"><span class="tag reveal">Como Jogar</span></div>
+    <h2 class="section-title reveal">Quatro passos para a<br/><span>barbearia perfeita</span></h2>
+    <p class="section-sub reveal">Simples de aprender, difícil de largar. Cada atendimento é uma nova chance de evoluir.</p>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div class="step-icon">🚪</div>
+        <div class="step-title">Receba Clientes</div>
+        <div class="step-desc">Clientes chegam com demandas diversas. Organize a fila e comece o atendimento.</div>
+      </div>
+      <div class="step reveal reveal-delay-2">
+        <div class="step-num">02</div>
+        <div class="step-icon">📋</div>
+        <div class="step-title">Entenda o Pedido</div>
+        <div class="step-desc">Cada cliente quer um estilo único. Leia o pedido e prepare as ferramentas certas.</div>
+      </div>
+      <div class="step reveal reveal-delay-3">
+        <div class="step-num">03</div>
+        <div class="step-icon">✂️</div>
+        <div class="step-title">Execute o Corte</div>
+        <div class="step-desc">Cadeira, tesoura, máquina — use os equipamentos certos e entregue um serviço impecável.</div>
+      </div>
+      <div class="step reveal reveal-delay-4">
+        <div class="step-num">04</div>
+        <div class="step-icon">🚀</div>
+        <div class="step-title">Evolua & Cresça</div>
+        <div class="step-desc">Receba pagamento, ganhe XP, desbloqueie upgrades e leve sua barbearia ao próximo nível.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CULTURE -->
+<section id="cultura">
+  <div class="container">
+    <div class="culture-layout">
+      <div class="culture-text">
+        <div class="section-label">
+          <span class="tag reveal">Identidade &amp; Cultura</span>
+        </div>
+        <h2 class="reveal">
+          Mais que um jogo —<br/>
+          <span>um manifesto cultural</span>
+        </h2>
+        <p class="reveal">
+          AfroBarber nasce da valorização da barbearia como espaço de cultura, resistência e comunidade. Aqui, cada corte carrega um legado.
+        </p>
+        <p class="reveal">
+          Representatividade importa. Nosso jogo celebra a estética afro, a musicalidade das raízes e a força de quem constrói algo do zero.
+        </p>
+        <div class="culture-values">
+          <div class="culture-value reveal">
+            <span class="cv-icon">✊</span>
+            <div>
+              <div class="cv-label">Respeito</div>
+              <div class="cv-desc">Pela história, pela cultura, pelo cliente</div>
+            </div>
+          </div>
+          <div class="culture-value reveal reveal-delay-1">
+            <span class="cv-icon">🎯</span>
+            <div>
+              <div class="cv-label">Foco</div>
+              <div class="cv-desc">No ofício, na excelência, no crescimento</div>
+            </div>
+          </div>
+          <div class="culture-value reveal reveal-delay-2">
+            <span class="cv-icon">🔥</span>
+            <div>
+              <div class="cv-label">Disciplina</div>
+              <div class="cv-desc">Para construir algo que dura</div>
+            </div>
+          </div>
+          <div class="culture-value reveal reveal-delay-3">
+            <span class="cv-icon">🌟</span>
+            <div>
+              <div class="cv-label">Sucesso</div>
+              <div class="cv-desc">Definido por você, conquistado por você</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="culture-cards">
+        <div class="culture-card reveal">
+          <div class="culture-card-icon">🎵</div>
+          <div class="culture-card-title">Música &amp; Atmosfera</div>
+          <div class="culture-card-text">Trilha sonora imersiva que captura a energia da barbearia — o ritmo que embala cada corte e transforma o ambiente.</div>
+        </div>
+        <div class="culture-card reveal reveal-delay-1">
+          <div class="culture-card-icon">💇</div>
+          <div class="culture-card-title">Estilos Autênticos</div>
+          <div class="culture-card-text">Cortes que celebram a beleza e a diversidade da estética afro-brasileira.</div>
+        </div>
+        <div class="culture-card reveal reveal-delay-2">
+          <div class="culture-card-icon">🤝</div>
+          <div class="culture-card-title">Comunidade Forte</div>
+          <div class="culture-card-text">A barbearia é o coração do bairro — construa laços, ganhe respeito e deixe sua marca na história.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOWNLOAD -->
+<section id="download">
+  <div class="container">
+    <div class="download-box">
+      <span class="tag">Disponível Agora</span>
+      <h2>Sua barbearia.<br/><span>Seu legado.</span></h2>
+      <p>Gratuito, sem complicação. Baixe agora e comece do zero — ou direto no topo. Você decide o caminho.</p>
+      <div class="download-actions">
+        <a href="https://play.google.com/store/apps/details?id=br.com.afrobarber.game" target="_blank" rel="noopener" class="btn-play-lg">
+          <span class="store-icon">▶</span>
+          <div>
+            <span class="btn-sub">Baixar grátis no</span>
+            <span class="btn-main">Google Play</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-label"><span class="tag reveal">FAQ</span></div>
+    <h2 class="section-title reveal">Perguntas <span>frequentes</span></h2>
+    <p class="section-sub reveal">Tem dúvidas? A gente responde.</p>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <button class="faq-question" aria-expanded="false">
+          O jogo é gratuito?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">Sim, 100% gratuito! Baixe no Google Play sem pagar nada. O jogo oferece uma experiência completa sem necessidade de compras obrigatórias.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal reveal-delay-1">
+        <button class="faq-question" aria-expanded="false">
+          Precisa de internet para jogar?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">Você pode jogar offline! A conexão é necessária apenas para sincronizar seu progresso na nuvem e acessar placares globais.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal reveal-delay-2">
+        <button class="faq-question" aria-expanded="false">
+          Quais dispositivos são compatíveis?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">AfroBarber roda em dispositivos Android. Recomendamos Android 7.0 ou superior para a melhor experiência de jogo.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal reveal-delay-3">
+        <button class="faq-question" aria-expanded="false">
+          O conteúdo é adequado para todas as idades?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">Sim! O jogo não contém violência, drogas ou conteúdo adulto. É adequado para todas as idades e foi pensado para ser inspirador e educativo.</div>
+        </div>
+      </div>
+      <div class="faq-item reveal reveal-delay-4">
+        <button class="faq-question" aria-expanded="false">
+          Meu progresso fica salvo?
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">Sim. O progresso é salvo na nuvem via Unity Cloud Save, permitindo que você continue de onde parou em qualquer dispositivo Android.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <a href="#inicio" class="nav-logo">
+          <div class="logo-mark">AB</div>
+          <span class="logo-text">AFROBARBER</span>
+        </a>
+        <p class="footer-copy">© 2026 AfroBarber. Todos os direitos reservados.</p>
+      </div>
+      <nav class="footer-links" aria-label="Links do rodapé">
+        <a href="#inicio">Início</a>
+        <a href="#recursos">Recursos</a>
+        <a href="#download">Download</a>
+        <a href="privacy-policy.html">Política de Privacidade</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Sticky nav
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  // Mobile menu toggle
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', open);
+  });
+  document.querySelectorAll('.mobile-link, .mobile-menu .btn').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+      });
+      if (!wasOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // Scroll reveal with IntersectionObserver
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
